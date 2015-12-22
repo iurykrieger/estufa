@@ -1,0 +1,22 @@
+{
+  "name": "estufa",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "datatables.net": "~1.10.10",
+    "datatables.net-dt": "~1.10.10",
+    "datatables.net-bs": "~1.10.10"
+  }
+}
