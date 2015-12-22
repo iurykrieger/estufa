@@ -25,3 +25,19 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ### License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+
+### Projeto Estufa 
+
+Apenas clonem o repositório: git clone http://gitlab.videira.ifc.edu.br/nectar/estufa-servidor-sistema.git
+
+Instalem todas as dependências com o composer: composer install
+
+Copiem o arquivo .env.example para um arquivo .env: cp .env.example .env
+
+Gerem uma key única para a sua aplicação: php artisan key:generate
+
+Alterem o arquivo .env criado com as suas variáveis de ambiente (Nome da DB, senha, etc.).
+
+Inicializem o servidor: php artisan serve
+
+
