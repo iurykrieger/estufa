@@ -25,6 +25,10 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/admin/scans', 'ScanController@index');
 
+	Route::get('admin/scans/sensor/{sensor}','ScanController@showBySensor');
+
+	Route::get('admin/scans/ambient/{ambient}','ScanController@showByAmbient');
+
 	Route::get('/admin', 'DashboardController@index');
 
 	Route::get('/',function(){

@@ -26,7 +26,7 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 
-### Projeto Estufa 
+## Projeto Estufa 
 
 Apenas clonem o repositório: git clone http://gitlab.videira.ifc.edu.br/nectar/estufa-servidor-sistema.git
 

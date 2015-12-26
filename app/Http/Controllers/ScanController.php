@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Scan;
+use App\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ScanController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the scans.
      *
      * @return \Illuminate\Http\Response
      */
@@ -22,28 +23,7 @@ class ScanController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * Display the specified scan.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -54,36 +34,13 @@ class ScanController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Display the specified scans by id_sensor
+     * @param  App\Sensor $idSensor [id of the sensor]
+     * @return Collection of App\Scan
      */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    public function showBySensor($idSensor){
+        $sensor = Sensor::findOrFail($idSensor);
+        $scans = $sensor->scans;
+        return view('scans.showBySensor',['scans' => $scans, 'user' => Auth::user()]);
     }
 }
