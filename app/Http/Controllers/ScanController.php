@@ -19,7 +19,7 @@ class ScanController extends Controller
     public function index()
     {
         $scans = Scan::take(100)->get();
-        return view('scans.index',['scans' => $scans, 'user' => Auth::user()]);
+        return view('scans.scans',['scans' => $scans, 'user' => Auth::user()]);
     }
 
     /**

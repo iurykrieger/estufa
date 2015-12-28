@@ -19,6 +19,12 @@ class Scan extends Model
     protected $primaryKey = 'id_scan';
 
     /**
+     * Date columns of the table
+     * @var string
+     */
+    protected $dates = ['date'];
+
+    /**
      * Boolean of timestamps columns created_at and updated_at
      * @var boolean
      */
