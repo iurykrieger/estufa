@@ -246,7 +246,7 @@
                 <!-- /.col-lg-12 -->
            </div>
 			<div class="row">  
-				@yield('content')
+				@yield('content') 
 
             </div>
             <!-- /#page-wrapper -->

@@ -6,5 +6,5 @@
 @section('page_heading','Home')
 
 @section('content')
-	<p>Teste de conteúdo</p>
+	<h1>Iury</h1>
 @endsection

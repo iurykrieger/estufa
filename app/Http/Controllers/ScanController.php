@@ -8,6 +8,8 @@ use App\Scan;
 use App\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class ScanController extends Controller
 {
@@ -16,10 +18,10 @@ class ScanController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $scans = Scan::take(100)->get();
-        return view('scans.scans',['scans' => $scans, 'user' => Auth::user()]);
+    public function index($pagesize = 25){
+        $sizes = [10,25,50,100,150];
+        $scans = Scan::orderBy('date','desc')->orderBy('time','desc')->paginate($pagesize);
+        return view('scans.scans',['scans' => $scans, 'pagesize' => $pagesize, 'sizes' => $sizes ,'user' => Auth::user()]);
     }
 
     /**
