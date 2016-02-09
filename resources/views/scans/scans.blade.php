@@ -37,6 +37,7 @@
 			<th>Umidade do Ar</th>
 			<th>Umidade do Solo</th>
 			<th>Sensor</th>
+			<th>Ambiente</th>
 			<th>Ações</th>
 		</tr>
 	</thead>
@@ -49,6 +50,7 @@
 			<th>Umidade do Ar</th>
 			<th>Umidade do Solo</th>
 			<th>Sensor</th>
+			<th>Ambiente</th>
 			<th>Ações</th>
 		</tr>
 	</tfoot>
@@ -61,11 +63,10 @@
 			<td>{{ $scan->temperature }}</td>
 			<td>{{ $scan->air_humidity }}</td>
 			<td>{{ $scan->ground_humidity }}</td>
-			<td>{{ $scan->sensor->id_sensor." - ".$scan->sensor->description }}</td>
+			<td><a href="{{url('admin/sensor/show/'.$scan->sensor->id_sensor)}}">{{ $scan->sensor->id_sensor." - ".$scan->sensor->description }}</a></td>
+			<td>{{ $scan->ambient->id_ambient." - ".$scan->ambient->description}}</td>
 			<td>
 				<button>@include('widgets.icon',['class'=>'times'])</button>
-				<button>@include('widgets.icon',['class'=>'sitemap'])</button>
-				<button>@include('widgets.icon',['class'=>'sitemap'])</button>
 			</td>
 		</tr>
 		@endforeach
