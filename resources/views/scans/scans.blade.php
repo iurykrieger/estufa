@@ -60,9 +60,9 @@
 			<td>{{ $scan->id_scan }}</td>
 			<td>{{ $scan->date->format('d/m/Y') }}</td>
 			<td>{{ $scan->time }}</td>
-			<td>{{ $scan->temperature }}</td>
-			<td>{{ $scan->air_humidity }}</td>
-			<td>{{ $scan->ground_humidity }}</td>
+			<td>{{ $scan->temperature }} ºC</td>
+			<td>{{ $scan->air_humidity }} %</td>
+			<td>{{ $scan->ground_humidity }} %</td>
 			<td><a href="{{url('admin/sensor/show/'.$scan->sensor->id_sensor)}}">{{ $scan->sensor->id_sensor." - ".$scan->sensor->description }}</a></td>
 			<td>{{ $scan->ambient->id_ambient." - ".$scan->ambient->description}}</td>
 			<td>

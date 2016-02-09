@@ -23,13 +23,11 @@ use App\Sensor;
 
 Route::group(['middleware' => 'auth'], function () {
 
-	Route::get('/admin/sensor/show/{sensor}','SensorController@show');
+	Route::get('/admin/scans/sensor/{sensor?}','ScanController@showBySensor');
 
 	Route::get('/admin/scans/{pagesize?}', 'ScanController@index');
 
-	Route::get('admin/scans/sensor/{sensor}','ScanController@showBySensor');
-
-	Route::get('admin/scans/ambient/{ambient}','ScanController@showByAmbient');
+	Route::get('/admin/scans/ambient/{ambient}','ScanController@showByAmbient');
 
 	Route::get('/admin', 'DashboardController@index');
 
