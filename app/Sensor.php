@@ -25,6 +25,13 @@ class Sensor extends Model
     public $timestamps = true;
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['description','id_ambient','active'];
+
+    /**
      * GhostScans of Sensor
      * @return Collection of App\GhostScan
      */

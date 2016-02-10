@@ -1,13 +1,13 @@
-<!-- resources/views/index.blade.php -->
+<!-- resources/views/sensors/index.blade.php -->
 @extends('layouts.dashboard')
 
 @section('css')
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
 @endsection
 
-@section('title','Leituras')
+@section('title','Sensores')
 
-@section('page_heading','Últimas Leituras')
+@section('page_heading','Sensores')
 
 @section('content')
 
@@ -18,61 +18,53 @@
 				Mostrando 
 				<select id="paginator" name="paginate" aria-controls="scans" class="form-control input-sm">
 					@foreach ($sizes as $value)
-					<option value="{{ $value }}" {{ ($value == $pagesize ? "selected":"") }}>{{ $value }}</option>
+					<option value="{{ $value }}" {{ ($value == $sensors->perPage() ? "selected":"") }}>{{ $value }}</option>
 					@endforeach
 				</select>
-				leituras por página
+				sensores por página
 			</label>
 		</div>
 	</div>
 </div>
 
-<table id="scans" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+<table id="sensors" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 	<thead>
 		<tr>
 			<th>ID</th>
-			<th>Data</th>
-			<th>Hora</th>
-			<th>Temperatura</th>
-			<th>Umidade do Ar</th>
-			<th>Umidade do Solo</th>
-			<th>Sensor</th>
+			<th>Descrição</th>
 			<th>Ambiente</th>
+			<th>Ativo</th>
+			<th>Última Alteração</th>
 			<th>Ações</th>
 		</tr>
 	</thead>
 	<tfoot>
 		<tr>
 			<th>ID</th>
-			<th>Data</th>
-			<th>Hora</th>
-			<th>Temperatura</th>
-			<th>Umidade do Ar</th>
-			<th>Umidade do Solo</th>
-			<th>Sensor</th>
+			<th>Descrição</th>
 			<th>Ambiente</th>
+			<th>Ativo</th>
+			<th>Última Alteração</th>
 			<th>Ações</th>
 		</tr>
 	</tfoot>
 	<tbody>
-		@foreach ($scans as $scan)
+		@foreach ($sensors as $sensor)
 		<tr>
-			<td>{{ $scan->id_scan }}</td>
-			<td>{{ $scan->date->format('d/m/Y') }}</td>
-			<td>{{ $scan->time }}</td>
-			<td>{{ $scan->temperature }} ºC</td>
-			<td>{{ $scan->air_humidity }} %</td>
-			<td>{{ $scan->ground_humidity }} %</td>
-			<td><a href="{{url('admin/sensor/show/'.$scan->sensor->id_sensor)}}">{{ $scan->sensor->id_sensor." - ".$scan->sensor->description }}</a></td>
-			<td>{{ $scan->ambient->id_ambient." - ".$scan->ambient->description}}</td>
+			<td>{{ $sensor->id_sensor }}</td>
+			<td>{{ $sensor->description }}</td>
+			<td><a href="{{url('admin/ambient/'.$sensor->ambient->id_ambient)}}">{{ $sensor->ambient->id_ambient." - ".$sensor->ambient->description}}</a></td>
+			<td>{{ ($sensor->active == 1 ? "Sim" : "Não") }}</td>
+			<td>{{ $sensor->updated_at->format('d/m/Y H:i:s') }}</td>
 			<td>
 				<button>@include('widgets.icon',['class'=>'times'])</button>
+				<button>@include('widgets.icon',['class'=>'pencil'])</button>
 			</td>
 		</tr>
 		@endforeach
 	</tbody>
 </table>
-{!! $scans->render() !!}
+{!! $sensors->render() !!}
 
 @endsection
 

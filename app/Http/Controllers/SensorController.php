@@ -2,13 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
+use App\Ambient;
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Sensor;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class SensorController extends Controller
 {
+
+    /**
+     * Instantiate a new SensorController instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +30,9 @@ class SensorController extends Controller
      */
     public function index()
     {
-        //
+        $sizes = [10,25,50,100,150];
+        $sensors = Sensor::orderBy('id_sensor','asc')->paginate(25);
+        return view('sensors.index',['sensors' => $sensors, 'sizes' => $sizes ,'user' => Auth::user()]);
     }
 
     /**
@@ -26,7 +42,8 @@ class SensorController extends Controller
      */
     public function create()
     {
-        //
+        $ambients = Ambient::lists('description', 'id_ambient');
+        return view('sensors.create',['ambients' => $ambients, 'user' => Auth::user()]);
     }
 
     /**
@@ -37,7 +54,10 @@ class SensorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $sensor = $request->all();
+        Sensor::create($sensor);
+
+        return Redirect::to('admin/sensor/create')->with('message','Sensor cadastrado com sucesso!');
     }
 
     /**

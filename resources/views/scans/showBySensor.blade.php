@@ -64,7 +64,7 @@
 			<td>{{ $scan->temperature }} ºC</td>
 			<td>{{ $scan->air_humidity }} %</td>
 			<td>{{ $scan->ground_humidity }} %</td>
-			<td><a href="{{url('admin/sensor/show/'.$scan->sensor->id_sensor)}}">{{ $scan->sensor->id_sensor." - ".$scan->sensor->description }}</a></td>
+			<td><a href="{{url('admin/sensor/'.$scan->sensor->id_sensor)}}">{{ $scan->sensor->id_sensor." - ".$scan->sensor->description }}</a></td>
 			<td>{{ $scan->ambient->id_ambient." - ".$scan->ambient->description}}</td>
 			<td>
 				<button>@include('widgets.icon',['class'=>'times'])</button>

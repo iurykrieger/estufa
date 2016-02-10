@@ -7,9 +7,7 @@
 
 @section('title','Leituras')
 
-@section('page_heading')
-	Leituras do ambiente {{ $selected_ambient->description }}
-@endsection
+@section('page_heading','Últimas Leituras')
 
 @section('content')
 
@@ -17,12 +15,13 @@
 	<div class="col-sm-6">
 		<div class="dataTables_length" id="scans_length">
 			<label>
-				Mostrando leituras do ambiente 
-				<select id="paginator" name="paginate" aria-controls="scans" class="form-control input-sm" style="width: 150px">
-					@foreach ($ambients as $ambient)
-					<option value="{{ $ambient->id_ambient }}" {{ ($ambient == $selected_ambient ? "selected":"") }}>{{ $ambient->id_ambient . " - " . $ambient->description }}</option>
+				Mostrando 
+				<select id="paginator" name="paginate" aria-controls="scans" class="form-control input-sm">
+					@foreach ($sizes as $value)
+					<option value="{{ $value }}" {{ ($value == $pagesize ? "selected":"") }}>{{ $value }}</option>
 					@endforeach
 				</select>
+				leituras por página
 			</label>
 		</div>
 	</div>
@@ -105,9 +104,9 @@
 			paging:false,
 		});
 		$('#paginator').bind('change', function () {
-			var path = '/admin/scans/';
+			var path = '/admin/';
 			var pathname = window.location.pathname.split( '/' );
-			var url = path + pathname[3] + '/' +$(this).val(); 
+			var url = path + pathname[2] + '/' +$(this).val(); 
 			if (url) {
 				window.location = url; 
 			}

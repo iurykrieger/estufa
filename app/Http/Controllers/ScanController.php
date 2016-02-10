@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ambient;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Scan;
@@ -13,6 +14,18 @@ use Illuminate\Support\Facades\Input;
 
 class ScanController extends Controller
 {
+
+	/**
+     * Instantiate a new ScanController instance.
+     *
+     * @return void
+     */
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
+
+
 	/**
 	 * Display a listing of the scans.
 	 *
@@ -21,7 +34,7 @@ class ScanController extends Controller
 	public function index($pagesize = 25){
 		$sizes = [10,25,50,100,150];
 		$scans = Scan::orderBy('date','desc')->orderBy('time','desc')->paginate($pagesize);
-		return view('scans.scans',['scans' => $scans, 'pagesize' => $pagesize, 'sizes' => $sizes ,'user' => Auth::user()]);
+		return view('scans.index',['scans' => $scans, 'pagesize' => $pagesize, 'sizes' => $sizes ,'user' => Auth::user()]);
 	}
 
 	/**
@@ -41,12 +54,16 @@ class ScanController extends Controller
 	 * @return Collection of App\Scan
 	 */
 	public function showBySensor($idSensor = null){
-		if($idSensor == null){
-			$idSensor = Scan::first()->id_sensor;
-		}
-		$scans = Scan::where('id_sensor',$idSensor)->orderBy('date','desc')->orderBy('time','desc')->paginate(50);
+		
+			if($idSensor == null){
+				$idSensor = Scan::first()->id_sensor;
+			}
+			$sensor = Sensor::findOrFail($idSensor);
+			$scans = Scan::where('id_sensor',$idSensor)->orderBy('date','desc')->orderBy('time','desc')->paginate(50);
+
+		
 		$sensors = Sensor::all();
-		return view('scans.showBySensor',['scans' => $scans, 'selected_sensor' => Sensor::find($idSensor), 'sensors' => $sensors, 'user' => Auth::user()]);
+		return view('scans.showBySensor',['scans' => $scans, 'selected_sensor' => $sensor, 'sensors' => $sensors, 'user' => Auth::user()]);
 	}
 
 	/**
@@ -60,6 +77,6 @@ class ScanController extends Controller
 		}
 		$scans = Scan::where('id_ambient',$idAmbient)->orderBy('date','desc')->orderBy('time','desc')->paginate(50);
 		$ambients = Ambient::all();
-		return view('scans.showByAmbient',['scans' => $scans, 'selected_ambient' => Ambient::find($idAmbient), 'ambients' => $sensors, 'user' => Auth::user()]);
+		return view('scans.showByAmbient',['scans' => $scans, 'selected_ambient' => Ambient::find($idAmbient), 'ambients' => $ambients, 'user' => Auth::user()]);
 	}
 }

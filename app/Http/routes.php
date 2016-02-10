@@ -18,23 +18,27 @@ use App\Sensor;
 */
 
 /**
- * Authentication Group Route
+ * Dashboard Routes
  */
+Route::get('/admin', 'DashboardController@index');
 
-Route::group(['middleware' => 'auth'], function () {
-
-	Route::get('/admin/scans/sensor/{sensor?}','ScanController@showBySensor');
-
-	Route::get('/admin/scans/{pagesize?}', 'ScanController@index');
-
-	Route::get('/admin/scans/ambient/{ambient}','ScanController@showByAmbient');
-
-	Route::get('/admin', 'DashboardController@index');
-
-	Route::get('/',function(){
-		return Redirect::to('/admin');
-	});
+Route::get('/',function(){
+	return Redirect::to('/admin');
 });
+
+/**
+ * Scan Routes
+ */
+Route::get('/admin/scans/sensor/{sensor?}','ScanController@showBySensor');
+
+Route::get('/admin/scans/ambient/{ambient?}','ScanController@showByAmbient');
+
+Route::get('/admin/scans/{pagesize?}', 'ScanController@index');
+
+/**
+ * Sensor Routes
+ */
+Route::resource('admin/sensor/', 'SensorController');
 
 /**
  * Authentication Routes

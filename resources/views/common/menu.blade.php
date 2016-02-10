@@ -17,10 +17,10 @@
         <a href="#">@include('widgets.icon',['class'=>'sitemap']) Sensores <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
             <li>
-                <a href="{{ url ('admin/sensor/new') }}">Cadastrar Sensor</a>
+                <a href="{{ url ('admin/sensor/create') }}">Novo Sensor</a>
             </li>
             <li>
-                <a href="{{ url ('admin/sensors') }}">Lista de Sensores</a>
+                <a href="{{ url ('admin/sensor') }}">Lista de Sensores</a>
             </li>
         </ul>
         <!-- /.nav-second-level -->
