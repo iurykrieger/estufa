@@ -20,11 +20,16 @@ use App\Sensor;
 /**
  * Dashboard Routes
  */
-Route::get('/admin', 'DashboardController@index');
+Route::get('admin', 'DashboardController@index');
 
 Route::get('/',function(){
 	return Redirect::to('/admin');
 });
+
+/**
+ * Sensor Routes
+ */
+Route::resource('admin/sensor', 'SensorController');
 
 /**
  * Scan Routes
@@ -35,10 +40,7 @@ Route::get('/admin/scans/ambient/{ambient?}','ScanController@showByAmbient');
 
 Route::get('/admin/scans/{pagesize?}', 'ScanController@index');
 
-/**
- * Sensor Routes
- */
-Route::resource('admin/sensor/', 'SensorController');
+
 
 /**
  * Authentication Routes

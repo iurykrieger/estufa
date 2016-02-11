@@ -30,9 +30,8 @@ class SensorController extends Controller
      */
     public function index()
     {
-        $sizes = [10,25,50,100,150];
-        $sensors = Sensor::orderBy('id_sensor','asc')->paginate(25);
-        return view('sensors.index',['sensors' => $sensors, 'sizes' => $sizes ,'user' => Auth::user()]);
+        $sensors = Sensor::orderBy('updated_at','desc')->paginate(20);
+        return view('sensors.index',['sensors' => $sensors, 'user' => Auth::user()]);
     }
 
     /**
@@ -54,10 +53,15 @@ class SensorController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'description' => 'required',
+            'id_ambient' => 'required',
+            'active' => 'required'
+            ]);
         $sensor = $request->all();
         Sensor::create($sensor);
 
-        return Redirect::to('admin/sensor/create')->with('message','Sensor cadastrado com sucesso!');
+        return Redirect::to('admin/sensor/create')->with('successMessage','O sensor foi cadastrado com sucesso no banco de dados.');
     }
 
     /**
@@ -68,7 +72,8 @@ class SensorController extends Controller
      */
     public function show($id)
     {
-        echo "aosdih";
+        $sensor = Sensor::findOrFail($id);
+        return view('sensors.show',['sensor' => $sensor, 'user' => Auth::user()]);
     }
 
     /**
@@ -79,7 +84,9 @@ class SensorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sensor = Sensor::findOrFail($id);
+        $ambients = Ambient::lists('description', 'id_ambient');
+        return view('sensors.edit', ['sensor' => $sensor, 'ambients' => $ambients , 'user' => Auth::user()]);
     }
 
     /**
@@ -91,7 +98,18 @@ class SensorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $sensor = Sensor::findOrFail($id);
+
+        $this->validate($request, [
+            'description' => 'required',
+            'id_ambient' => 'required',
+            'active' => 'required'
+            ]);
+
+        $input = $request->all();
+        $sensor->fill($input)->save();
+
+        return Redirect::to('admin/sensor/'.$sensor->id_sensor)->with('successMessage','O sensor foi alterado com sucesso no banco de dados.');
     }
 
     /**
@@ -102,6 +120,10 @@ class SensorController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $sensor = Sensor::findOrFail($id);
+        $sensor->delete();
+
+        return Redirect::to('admin/sensor')->with('successMessage','O sensor foi excluido com sucesso do banco de dados.');
     }
 }

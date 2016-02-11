@@ -13,11 +13,20 @@
 	<meta content="" name="author"/>
 
 	<link rel="stylesheet" href="{{ asset("assets/stylesheets/styles.css") }}" />
+	<link rel="stylesheet" href="{{ asset("css/sweetalert.css") }}">
+	<link rel="stylesheet" href="{{ asset("css/main.css") }}" />
 	@yield('css')
+	
 </head>
 <body>
+	
+	
 	@yield('body')
+
 	<script src="{{ asset("assets/scripts/frontend.js") }}" type="text/javascript"></script>
+	<script src="{{ asset("js/sweetalert.js")}}"></script>
+	<script src="{{ asset("js/sweetalert.js")}}"></script>
+
 	@yield('scripts')
 </body>
 </html>
