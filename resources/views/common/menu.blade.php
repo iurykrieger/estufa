@@ -53,13 +53,16 @@
         <a href="#">@include('widgets.icon',['class'=>'tasks']) Leituras<span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
             <li>
-                <a href="{{ url ('admin/scans') }}">Últimas Leituras</a>
+                <a href="{{ url ('admin/scan') }}">Últimas Leituras</a>
             </li>
             <li>
-                <a href="{{ url ('admin/scans/sensor') }}">Leituras por Sensor</a>
+                <a href="{{ url ('admin/scan/all') }}">Todas as Leituras</a>
             </li>
             <li>
-                <a href="{{ url ('admin/scans/ambient') }}">Leituras por Ambiente</a>
+                <a href="{{ url ('admin/scan/sensor') }}">Leituras por Sensor</a>
+            </li>
+            <li>
+                <a href="{{ url ('admin/scan/ambient') }}">Leituras por Ambiente</a>
             </li>
         </ul>
         <!-- /.nav-second-level -->

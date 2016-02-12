@@ -50,7 +50,7 @@
 		<h3 class="panel-title">Criado em:</h3>
 	</div>
 	<div class="panel-body">
-		{{ $sensor->created_at->format('d/m/Y H:i:s') }}
+		{{ $sensor->created_at->format('d/m/Y H:m:s') }}
 	</div>
 </div>
 <div class="panel panel-default">
@@ -58,7 +58,7 @@
 		<h3 class="panel-title">Última Alteração em:</h3>
 	</div>
 	<div class="panel-body">
-		{{ $sensor->updated_at->format('d/m/Y H:i:s') }}
+		{{ $sensor->updated_at->format('d/m/Y H:m:s') }}
 	</div>
 </div>
 <a href="{{ url('admin/sensor') }}">

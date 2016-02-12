@@ -34,13 +34,12 @@ Route::resource('admin/sensor', 'SensorController');
 /**
  * Scan Routes
  */
-Route::get('/admin/scans/sensor/{sensor?}','ScanController@showBySensor');
-
-Route::get('/admin/scans/ambient/{ambient?}','ScanController@showByAmbient');
-
-Route::get('/admin/scans/{pagesize?}', 'ScanController@index');
-
-
+Route::get('/admin/scan/sensor/{sensor?}','ScanController@indexBySensor');
+Route::get('/admin/scan/ambient/{ambient?}','ScanController@indexByAmbient');
+Route::get('/admin/scan/all', 'ScanController@indexAll');
+Route::get('/admin/scan/date', 'ScanController@indexByDate');
+Route::post('/admin/scan/date', 'ScanController@getScansByDate');
+Route::get('/admin/scan/', 'ScanController@index');
 
 /**
  * Authentication Routes

@@ -7,26 +7,10 @@
 
 @section('title','Leituras')
 
-@section('page_heading')
-	Leituras do sensor {{ $selected_sensor->description }}
-@endsection
+@section('page_heading','Todas as Leituras')
 
 @section('content')
 
-<div class="dataTables_wrapper form-inline dt-bootstrap">
-	<div class="col-sm-6">
-		<div class="dataTables_length" id="scans_length">
-			<label>
-				Mostrando leituras do sensor 
-				<select id="paginator" name="paginate" aria-controls="scans" class="form-control input-sm" style="width: 150px">
-					@foreach ($sensors as $sensor)
-					<option value="{{ $sensor->id_sensor }}" {{ ($sensor == $selected_sensor ? "selected":"") }}>{{ $sensor->id_sensor . " - " . $sensor->description }}</option>
-					@endforeach
-				</select>
-			</label>
-		</div>
-	</div>
-</div>
 
 <table id="scans" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 	<thead>
@@ -105,9 +89,9 @@
 			paging:false,
 		});
 		$('#paginator').bind('change', function () {
-			var path = '/admin/scans/';
+			var path = '/admin/';
 			var pathname = window.location.pathname.split( '/' );
-			var url = path + pathname[3] + '/' +$(this).val(); 
+			var url = path + pathname[2] + '/' +$(this).val(); 
 			if (url) {
 				window.location = url; 
 			}

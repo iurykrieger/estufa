@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Ambient;
+use App\GhostScan;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\LastScan;
+use App\Scan;
 use App\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -122,6 +125,9 @@ class SensorController extends Controller
     {
 
         $sensor = Sensor::findOrFail($id);
+        GhostScan::where('id_sensor', $sensor->id_sensor)->delete();
+        Scan::where('id_sensor', $sensor->id_sensor)->delete();
+        LastScan::where('id_sensor', $sensor->id_sensor)->delete();
         $sensor->delete();
 
         return Redirect::to('admin/sensor')->with('successMessage','O sensor foi excluido com sucesso do banco de dados.');
