@@ -29,6 +29,11 @@ Route::get('/',function(){
 /**
  * Sensor Routes
  */
+Route::resource('admin/ambient', 'AmbientController');
+
+/**
+ * Sensor Routes
+ */
 Route::resource('admin/sensor', 'SensorController');
 
 /**
