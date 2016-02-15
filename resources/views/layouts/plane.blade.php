@@ -20,12 +20,13 @@
 </head>
 <body>
 	
-	
 	@yield('body')
 
+	<!-- Scripts -->
 	<script src="{{ asset("assets/scripts/frontend.js") }}" type="text/javascript"></script>
 	<script src="{{ asset("js/sweetalert.js")}}"></script>
-	<script src="{{ asset("js/sweetalert.js")}}"></script>
+
+    @include('common.messages')
 
 	@yield('scripts')
 </body>

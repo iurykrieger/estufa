@@ -9,8 +9,6 @@
 
 @section('page_heading','Editar - '.$sensor->description)
 
-@include('common.messages')
-
 @section('content')
 
 {!! Form::open(['url' => 'admin/sensor/'.$sensor->id_sensor, 'method' => 'PATCH']) !!}

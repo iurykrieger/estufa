@@ -34,12 +34,16 @@ Route::resource('admin/sensor', 'SensorController');
 /**
  * Scan Routes
  */
-Route::get('/admin/scan/sensor/{sensor?}','ScanController@indexBySensor');
-Route::get('/admin/scan/ambient/{ambient?}','ScanController@indexByAmbient');
+Route::get('/admin/scan/sensor/{sensor?}', 'ScanController@indexBySensor');
+Route::get('/admin/scan/ambient/{ambient?}', 'ScanController@indexByAmbient');
+Route::post('/admin/scan/date', 'ScanController@getScansByDates');
 Route::get('/admin/scan/all', 'ScanController@indexAll');
-Route::get('/admin/scan/date', 'ScanController@indexByDate');
-Route::post('/admin/scan/date', 'ScanController@getScansByDate');
-Route::get('/admin/scan/', 'ScanController@index');
+Route::resource('admin/scan', 'ScanController',['only' => ['index', 'show', 'destroy']]);
+
+/**
+ * Ambient Routes
+ */
+Route::resource('admin/ambient', 'AmbientController');
 
 /**
  * Authentication Routes

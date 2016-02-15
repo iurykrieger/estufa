@@ -65,7 +65,7 @@
 			<td>{{ $scan->air_humidity }} %</td>
 			<td>{{ $scan->ground_humidity }} %</td>
 			<td><a href="{{url('admin/sensor/'.$scan->sensor->id_sensor)}}">{{ $scan->sensor->id_sensor." - ".$scan->sensor->description }}</a></td>
-			<td>{{ $scan->ambient->id_ambient." - ".$scan->ambient->description}}</td>
+			<td><a href="{{url('admin/ambient/'.$scan->ambient->id_ambient)}}">{{ $scan->ambient->id_ambient." - ".$scan->ambient->description}}</a></td>
 			<td>
 				<button>@include('widgets.icon',['class'=>'times'])</button>
 			</td>
@@ -80,40 +80,6 @@
 @section('scripts')
 
 <!-- DataTables -->
-<script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$('#scans').DataTable({
-			language: {
-				"lengthMenu": "Mostrando _MENU_ leituras por página",
-				"zeroRecords": "Nada encontrado",
-				"info": "Mostrando página _PAGE_ de _PAGES_",
-				"infoEmpty": "Sem registros",
-				"infoFiltered": "(Filtrado de _MAX_ registros totais)",
-				"search": "Buscar:",
-				"paginate": {
-					"first":      "Primeiro",
-					"last":       "Último",
-					"next":       "Próximo",
-					"previous":   "Anterior"
-				},
-			},
-			order: [[ 1, "desc" ],[2 , "desc"]],
-			responsive: true,
-			pageLength: 50,
-			paging:false,
-		});
-		$('#paginator').bind('change', function () {
-			var path = '/admin/scan/';
-			var pathname = window.location.pathname.split( '/' );
-			var url = path + pathname[3] + '/' +$(this).val(); 
-			if (url) {
-				window.location = url; 
-			}
-			return false;
-		});
-	} );
-</script>
+@include('common.dataTables')
 
 @endsection

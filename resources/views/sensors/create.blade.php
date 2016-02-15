@@ -11,8 +11,6 @@
 
 @section('content')
 
-@include('common.messages')
-
 {!! Form::open(['url' => 'admin/sensor']) !!}
 {!! csrf_field() !!}
 

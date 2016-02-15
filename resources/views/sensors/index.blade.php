@@ -11,8 +11,6 @@
 
 @section('content')
 
-@include('common.messages')
-
 <table id="sensors" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
     <thead>
         <tr>
@@ -66,50 +64,6 @@
 @section('scripts')
 
 <!-- DataTables -->
-<script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#sensors').DataTable({
-            language: {
-                "lengthMenu": "Mostrando _MENU_ leituras por página",
-                "zeroRecords": "Nada encontrado",
-                "info": "Mostrando página _PAGE_ de _PAGES_",
-                "infoEmpty": "Sem registros",
-                "infoFiltered": "(Filtrado de _MAX_ registros totais)",
-                "search": "Buscar:",
-                "paginate": {
-                    "first":      "Primeiro",
-                    "last":       "Último",
-                    "next":       "Próximo",
-                    "previous":   "Anterior"
-                },
-            },
-            order: [[ 4, "desc" ]],
-            responsive: true,
-            pageLength: 50,
-            paging:false,
-        });
-    } );
+@include('common.dataTables')
 
-    function confirmDelete(){
-        event.preventDefault();
-        swal({   
-            title: "Você tem certeza que deseja deletar este sensor?",   
-            text: "Você não poderá recuperar este registro!",   
-            type: "warning",   
-            showCancelButton: true,   
-            confirmButtonColor: "#DD6B55",  
-            confirmButtonText: "Sim, remover!",   
-            cancelButtonText: "Não, cancelar!",   
-            closeOnConfirm: false,
-         }, 
-         function(isConfirm){   
-            if (isConfirm) {    
-                $("#form-delete").submit();
-            }
-        });
-    };
-</script>
-
-@append
+@endsection

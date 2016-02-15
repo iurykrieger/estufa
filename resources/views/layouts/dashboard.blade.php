@@ -1,4 +1,5 @@
 @extends('layouts.plane')
+
 @section('body')
 <div id="wrapper">
 
@@ -70,7 +71,7 @@
             <!-- /.dropdown -->
             <li class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                    {{ $user->name }} <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i> 
+                    {{ Auth::user()->name }} <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i> 
                 </a>
                 <ul class="dropdown-menu dropdown-user">
                     <li><a href="#"><i class="fa fa-user fa-fw"></i> Meu Perfil</a>
@@ -110,5 +111,5 @@
         <!-- /#page-wrapper -->
     </div>
 </div>
-@stop
+@endsection
 

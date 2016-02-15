@@ -11,6 +11,18 @@
 
 @section('content')
 
+{!! Form::open(['method' => 'POST','url' => 'admin/scan/date', 'class' => 'action-form form-inline', 'id' => 'form-dates']) !!}
+{!! csrf_field() !!}
+<div class="form-group">
+	{!! Form::label('initialDate', 'Data Inicial:', ['class' => 'control-label']) !!}
+	{!! Form::input('date','initialDate', $initialDate, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
+</div>
+<div class="form-group">
+	{!! Form::label('endDate', 'Data Final:', ['class' => 'control-label']) !!}
+	{!! Form::input('date','endDate', $endDate, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
+</div>
+{!! Form::button('<i class="fa fa-search"></i> Pesquisar', ['class' => 'btn btn-primary', 'id' => 'btn-search', 'type' => 'submit']) !!}
+{!! Form::close() !!}
 
 <table id="scans" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 	<thead>
@@ -49,9 +61,16 @@
 			<td>{{ $scan->air_humidity }} %</td>
 			<td>{{ $scan->ground_humidity }} %</td>
 			<td><a href="{{url('admin/sensor/'.$scan->sensor->id_sensor)}}">{{ $scan->sensor->id_sensor." - ".$scan->sensor->description }}</a></td>
-			<td>{{ $scan->ambient->id_ambient." - ".$scan->ambient->description}}</td>
+			<td><a href="{{url('admin/ambient/'.$scan->ambient->id_ambient)}}">{{ $scan->ambient->id_ambient." - ".$scan->ambient->description}}</a></td>
 			<td>
-				<button>@include('widgets.icon',['class'=>'times'])</button>
+				<!-- Show Button -->
+                <a href="{{ url('admin/scan/'.$scan->id_scan) }}"><button type="button" class="btn btn-primary">@include('widgets.icon',['class'=>'eye']) Visualizar</button></a>
+                
+                <!-- Destroy Form Button -->
+                {!! Form::open(['method' => 'DELETE','url' => 'admin/scan/'.$scan->id_scan, 'class' => 'action-form', 'id' => 'form-delete']) !!}
+                {!! csrf_field() !!}
+                {!! Form::button('<i class="fa fa-times"></i> Remover', ['class' => 'btn btn-danger', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
+                {!! Form::close() !!}
 			</td>
 		</tr>
 		@endforeach
@@ -64,40 +83,6 @@
 @section('scripts')
 
 <!-- DataTables -->
-<script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$('#scans').DataTable({
-			language: {
-				"lengthMenu": "Mostrando _MENU_ leituras por página",
-				"zeroRecords": "Nada encontrado",
-				"info": "Mostrando página _PAGE_ de _PAGES_",
-				"infoEmpty": "Sem registros",
-				"infoFiltered": "(Filtrado de _MAX_ registros totais)",
-				"search": "Buscar:",
-				"paginate": {
-					"first":      "Primeiro",
-					"last":       "Último",
-					"next":       "Próximo",
-					"previous":   "Anterior"
-				},
-			},
-			order: [[ 1, "desc" ],[2 , "desc"]],
-			responsive: true,
-			pageLength: 50,
-			paging:false,
-		});
-		$('#paginator').bind('change', function () {
-			var path = '/admin/';
-			var pathname = window.location.pathname.split( '/' );
-			var url = path + pathname[2] + '/' +$(this).val(); 
-			if (url) {
-				window.location = url; 
-			}
-			return false;
-		});
-	} );
-</script>
+@include('common.dataTables')
 
 @endsection
