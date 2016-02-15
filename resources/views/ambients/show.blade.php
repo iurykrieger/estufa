@@ -11,8 +11,6 @@
 
 @section('content')
 
-@include('common.messages')
-
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h3 class="panel-title">ID do Ambiente</h3>
@@ -105,28 +103,3 @@
 {!! Form::close() !!}
 
 @endsection
-
-@section('scripts')
-
-<script>
-	function confirmDelete(){
-		event.preventDefault();
-		swal({   
-			title: "Você tem certeza que deseja deletar este ambiente?",   
-			text: "Você não poderá recuperar este registro!",   
-			type: "warning",   
-			showCancelButton: true,   
-			confirmButtonColor: "#DD6B55",  
-			confirmButtonText: "Sim, remover!",   
-			cancelButtonText: "Não, cancelar!",   
-			closeOnConfirm: false,
-		}, 
-		function(isConfirm){   
-			if (isConfirm) {    
-				$("#form-delete").submit();
-			}
-		});
-	};
-</script>
-
-@append

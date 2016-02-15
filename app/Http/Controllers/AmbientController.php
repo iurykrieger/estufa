@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Ambient;
+use App\GhostScan;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\LastScan;
+use App\Scan;
+use App\Sensor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class AmbientController extends Controller
 {
@@ -98,6 +104,7 @@ class AmbientController extends Controller
     public function update(Request $request, $id)
     {
         $ambient = Ambient::findOrFail($id);
+
         $this->validate($request, [
             'description' => 'required',
             'max_temperature' => 'required',
@@ -107,6 +114,7 @@ class AmbientController extends Controller
             'max_ground_humidity' => 'required',
             'min_ground_humidity' => 'required'
             ]);
+
         $input = $request->all();
         $ambient->fill($input)->save();
 
@@ -122,6 +130,7 @@ class AmbientController extends Controller
     public function destroy($id)
     {
         $ambient = Ambient::findOrFail($id);
+        Sensor::where('id_ambient', $ambient->id_ambient)->delete();
         $ambient->delete();
         return Redirect::to('admin/ambient')->with('successMessage','O ambiente foi excluido com sucesso do banco de dados.');
     }

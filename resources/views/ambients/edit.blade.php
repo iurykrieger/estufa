@@ -9,8 +9,6 @@
 
 @section('page_heading','Editar - '.$ambient->description)
 
-@include('common.messages')
-
 @section('content')
 
 {!! Form::open(['url' => 'admin/ambient/'.$ambient->id_ambient, 'method' => 'PATCH']) !!}
