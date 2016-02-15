@@ -6,7 +6,6 @@
 @stop
 
 @section('content')
-    @include('common.errors')
     <form class="form-signin" method="POST" action="/auth/login">
         {!! csrf_field() !!}
         <div class="login-form">
