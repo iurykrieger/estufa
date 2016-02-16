@@ -1,10 +1,6 @@
 <!-- resources/views/ambients/show.blade.php -->
 @extends('layouts.dashboard')
 
-@section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
-@endsection
-
 @section('title','Ambiente - '.$ambient->description)
 
 @section('page_heading','Ambiente - '.$ambient->description)

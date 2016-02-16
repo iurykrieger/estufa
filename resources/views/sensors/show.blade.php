@@ -1,10 +1,6 @@
 <!-- resources/views/sensors/show.blade.php -->
 @extends('layouts.dashboard')
 
-@section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
-@endsection
-
 @section('title','Sensor - '.$sensor->description)
 
 @section('page_heading','Sensor - '.$sensor->description)

@@ -18,7 +18,7 @@
 		<div class="dataTables_length" id="scans_length">
 			<label>
 				Mostrando leituras do sensor 
-				<select id="paginator" name="paginate" aria-controls="scans" class="form-control input-sm" style="width: 150px">
+				<select id="dropdown" name="paginate" aria-controls="scans" class="form-control input-sm" style="width: 150px">
 					@foreach ($sensors as $sensor)
 					<option value="{{ $sensor->id_sensor }}" {{ ($sensor == $selected_sensor ? "selected":"") }}>{{ $sensor->id_sensor . " - " . $sensor->description }}</option>
 					@endforeach
@@ -67,7 +67,14 @@
 			<td><a href="{{url('admin/sensor/'.$scan->sensor->id_sensor)}}">{{ $scan->sensor->id_sensor." - ".$scan->sensor->description }}</a></td>
 			<td><a href="{{url('admin/ambient/'.$scan->ambient->id_ambient)}}">{{ $scan->ambient->id_ambient." - ".$scan->ambient->description}}</a></td>
 			<td>
-				<button>@include('widgets.icon',['class'=>'times'])</button>
+				<!-- Show Button -->
+                <a href="{{ url('admin/scan/'.$scan->id_scan) }}"><button type="button" class="btn btn-primary">@include('widgets.icon',['class'=>'eye']) Visualizar</button></a>
+                
+                <!-- Destroy Form Button -->
+                {!! Form::open(['method' => 'DELETE','url' => 'admin/scan/'.$scan->id_scan, 'class' => 'action-form', 'id' => 'form-delete']) !!}
+                {!! csrf_field() !!}
+                {!! Form::button('<i class="fa fa-times"></i> Remover', ['class' => 'btn btn-danger', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
+                {!! Form::close() !!}
 			</td>
 		</tr>
 		@endforeach
@@ -81,5 +88,8 @@
 
 <!-- DataTables -->
 @include('common.dataTables')
+
+<!-- Sensor Dropdown -->
+@include('common.dynamicDropdown',['baseRoute' => 'admin/scan/sensor'])
 
 @endsection
