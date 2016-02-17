@@ -7,10 +7,22 @@
 
 @section('title','Leituras')
 
-@section('page_heading','Últimas Leituras')
+@section('page_heading','Todas as Leituras')
 
 @section('content')
 
+{!! Form::open(['method' => 'POST','url' => 'admin/scan/date', 'class' => 'action-form form-inline', 'id' => 'form-dates']) !!}
+{!! csrf_field() !!}
+<div class="form-group">
+	{!! Form::label('initialDate', 'Data Inicial:', ['class' => 'control-label']) !!}
+	{!! Form::input('date','initialDate', $initialDate, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
+</div>
+<div class="form-group">
+	{!! Form::label('endDate', 'Data Final:', ['class' => 'control-label']) !!}
+	{!! Form::input('date','endDate', $endDate, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
+</div>
+{!! Form::button('<i class="fa fa-search"></i> Pesquisar', ['class' => 'btn btn-primary', 'id' => 'btn-search', 'type' => 'submit']) !!}
+{!! Form::close() !!}
 
 <table id="scans" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 	<thead>

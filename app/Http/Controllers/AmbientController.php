@@ -13,11 +13,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
-class SensorController extends Controller
+class AmbientController extends Controller
 {
 
     /**
-     * Instantiate a new SensorController instance.
+     * Instantiate a new AmbientController instance.
      *
      * @return void
      */
@@ -33,8 +33,8 @@ class SensorController extends Controller
      */
     public function index()
     {
-        $sensors = Sensor::orderBy('updated_at','desc')->paginate(20);
-        return view('sensors.index',['sensors' => $sensors]);
+        $ambients = Ambient::orderBy('updated_at','desc')->paginate(20);
+        return view('ambients.index',['ambients' => $ambients]);
     }
 
     /**
@@ -44,8 +44,7 @@ class SensorController extends Controller
      */
     public function create()
     {
-        $ambients = Ambient::lists('description', 'id_ambient');
-        return view('sensors.create',['ambients' => $ambients]);
+        return view('ambients.create');
     }
 
     /**
@@ -58,13 +57,17 @@ class SensorController extends Controller
     {
         $this->validate($request, [
             'description' => 'required',
-            'id_ambient' => 'required',
-            'active' => 'required'
+            'max_temperature' => 'required',
+            'min_temperature' => 'required',
+            'max_air_humidity' => 'required',
+            'min_air_humidity' => 'required',
+            'max_ground_humidity' => 'required',
+            'min_ground_humidity' => 'required'
             ]);
-        $sensor = $request->all();
-        Sensor::create($sensor);
+        $ambient = $request->all();
+        Ambient::create($ambient);
 
-        return Redirect::to('admin/sensor/create')->with('successMessage','O sensor foi cadastrado com sucesso no banco de dados.');
+        return Redirect::to('admin/ambient/create')->with('successMessage','O ambiente foi cadastrado com sucesso no banco de dados.');
     }
 
     /**
@@ -75,8 +78,8 @@ class SensorController extends Controller
      */
     public function show($id)
     {
-        $sensor = Sensor::findOrFail($id);
-        return view('sensors.show',['sensor' => $sensor]);
+        $ambient = Ambient::findOrFail($id);
+        return view('ambients.show',['ambient' => $ambient]);
     }
 
     /**
@@ -87,9 +90,8 @@ class SensorController extends Controller
      */
     public function edit($id)
     {
-        $sensor = Sensor::findOrFail($id);
-        $ambients = Ambient::lists('description', 'id_ambient');
-        return view('sensors.edit', ['sensor' => $sensor, 'ambients' => $ambients]);
+        $ambient = Ambient::findOrFail($id);
+        return view('ambients.edit', ['ambient' => $ambient]);
     }
 
     /**
@@ -101,18 +103,22 @@ class SensorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $sensor = Sensor::findOrFail($id);
+        $ambient = Ambient::findOrFail($id);
 
         $this->validate($request, [
             'description' => 'required',
-            'id_ambient' => 'required',
-            'active' => 'required'
+            'max_temperature' => 'required',
+            'min_temperature' => 'required',
+            'max_air_humidity' => 'required',
+            'min_air_humidity' => 'required',
+            'max_ground_humidity' => 'required',
+            'min_ground_humidity' => 'required'
             ]);
 
         $input = $request->all();
-        $sensor->fill($input)->save();
+        $ambient->fill($input)->save();
 
-        return Redirect::to('admin/sensor/'.$sensor->id_sensor)->with('successMessage','O sensor foi alterado com sucesso no banco de dados.');
+        return Redirect::to('admin/ambient/'.$ambient->id_ambient)->with('successMessage','O ambiente foi alterado com sucesso no banco de dados.');
     }
 
     /**
@@ -123,12 +129,9 @@ class SensorController extends Controller
      */
     public function destroy($id)
     {
-        $sensor = Sensor::findOrFail($id);
-        GhostScan::where('id_sensor', $sensor->id_sensor)->delete();
-        Scan::where('id_sensor', $sensor->id_sensor)->delete();
-        LastScan::where('id_sensor', $sensor->id_sensor)->delete();
-        $sensor->delete();
-
-        return Redirect::to('admin/sensor')->with('successMessage','O sensor foi excluido com sucesso do banco de dados.');
+        $ambient = Ambient::findOrFail($id);
+        Sensor::where('id_ambient', $ambient->id_ambient)->delete();
+        $ambient->delete();
+        return Redirect::to('admin/ambient')->with('successMessage','O ambiente foi excluido com sucesso do banco de dados.');
     }
 }

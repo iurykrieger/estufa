@@ -11,15 +11,8 @@
 
 @section('content')
 
-@if (session('message')) 
-<div class="alert alert-success">
-	<strong>Tudo certo!</strong>
-	<br>
-	O sensor foi cadastrado com sucesso no banco de dados.
-</div>
-@endif
-
 {!! Form::open(['url' => 'admin/sensor']) !!}
+{!! csrf_field() !!}
 
 <div class="form-group">
 	{!! Form::label('description', 'Descrição:', ['class' => 'control-label']) !!}

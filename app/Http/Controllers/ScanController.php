@@ -7,10 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Scan;
 use App\Sensor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
 
 class ScanController extends Controller
 {
@@ -31,21 +33,9 @@ class ScanController extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index($pagesize = 25){
-		$sizes = [10,25,50,100,150];
-		$scans = Scan::orderBy('date','desc')->orderBy('time','desc')->paginate($pagesize);
-		return view('scans.index',['scans' => $scans, 'pagesize' => $pagesize, 'sizes' => $sizes ,'user' => Auth::user()]);
-	}
-
-	/**
-	 * Display the specified scan.
-	 *
-	 * @param  int  $id
-	 * @return \Illuminate\Http\Response
-	 */
-	public function show($id)
-	{
-		//
+	public function index(){
+		$scans = Scan::where('date',Carbon::now()->format('Y-m-d'))->orderBy('date','desc')->orderBy('time','desc')->paginate(30);
+		return view('scans.index',['scans' => $scans]);
 	}
 
 	/**
@@ -53,30 +43,80 @@ class ScanController extends Controller
 	 * @param  App\Sensor $idSensor [id of the sensor]
 	 * @return Collection of App\Scan
 	 */
-	public function showBySensor($idSensor = null){
-		
-			if($idSensor == null){
-				$idSensor = Scan::first()->id_sensor;
-			}
-			$sensor = Sensor::findOrFail($idSensor);
-			$scans = Scan::where('id_sensor',$idSensor)->orderBy('date','desc')->orderBy('time','desc')->paginate(50);
+	public function indexBySensor($idSensor = null){
+		if($idSensor == null){
+			$idSensor = Scan::first()->id_sensor;
+		}
+		$sensor = Sensor::findOrFail($idSensor);
+		$scans = Scan::where('id_sensor',$idSensor)->orderBy('date','desc')->orderBy('time','desc')->paginate(50);
 
-		
 		$sensors = Sensor::all();
-		return view('scans.showBySensor',['scans' => $scans, 'selected_sensor' => $sensor, 'sensors' => $sensors, 'user' => Auth::user()]);
+		return view('scans.indexBySensor',['scans' => $scans, 'selected_sensor' => $sensor, 'sensors' => $sensors]);
 	}
 
 	/**
 	 * Display the specified scans by id_ambient
-	 * @param  App\Sensor $idAmbient [id of the ambient]
+	 * @param  App\Ambient $idAmbient [id of the ambient]
 	 * @return Collection of App\Scan
 	 */
-	public function showByAmbient($idAmbient = null){
-		if($idAmbient == null){
+	public function indexByAmbient($idAmbient = null){
+		if($idAmbient == null){	
 			$idAmbient = Ambient::first()->id_ambient;
 		}
 		$scans = Scan::where('id_ambient',$idAmbient)->orderBy('date','desc')->orderBy('time','desc')->paginate(50);
 		$ambients = Ambient::all();
-		return view('scans.showByAmbient',['scans' => $scans, 'selected_ambient' => Ambient::find($idAmbient), 'ambients' => $ambients, 'user' => Auth::user()]);
+		return view('scans.indexByAmbient',['scans' => $scans, 'selected_ambient' => Ambient::find($idAmbient), 'ambients' => $ambients]);
 	}
+
+	/**
+	 * Display all the scans
+	 * @return Collection of App\Scan
+	 */
+	public function indexAll(){
+		$scans = Scan::orderBy('date','desc')->orderBy('time','desc')->paginate(30);
+		return view('scans.indexAll',['scans' => $scans, 'initialDate' => null, 'endDate' => null]);
+	}
+
+	/**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $scan = Scan::findOrFail($id);
+        return view('scans.show',['scan' => $scan]);
+    }
+
+	/**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $scan = Scan::findOrFail($id);
+        $scan->delete();
+        return Redirect::to('admin/scan/all')->with('successMessage','A leitura foi excluida com sucesso do banco de dados.');
+    }
+
+    /**
+     * Display scans by a specific interval of dates
+     * @param  Request $request [Form request with initial and end dates]
+     * @return App\Scan         [List of scans by specific dates]
+     */
+    public function getScansByDates(Request $request){
+    	$initialDate = $request->input('initialDate');
+    	$endDate = $request->input('endDate');
+    	$initialDate = Carbon::parse($initialDate);
+    	$endDate = Carbon::parse($endDate);
+    	$scans = Scan::where('date','>=',$initialDate->format('Y-m-d'))
+    			->where('date','<=',$endDate->format('Y-m-d'))
+    			->orderBy('date','desc')
+    			->orderBy('time','desc')
+    			->paginate(30);
+    	return view('scans.indexAll',['scans' => $scans, 'initialDate' => $request->input('initialDate'), 'endDate' => $request->input('endDate')]);
+    }
 }

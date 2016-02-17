@@ -11,8 +11,6 @@
 @endsection
 
 @section('content')
-  <div id="curve_chart" style="width:auto; height:700px;"></div>
-
     <div id="chart"></div>
     {!! Lava::render('LineChart', 'Temps', 'chart') !!}
     

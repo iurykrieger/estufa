@@ -29,22 +29,10 @@
         <a href="#">@include('widgets.icon',['class'=>'tree']) Ambientes <span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
             <li>
-                <a href="{{ url ('panels') }}">Panels and Collapsibles</a>
+                <a href="{{ url ('admin/ambient/create') }}">Novo Ambiente</a>
             </li>
             <li>
-                <a href="{{ url ('buttons' ) }}">Buttons</a>
-            </li>
-            <li>
-                <a href="{{ url('notifications') }}">Alerts</a>
-            </li>
-            <li>
-                <a href="{{ url ('typography') }}">Typography</a>
-            </li>
-            <li>
-                <a href="{{ url ('icons') }}"> Icons</a>
-            </li>
-            <li>
-                <a href="{{ url ('grid') }}">Grid</a>
+                <a href="{{ url ('admin/ambient') }}">Lista de Ambientes</a>
             </li>
         </ul>
         <!-- /.nav-second-level -->
@@ -53,13 +41,16 @@
         <a href="#">@include('widgets.icon',['class'=>'tasks']) Leituras<span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
             <li>
-                <a href="{{ url ('admin/scans') }}">Últimas Leituras</a>
+                <a href="{{ url ('admin/scan') }}">Últimas Leituras</a>
             </li>
             <li>
-                <a href="{{ url ('admin/scans/sensor') }}">Leituras por Sensor</a>
+                <a href="{{ url ('admin/scan/all') }}">Todas as Leituras</a>
             </li>
             <li>
-                <a href="{{ url ('admin/scans/ambient') }}">Leituras por Ambiente</a>
+                <a href="{{ url ('admin/scan/sensor') }}">Leituras por Sensor</a>
+            </li>
+            <li>
+                <a href="{{ url ('admin/scan/ambient') }}">Leituras por Ambiente</a>
             </li>
         </ul>
         <!-- /.nav-second-level -->

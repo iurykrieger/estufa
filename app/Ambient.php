@@ -28,7 +28,7 @@ class Ambient extends Model
      * The attributes that are mass assignable
      * @var array
      */
-    //protected $fillable = [];
+    protected $fillable = ['description', 'max_temperature', 'min_temperature', 'max_air_humidity', 'min_air_humidity', 'max_ground_humidity', 'min_ground_humidity'];
 
     /**
      * Scans of Ambient

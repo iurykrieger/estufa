@@ -4,8 +4,10 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ff67230f0616dbdaa99bba9d044930e6",
-    "content-hash": "c85df20ce5622b39351fb3833954e713",
+
+    "hash": "f5bdffc05b8a4477cd03761aea6e556f",
+    "content-hash": "76b8ce909f0b23b33c18f0cae509a92a",
+
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -303,6 +305,45 @@
                 }
             ],
             "time": "2015-01-01 16:31:18"
+        },
+        {
+            "name": "infinety/sweetalert",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Infinety/laravel-sweet-alert.git",
+                "reference": "e18cef9b5a00c5f385f7d9cc799d67b9354f0957"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Infinety/laravel-sweet-alert/zipball/e18cef9b5a00c5f385f7d9cc799d67b9354f0957",
+                "reference": "e18cef9b5a00c5f385f7d9cc799d67b9354f0957",
+                "shasum": ""
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "Infinety\\SweetAlert\\": "/src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Infinety",
+                    "email": "hello@infinety.co.uk"
+                }
+            ],
+            "description": "A package for using SweetAlert with Laravel 5.1 >",
+            "keywords": [
+                "alert",
+                "laravel",
+                "laravel sweet alert",
+                "sweet-alert"
+            ],
+            "time": "2016-01-13 23:11:28"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -2322,6 +2363,52 @@
             "time": "2015-12-08 16:14:14"
         },
         {
+            "name": "uxweb/sweet-alert",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/uxweb/sweet-alert.git",
+                "reference": "24a963cb788357b354a861a9b96484ade0e45b56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/uxweb/sweet-alert/zipball/24a963cb788357b354a861a9b96484ade0e45b56",
+                "reference": "24a963cb788357b354a861a9b96484ade0e45b56",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/session": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "UxWeb\\SweetAlert\\": "src/SweetAlert/"
+                },
+                "files": [
+                    "src/SweetAlert/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Uziel Bueno",
+                    "email": "ux.webs@gmail.com"
+                }
+            ],
+            "description": "A simple PHP package to show Sweet Alerts with the Laravel Framework",
+            "keywords": [
+                "alert",
+                "laravel",
+                "sweet"
+            ],
+            "time": "2015-12-22 05:01:51"
+        },
+        {
             "name": "vlucas/phpdotenv",
             "version": "v1.1.1",
             "source": {
@@ -2369,6 +2456,7 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
+<<<<<<< HEAD
             "version": "v6.4.4",
             "source": {
                 "type": "git",
@@ -2379,6 +2467,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/a72637f0cfc9957502d7c9998dc759c2fbe2ea8d",
                 "reference": "a72637f0cfc9957502d7c9998dc759c2fbe2ea8d",
+=======
+            "version": "v6.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yajra/laravel-datatables.git",
+                "reference": "ef33c84abcd41312335fdc80efcd555cc3451c89"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/ef33c84abcd41312335fdc80efcd555cc3451c89",
+                "reference": "ef33c84abcd41312335fdc80efcd555cc3451c89",
+>>>>>>> 401945d81795198ab20524d19f2f418f3c4ef330
                 "shasum": ""
             },
             "require": {
@@ -2422,7 +2522,11 @@
                 "laravel4",
                 "laravel5"
             ],
+<<<<<<< HEAD
             "time": "2016-02-13 01:56:56"
+=======
+            "time": "2016-02-11 06:14:41"
+>>>>>>> 401945d81795198ab20524d19f2f418f3c4ef330
         }
     ],
     "packages-dev": [
@@ -3656,7 +3760,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "infinety/sweetalert": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
