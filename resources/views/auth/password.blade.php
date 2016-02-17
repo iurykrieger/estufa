@@ -7,7 +7,7 @@
 
 @section('content')
 
-    @include('common.errors')
+    @include('common.messages')
     <form class="form-password" method="POST" action="/password/email">
         {!! csrf_field() !!}
         @if (session('status')) 

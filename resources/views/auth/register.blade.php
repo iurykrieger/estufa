@@ -7,7 +7,7 @@
 
 @section('content')
 
-    @include('common.errors')
+    @include('common.messages')
     <form class="form-signup" method="POST" action="/auth/register">
         {!! csrf_field() !!}
         <div class="login-form">

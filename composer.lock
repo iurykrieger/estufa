@@ -4,10 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-
-    "hash": "f5bdffc05b8a4477cd03761aea6e556f",
-    "content-hash": "76b8ce909f0b23b33c18f0cae509a92a",
-
+    "hash": "385054c7054ba2d206018d67343b3c26",
+    "content-hash": "aa7f3b3e681e0ff58e80104ffb86d7e7",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -2456,7 +2454,6 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-<<<<<<< HEAD
             "version": "v6.4.4",
             "source": {
                 "type": "git",
@@ -2467,18 +2464,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/a72637f0cfc9957502d7c9998dc759c2fbe2ea8d",
                 "reference": "a72637f0cfc9957502d7c9998dc759c2fbe2ea8d",
-=======
-            "version": "v6.4.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "ef33c84abcd41312335fdc80efcd555cc3451c89"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/ef33c84abcd41312335fdc80efcd555cc3451c89",
-                "reference": "ef33c84abcd41312335fdc80efcd555cc3451c89",
->>>>>>> 401945d81795198ab20524d19f2f418f3c4ef330
                 "shasum": ""
             },
             "require": {
@@ -2522,11 +2507,7 @@
                 "laravel4",
                 "laravel5"
             ],
-<<<<<<< HEAD
             "time": "2016-02-13 01:56:56"
-=======
-            "time": "2016-02-11 06:14:41"
->>>>>>> 401945d81795198ab20524d19f2f418f3c4ef330
         }
     ],
     "packages-dev": [
