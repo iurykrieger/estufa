@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PostController;
 use App\Scan;
 use App\Sensor;
+use App\Charts;
 
 
 /*
@@ -30,9 +31,7 @@ Route::get('/',function(){
  * Scan Routes
  */
 Route::get('/admin/scans/sensor/{sensor?}','ScanController@showBySensor');
-
 Route::get('/admin/scans/ambient/{ambient?}','ScanController@showByAmbient');
-
 Route::get('/admin/scans/{pagesize?}', 'ScanController@index');
 
 /**
@@ -64,3 +63,9 @@ Route::post('password/email', 'Auth\PasswordController@postEmail');
  */
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 Route::post('password/reset', 'Auth\PasswordController@postReset');
+
+/**
+ * Charts reset routes
+ */
+Route::get('/admin/chart/sensor','ChartController@showSensor');
+Route::get('/admin/chart/ambient','ChartController@showAmbient');

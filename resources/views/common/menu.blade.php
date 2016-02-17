@@ -68,22 +68,10 @@
         <a href="#">@include('widgets.icon',['class'=>'bar-chart']) Gráficos<span class="fa arrow"></span></a>
         <ul class="nav nav-second-level">
             <li>
-                <a href="{{ url ('panels') }}">Panels and Collapsibles</a>
+                <a href="{{ url ('admin/chart/sensor') }}">Sensor</a>
             </li>
-            <li>
-                <a href="{{ url ('buttons' ) }}">Buttons</a>
-            </li>
-            <li>
-                <a href="{{ url('notifications') }}">Alerts</a>
-            </li>
-            <li>
-                <a href="{{ url ('typography') }}">Typography</a>
-            </li>
-            <li>
-                <a href="{{ url ('icons') }}"> Icons</a>
-            </li>
-            <li>
-                <a href="{{ url ('grid') }}">Grid</a>
+           <li>
+                <a href="{{ url ('admin/chart/ambient') }}">Ambiente</a>
             </li>
         </ul>
         <!-- /.nav-second-level -->
