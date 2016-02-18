@@ -44,6 +44,8 @@ Route::resource('admin/scan', 'ScanController',['only' => ['index', 'show', 'des
 /**
  * Ambient Routes
  */
+Route::get('admin/ambient/sensors/{ambient?}','AmbientController@getAmbientSensors');
+Route::post('admin/ambient/sensors/{ambient}','AmbientController@deactivateAmbientSensors');
 Route::resource('admin/ambient', 'AmbientController');
 
 /**

@@ -12,7 +12,6 @@
 @section('content')
 
 {!! Form::open(['url' => 'admin/ambient']) !!}
-{!! csrf_field() !!}
 
 <div class="form-group">
 	{!! Form::label('description', 'Descrição:', ['class' => 'control-label']) !!}

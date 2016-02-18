@@ -1,5 +1,5 @@
 <!-- resources/views/common/messages.blade.php -->
-@if (count($errors) > 0)
+@if ($errors->any())
     @foreach ($errors->all() as $error)
         <script>
             $(document).ready(function() {

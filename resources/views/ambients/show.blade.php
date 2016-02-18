@@ -94,7 +94,6 @@
 	<button type="button" class="btn btn-info">@include('widgets.icon',['class'=>'pencil']) Editar Ambient</button>
 </a>
 {!! Form::open(['method' => 'DELETE','url' => 'admin/ambient/'.$ambient->id_ambient, 'class' => 'action-form', 'id' => 'form-delete']) !!}
-{!! csrf_field() !!}
 {!! Form::button('<i class="fa fa-times"></i> Remover Ambiente', ['class' => 'btn btn-danger pull-right', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
 {!! Form::close() !!}
 

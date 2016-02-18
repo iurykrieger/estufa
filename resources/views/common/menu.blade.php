@@ -34,6 +34,9 @@
             <li>
                 <a href="{{ url ('admin/ambient') }}">Lista de Ambientes</a>
             </li>
+            <li>
+                <a href="{{ url ('admin/ambient/sensors') }}">Sensores de um Ambiente</a>
+            </li>
         </ul>
         <!-- /.nav-second-level -->
     </li>

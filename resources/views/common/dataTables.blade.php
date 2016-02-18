@@ -17,6 +17,7 @@
 					"previous":   "Anterior"
 				},
 			},
+			"autoWidth": false,
 			responsive: true,
 			pageLength: 50,
 			paging:false,

@@ -16,16 +16,14 @@ use Illuminate\Support\Facades\Input;
 
 use Khill\Lavacharts\Laravel\LavachartsFacade as Lava;
 
-class ChartController extends Controller
-{
+class ChartController extends Controller{
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-      
+    public function index(){
+
     }
 
     /**
@@ -33,8 +31,7 @@ class ChartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         //
     }
 
@@ -44,8 +41,7 @@ class ChartController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         //
     }
 
@@ -55,9 +51,8 @@ class ChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-  
+    public function show($id){
+
     }
 
     /**
@@ -66,8 +61,7 @@ class ChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         //
     }
 
@@ -78,8 +72,7 @@ class ChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         //
     }
 
@@ -89,39 +82,38 @@ class ChartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         //
     }
 
     public function showSensor(){
-       $sensors = Sensor::all();
-       $sizes = [10,25,50,100,150];
-       $scans = Scan::orderBy('date','desc')->orderBy('time','desc')->where('id_scan', '>', 316000)->get();
-       return view('chart.sensor',['scans' => $scans,'sensors' => $sensors,'user'=>Auth::user()]);
+         $sensors = Sensor::all();
+         $sizes = [10,25,50,100,150];
+         $scans = Scan::orderBy('date','desc')->orderBy('time','desc')->where('id_scan', '>', 316000)->get();
+         return view('chart.sensor',['scans' => $scans,'sensors' => $sensors,'user'=>Auth::user()]);
     }
 
     public function showAmbient(){
 
-        $temperatures = Lava::DataTable();
-        
-        $scans = Scan::orderBy('date','desc')->orderBy('time','desc')->where('id_scan', '>', 316000)->get();
+    $temperatures = Lava::DataTable();
 
-        $temperatures->addDateColumn('Date')
-                     ->addNumberColumn('Temperatura')
-                     ->addNumberColumn('Umidade ar')
-                     ->addNumberColumn('Umidade solo');
+    $scans = Scan::orderBy('date','asc')->orderBy('time','asc')->paginate(4000);
 
-        foreach ($scans as $scan) {
-            $temperatures->addRow([$scan->date,$scan->temperature,$scan->air_humidity,$scan->ground_humidity]);
-        }
+    $temperatures->addDateColumn('Date')
+    ->addNumberColumn('Temperatura')
+    ->addNumberColumn('Umidade ar')
+    ->addNumberColumn('Umidade solo');
+
+    foreach ($scans as $scan) {
+        $temperatures->addRow([$scan->date,$scan->temperature,$scan->air_humidity,$scan->ground_humidity]);
+    }
 
     
     Lava::LineChart('Temps', $temperatures, [
-    'title' => 'Weather in October',
-    'height'=> 800
-    ]);
+        'title' => 'Weather in October',
+        'height'=> 800
+        ]);
 
-        return view('chart.ambient',['user'=>Auth::user()]);
+    return view('chart.ambient',['user'=>Auth::user()]);
     }
 }

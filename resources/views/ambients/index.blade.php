@@ -59,11 +59,8 @@
                 <!-- Edit Button -->
                 <a href="{{ url('admin/ambient/'.$ambient->id_ambient.'/edit') }}"><button type="button" class="btn btn-info">@include('widgets.icon',['class'=>'pencil']) Editar</button></a>
                 
-                <!-- Destroy Form Button -->
-                {!! Form::open(['method' => 'DELETE','url' => 'admin/ambient/'.$ambient->id_ambient, 'class' => 'action-form', 'id' => 'form-delete']) !!}
-                {!! csrf_field() !!}
-                {!! Form::button('<i class="fa fa-times"></i> Remover', ['class' => 'btn btn-danger', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
-                {!! Form::close() !!}
+                <!-- Sensors Button -->
+                <a href="{{ url('admin/ambient/sensors/'.$ambient->id_ambient) }}"><button type="button" class="btn btn-info">@include('widgets.icon',['class'=>'sitemap']) Sensores</button></a>
             </td>
         </tr>
         @endforeach

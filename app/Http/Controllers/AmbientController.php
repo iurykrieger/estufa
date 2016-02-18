@@ -130,8 +130,26 @@ class AmbientController extends Controller
     public function destroy($id)
     {
         $ambient = Ambient::findOrFail($id);
-        Sensor::where('id_ambient', $ambient->id_ambient)->delete();
-        $ambient->delete();
-        return Redirect::to('admin/ambient')->with('successMessage','O ambiente foi excluido com sucesso do banco de dados.');
+        if(count($ambient->sensors()) > 0){
+            return Redirect::back()->withErrors('Você não pode deletar um ambiente que possui sensores atrelados!');
+        }else{
+            $ambient->delete();
+            return Redirect::to('admin/ambient')->with('successMessage','O ambiente foi excluido com sucesso do banco de dados.');
+        }
+    }
+
+    /**
+     * Get All Sensors of the specified Ambient
+     * @param  int $id [Ambient Id]
+     * @return [type]     [description]
+     */
+    public function getAmbientSensors($id = null){
+        if($id == null){
+            $id = Ambient::first()->id_ambient;
+        }
+        $ambients = Ambient::all();
+        $selectedAmbient = Ambient::findOrFail($id);
+        $sensors = $selectedAmbient->sensors()->paginate(30);
+        return view('ambients.ambientSensors',['selectedAmbient' => $selectedAmbient, 'ambients' => $ambients, 'sensors' => $sensors]);
     }
 }
