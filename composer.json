@@ -11,7 +11,8 @@
         "illuminate/html": "^5.0",
         "khill/lavacharts" : "3.0.*",
         "uxweb/sweet-alert": "~1.1",
-        "infinety/sweetalert": "dev-master"
+        "infinety/sweetalert": "dev-master",
+        "almasaeed2010/adminlte": "^2.3"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

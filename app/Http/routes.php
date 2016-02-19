@@ -21,6 +21,11 @@ use App\Charts;
 /**
  * Dashboard Routes
  */
+
+Route::get('adminlte', function(){
+	return view('layouts.adminlte');
+});
+
 Route::get('admin', 'DashboardController@index');
 
 Route::get('/',function(){
