@@ -1,9 +1,7 @@
 <!-- resources/views/auth/password.blade.php -->
 @extends('layouts.login')
 
-@section('title')
-    Esqueci Minha Senha
-@stop
+@section('subtitle','Digite o email relacionado à sua conta')
 
 @section('content')
 
@@ -17,15 +15,12 @@
                 O email com seu token de redefinição de senha foi enviado.
             </div>
         @endif
-        <div class="login-form">
-            <p>
-                Digite o email relacionado à sua conta.
-            </p>
+        <div class="form-group has-feedback">
             <div class="form-group">
-                <input \type="email" class="form-control login-field" value="" placeholder="Email" id="login-email" name="email">
-                <label class="login-field-icon fui-user" for="login-name"></label>
+                <input type="email" class="form-control" value="{{ old('email') }}" placeholder="Email" id="login-email" name="email">
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
-            <button type="submit" value="Redefinir Senha" class="btn btn-primary btn-lg btn-block">Redefinir Senha</button>
+            <button type="submit" value="Redefinir Senha" class="btn btn-primary btn-lg btn-block btn-flat">Redefinir Senha</button><br>
             <a class="login-link" href="/auth/login">Voltar ao login</a>
         </div>
     </form>
