@@ -149,13 +149,14 @@
           <small>@yield('page_subtitle')</small>
         </h1>
         <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> @yield('parent_breadcrumb')</a></li>
-          <li class="active">@yield('active_breadcrumb')</li>
+          @yield('breadcrumb')
         </ol>
       </section>
 
       <!-- Main content -->
+      <section class="content">
       @yield('content')
+      </section>
       <!-- /.content -->
 
     </div>

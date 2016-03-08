@@ -28,6 +28,8 @@
   <link rel="stylesheet" href="{{ asset('/vendor/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css') }}">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{ asset('/vendor/bower_components/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+  <!-- Sweet Alert -->
+  <link rel="stylesheet" href="{{ asset('css/SweetAlert.css') }}">
 
   @yield('css')
 
@@ -75,10 +77,8 @@
 	<script src="{{ asset('/vendor/bower_components/AdminLTE/plugins/fastclick/fastclick.js') }}"></script>
 	<!-- AdminLTE App -->
 	<script src="{{ asset('/vendor/bower_components/AdminLTE/dist/js/app.min.js') }}"></script>
-	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-	<script src="{{ asset('/vendor/bower_components/AdminLTE/dist/js/pages/dashboard.js') }}"></script>
-	<!-- AdminLTE for demo purposes -->
-	<script src="{{ asset('/vendor/bower_components/AdminLTE/dist/js/demo.js') }}"></script>
+	<!-- SweetAlert -->
+	<script src="{{ asset('js/SweetAlert.js') }}"></script>
 
     @include('common.messages')
 

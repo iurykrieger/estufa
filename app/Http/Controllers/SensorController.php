@@ -116,19 +116,72 @@ class SensorController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the ambient from specified sensor.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         $sensor = Sensor::findOrFail($id);
-        GhostScan::where('id_sensor', $sensor->id_sensor)->delete();
-        Scan::where('id_sensor', $sensor->id_sensor)->delete();
-        LastScan::where('id_sensor', $sensor->id_sensor)->delete();
-        $sensor->delete();
+        $sensor->active = false;
+        $sensor->id_ambient = null;
+        $sensor->save();
 
-        return Redirect::to('admin/sensor')->with('successMessage','O sensor foi excluido com sucesso do banco de dados.');
+        return Redirect::back()->with('successMessage','O sensor foi removido do ambiente com sucesso.');
+    }
+
+    /**
+     * Deactivate the specified sensor
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function deactivate($id){
+        $sensor = Sensor::findOrFail($id);
+        $sensor->active = false;
+        $sensor->save();
+    
+        return Redirect::back()->with('successMessage','O sensor foi desativado com sucesso.');
+    }
+
+    /**
+     * Activate the specified sensor
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function activate($id){
+        $sensor = Sensor::findOrFail($id);
+        if(!(is_null($sensor->ambient))){
+            $sensor->active = true;
+            $sensor->save();
+            return Redirect::back()->with('successMessage','O sensor foi desativado com sucesso.');
+        }else{
+            return Redirect::back()->withErrors(['O sensor precisa ter um ambiente atrelado para ser ativado!']);
+        }
+    }
+
+    public function multipleDestroy(Request $request){
+        $sensors = $request->sensors;
+        foreach ($sensors as $id) {
+            $sensor = Sensor::findOrFail($id);
+            $sensor->active = false;
+            $sensor->id_ambient = null;
+            $sensor->save();
+        }
+        return Redirect::back()->with('successMessage','Sensores desativados com sucesso.');
+    }
+
+    /**
+     * Get All Sensors of the specified Ambient
+     * @param  int $id [Ambient Id]
+     * @return [type]     [description]
+     */
+    public function getSensorsByAmbient($id = null){
+        if($id == null){
+            $id = Ambient::first()->id_ambient;
+        }
+        $ambients = Ambient::all();
+        $selectedAmbient = Ambient::findOrFail($id);
+        $sensors = $selectedAmbient->sensors()->paginate(30);
+        return view('sensors.indexByAmbient',['selectedAmbient' => $selectedAmbient, 'ambients' => $ambients, 'sensors' => $sensors]);
     }
 }

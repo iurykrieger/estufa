@@ -66,7 +66,6 @@ class AmbientController extends Controller
             ]);
         $ambient = $request->all();
         Ambient::create($ambient);
-
         return Redirect::to('admin/ambient/create')->with('successMessage','O ambiente foi cadastrado com sucesso no banco de dados.');
     }
 
@@ -136,20 +135,5 @@ class AmbientController extends Controller
             $ambient->delete();
             return Redirect::to('admin/ambient')->with('successMessage','O ambiente foi excluido com sucesso do banco de dados.');
         }
-    }
-
-    /**
-     * Get All Sensors of the specified Ambient
-     * @param  int $id [Ambient Id]
-     * @return [type]     [description]
-     */
-    public function getAmbientSensors($id = null){
-        if($id == null){
-            $id = Ambient::first()->id_ambient;
-        }
-        $ambients = Ambient::all();
-        $selectedAmbient = Ambient::findOrFail($id);
-        $sensors = $selectedAmbient->sensors()->paginate(30);
-        return view('ambients.ambientSensors',['selectedAmbient' => $selectedAmbient, 'ambients' => $ambients, 'sensors' => $sensors]);
     }
 }

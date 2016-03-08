@@ -7,19 +7,17 @@
 
 @section('page_subtitle','Novo Ambiente')
 
-@section('parent_breadcrumb','Home')
-
-@section('active_breadcrumb','Novo Ambiente')
+@section('breadcrumb')
+    <li><a href="{{ url('admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><i class="fa fa-tree"></i> Ambientes</li>
+    <li class="active">Novo Ambiente</li>
+@endsection
 
 @section('content')
-
-<!-- Main content -->
-<section class="content">
-
   <!-- Default box -->
   <div class="box">
     <div class="box-header with-border">
-      <h3 class="box-title">Cadastro de Ambiente</h3>
+      <h3 class="box-title"><i class="fa fa-tree"></i> Cadastro de Ambiente</h3>
 
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -66,16 +64,17 @@
 			{!! Form::text('min_ground_humidity', null, ['class' => 'form-control']) !!}
 		</div>
 
-		{!! Form::submit('Salvar Novo Ambiente', ['class' => 'btn btn-primary']) !!}
+		{!!Form::button('<i class="fa fa-save"></i> Salvar Novo Ambiente', array('type' => 'submit', 'class' => 'btn btn-primary btn-flat'))!!}
+
+		<a href="{{ url('admin/ambient') }}">
+			<button type="button" class="btn btn-info btn-flat"><i class="fa fa-arrow-left"></i> Voltar aos ambientes</button>
+		</a>
 
 		{!! Form::close() !!}
+		
     </div>
     <!-- /.box-body -->
     
   </div>
   <!-- /.box -->
-
-</section>
-<!-- /.content -->
-
 @endsection

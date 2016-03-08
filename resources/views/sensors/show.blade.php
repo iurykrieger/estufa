@@ -3,67 +3,84 @@
 
 @section('title','Sensor - '.$sensor->description)
 
-@section('page_heading','Sensor - '.$sensor->description)
+@section('page_title','Sensor')
+
+@section('page_subtitle',$sensor->description)
+
+@section('breadcrumb')
+    <li><a href="{{ url('admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><i class="fa fa-sitemap"></i> Sensores</li>
+    <li class="active">Vizualisar Sensor</li>
+@endsection
 
 @section('content')
 
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h3 class="panel-title">ID do Sensor</h3>
+<!-- Default box -->
+<div class="box">
+	<div class="box-header with-border">
+		<h3 class="box-title"><i class="fa fa-sitemap"></i> Vizualização de Sensor</h3>
+		<div class="box-tools pull-right">
+			<button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+				<i class="fa fa-minus"></i>
+			</button>
+			<button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+				<i class="fa fa-times"></i>
+			</button>
+		</div>
 	</div>
-	<div class="panel-body">
-		{{ $sensor->id_sensor }}
+	<div class="box-body">
+		<div class="box-header">
+			<h3 class="box-title">ID DO SENSOR</h3>
+		</div>
+		<div class="box-body">
+			{{ $sensor->id_sensor }}
+		</div>
+		<hr>
+		<div class="box-header">
+			<h3 class="box-title">DESCRIÇÃO</h3>
+		</div>
+		<div class="box-body">
+			{{ $sensor->description }}
+		</div>
+		<hr>
+		<div class="box-header">
+			<h3 class="box-title">AMBIENTE</h3>
+		</div>
+		<div class="box-body">
+			<a href="{{url('admin/ambient/'.$sensor->ambient->id_ambient)}}">{{ $sensor->ambient->id_ambient." - ".$sensor->ambient->description}}</a>
+		</div>
+		<hr>
+		<div class="box-header">
+			<h3 class="box-title">ATIVO</h3>
+		</div>
+		<div class="box-body">
+			{{ ($sensor->active == 1 ? "Sim":"Não") }}
+		</div>
+		<hr>
+		<div class="box-header">
+			<h3 class="box-title">CRIADO EM</h3>
+		</div>
+		<div class="box-body">
+			{{ $sensor->created_at->format('d/m/Y H:m:s') }}
+		</div>
+		<hr>
+		<div class="box-header">
+			<h3 class="box-title">ÚLTIMA ALTERAÇÃO EM</h3>
+		</div>
+		<div class="box-body">
+			{{ $sensor->updated_at->format('d/m/Y H:m:s') }}
+		</div>
+		<hr>
+		<a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/edit') }}"><button type="button" class="btn btn-primary btn-flat"><i class="fa fa-pencil"></i> Editar Sensor</button></a>
+		<a href="{{ url('admin/sensor') }}"><button type="button" class="btn btn-info btn-flat"><i class="fa fa-arrow-left"></i> Voltar aos sensores</button></a>
+
+		{!! Form::open(['method' => 'DELETE','url' => 'admin/sensor/'.$sensor->id_sensor, 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
+		{!! csrf_field() !!}
+		{!! Form::button('<i class="fa fa-trash"></i> Remover Sensor', ['class' => 'btn btn-danger btn-flat pull-right', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
+		{!! Form::close() !!}
 	</div>
+	<!-- /.box-body -->
 </div>
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h3 class="panel-title">Descrição</h3>
-	</div>
-	<div class="panel-body">
-		{{ $sensor->description }}
-	</div>
-</div>
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h3 class="panel-title">Ambiente</h3>
-	</div>
-	<div class="panel-body">
-		<a href="{{url('admin/ambient/'.$sensor->ambient->id_ambient)}}">{{ $sensor->ambient->id_ambient." - ".$sensor->ambient->description}}</a>
-	</div>
-</div>
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h3 class="panel-title">Ativo:</h3>
-	</div>
-	<div class="panel-body">
-		{{ ($sensor->active == 1 ? "Sim":"Não") }}
-	</div>
-</div>
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h3 class="panel-title">Criado em:</h3>
-	</div>
-	<div class="panel-body">
-		{{ $sensor->created_at->format('d/m/Y H:m:s') }}
-	</div>
-</div>
-<div class="panel panel-default">
-	<div class="panel-heading">
-		<h3 class="panel-title">Última Alteração em:</h3>
-	</div>
-	<div class="panel-body">
-		{{ $sensor->updated_at->format('d/m/Y H:m:s') }}
-	</div>
-</div>
-<a href="{{ url('admin/sensor') }}">
-	<button type="button" class="btn btn-primary">@include('widgets.icon',['class'=>'arrow-left']) Voltar aos sensores</button>
-</a>
-<a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/edit') }}">
-	<button type="button" class="btn btn-info">@include('widgets.icon',['class'=>'pencil']) Editar Sensor</button>
-</a>
-{!! Form::open(['method' => 'DELETE','url' => 'admin/sensor/'.$sensor->id_sensor, 'class' => 'action-form', 'id' => 'form-delete']) !!}
-{!! csrf_field() !!}
-{!! Form::button('<i class="fa fa-times"></i> Remover Sensor', ['class' => 'btn btn-danger pull-right', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
-{!! Form::close() !!}
+<!-- /.box -->
 
 @endsection

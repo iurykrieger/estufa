@@ -1,63 +1,92 @@
 <!-- resources/views/sensors/index.blade.php -->
 @extends('layouts.dashboard')
 
-@section('css')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/dataTables.bootstrap.min.css">
-@endsection
-
 @section('title','Sensores')
 
-@section('page_heading','Sensores')
+@section('page_title','Sensores')
+
+@section('page_subtitle','Todos os Sensores')
+
+@section('breadcrumb')
+    <li><a href="{{ url('admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><i class="fa fa-sitemap"></i> Sensores</li>
+    <li class="active">Lista de Sensores</li>
+@endsection
 
 @section('content')
 
-<table id="sensors" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Descrição</th>
-            <th>Ambiente</th>
-            <th>Ativo</th>
-            <th>Última Alteração</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
-    <tfoot> 
-        <tr>
-            <th>ID</th>
-            <th>Descrição</th>
-            <th>Ambiente</th>
-            <th>Ativo</th>
-            <th>Última Alteração</th>
-            <th>Ações</th>
-        </tr>
-    </tfoot>
-    <tbody>
-        @foreach ($sensors as $sensor)
-        <tr>
-            <td>{{ $sensor->id_sensor }}</td>
-            <td>{{ $sensor->description }}</td>
-            <td><a href="{{url('admin/ambient/'.$sensor->ambient->id_ambient)}}">{{ $sensor->ambient->id_ambient." - ".$sensor->ambient->description}}</a></td>
-            <td>{{ ($sensor->active == 1 ? "Sim" : "Não") }}</td>
-            <td>{{ $sensor->updated_at->format('d/m/Y H:i:s') }}</td>
-            <td>
-                <!-- Show Button -->
-                <a href="{{ url('admin/sensor/'.$sensor->id_sensor) }}"><button type="button" class="btn btn-primary">@include('widgets.icon',['class'=>'eye']) Visualizar</button></a>
+<!-- Default box -->
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title"><i class="fa fa-sitemap"></i> Lista de Sensores</h3>
 
-                <!-- Edit Button -->
-                <a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/edit') }}"><button type="button" class="btn btn-info">@include('widgets.icon',['class'=>'pencil']) Editar</button></a>
-                
-                <!-- Destroy Form Button -->
-                {!! Form::open(['method' => 'DELETE','url' => 'admin/sensor/'.$sensor->id_sensor, 'class' => 'action-form', 'id' => 'form-delete']) !!}
-                {!! csrf_field() !!}
-                {!! Form::button('<i class="fa fa-times"></i> Remover', ['class' => 'btn btn-danger', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
-                {!! Form::close() !!}
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-{!! $sensors->render() !!}
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+          <i class="fa fa-minus"></i></button>
+        <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+          <i class="fa fa-times"></i></button>
+      </div>
+    </div>
+    <div class="box-body">
+        <table id="sensors" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descrição</th>
+                    <th>Ambiente</th>
+                    <th>Ativo</th>
+                    <th>Última Alteração</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tfoot> 
+                <tr>
+                    <th>ID</th>
+                    <th>Descrição</th>
+                    <th>Ambiente</th>
+                    <th>Ativo</th>
+                    <th>Última Alteração</th>
+                    <th>Ações</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach ($sensors as $sensor)
+                <tr>
+                    <td>{{ $sensor->id_sensor }}</td>
+                    <td>{{ $sensor->description }}</td>
+                    <td>
+                        @if(is_null($sensor->ambient))
+                            <a href="{{url('admin/sensor/'.$sensor->id_sensor.'/edit')}}"><i class="fa fa-plus"></i> Adicionar Ambiente</a>
+                        @else
+                            <a href="{{url('admin/ambient/'.$sensor->ambient->id_ambient)}}">{{ $sensor->ambient->id_ambient." - ".$sensor->ambient->description}}</a>
+                        @endif
+                    </td>
+                    <td>{{ ($sensor->active == 1 ? "Sim" : "Não") }}</td>
+                    <td>{{ $sensor->updated_at->format('d/m/Y H:i:s') }}</td>
+                    <td>
+                        <!-- Show Button -->
+                        <a href="{{ url('admin/sensor/'.$sensor->id_sensor) }}"><button type="button" class="btn btn-primary btn-flat"><i class="fa fa-eye"></i> Visualizar</button></a>
+
+                        <!-- Edit Button -->
+                        <a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/edit') }}"><button type="button" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i> Editar</button></a>
+                        
+                        @if($sensor->active)
+                            <!-- Deactivate Button -->
+                            <a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/deactivate') }}"><button type="button" class="btn btn-danger btn-flat"><i class="fa fa-toggle-on"></i> Desativar</button></a>
+                        @else
+                            <!-- Activate Button -->
+                            <a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/activate') }}"><button type="button" class="btn btn-success btn-flat"><i class="fa fa-toggle-off"></i> Ativar</button></a>
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        {!! $sensors->render() !!}
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
 
 @endsection
 

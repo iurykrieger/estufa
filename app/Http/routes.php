@@ -35,6 +35,10 @@ Route::get('/',function(){
 /**
  * Sensor Routes
  */
+Route::delete('admin/sensor/multipleDestroy','SensorController@multipleDestroy');
+Route::get('admin/sensor/{sensor}/deactivate','SensorController@deactivate');
+Route::get('admin/sensor/{sensor}/activate','SensorController@activate');
+Route::get('admin/sensor/ambient/{ambient?}','SensorController@getSensorsByAmbient');
 Route::resource('admin/sensor', 'SensorController');
 
 /**
@@ -49,7 +53,6 @@ Route::resource('admin/scan', 'ScanController',['only' => ['index', 'show', 'des
 /**
  * Ambient Routes
  */
-Route::get('admin/ambient/sensors/{ambient?}','AmbientController@getAmbientSensors');
 Route::post('admin/ambient/sensors/{ambient}','AmbientController@deactivateAmbientSensors');
 Route::resource('admin/ambient', 'AmbientController');
 

@@ -1,7 +1,7 @@
 <!-- sidebar menu: : style can be found in sidebar.less -->
 <ul class="sidebar-menu">
     <li class="header">NAVEGAÇÃO PRINCIPAL</li>
-    <li class="active">
+    <li >
       <a href="{{ url('admin') }}">
         <i class="fa fa-dashboard"></i> <span>Home</span>
     </a>
@@ -16,6 +16,7 @@
     <ul class="treeview-menu">
         <li><a href="{{ url ('admin/sensor/create') }}"><i class="fa fa-circle-o"></i> Novo Sensor</a></li>
         <li><a href="{{ url ('admin/sensor') }}"><i class="fa fa-circle-o"></i> Lista de Sensores</a></li>
+        <li><a href="{{ url ('admin/sensor/ambient/') }}"><i class="fa fa-circle-o"></i> Sensores por Ambiente</a></li>
     </ul>
 </li>
 
@@ -29,7 +30,6 @@
     <ul class="treeview-menu">
         <li><a href="{{ url ('admin/ambient/create') }}"><i class="fa fa-circle-o"></i> Novo Ambiente</a></li>
         <li><a href="{{ url ('admin/ambient') }}"><i class="fa fa-circle-o"></i> Lista de Ambientes</a></li>
-        <li><a href="{{ url ('admin/ambient/sensors') }}"><i class="fa fa-circle-o"></i> Sensores de um Ambiente</a></li>
     </ul>
 </li>
 
