@@ -9,6 +9,8 @@ use App\Http\Requests;
 use App\LastScan;
 use App\Scan;
 use App\Sensor;
+use App\Services\DataTransfer;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;

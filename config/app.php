@@ -150,6 +150,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        App\Providers\DataServiceProvider::class,
+
     ],
 
     /*
@@ -201,6 +203,7 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Datatables' => Yajra\Datatables\Datatables::class,
 
+        'DataTransfer' => App\Services\DataTransfer::class,
     ],
 
 ];

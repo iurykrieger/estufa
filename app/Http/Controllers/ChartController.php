@@ -23,7 +23,10 @@ class ChartController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(){
-
+        
+        /************* CÓDIGO SERVICE PROVIDER ************/
+        DataTransfer::getScansByAmbient('2015-04-12', Carbon::now(), 2)->paginate(50);
+        //************* CÓDIGO SERVICE PROVIDER ************/
     }
 
     /**
