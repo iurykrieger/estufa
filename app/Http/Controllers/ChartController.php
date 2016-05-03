@@ -8,6 +8,9 @@ use App\Chart;
 use App\Sensor;
 use App\Ambient;
 use App\Scan;
+use App\Services\DataTransfer;
+use Carbon\Carbon;
+
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,10 +26,7 @@ class ChartController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        
-        /************* CÓDIGO SERVICE PROVIDER ************/
-        DataTransfer::getScansByAmbient('2015-04-12', Carbon::now(), 2)->paginate(50);
-        //************* CÓDIGO SERVICE PROVIDER ************/
+
     }
 
     /**
@@ -89,34 +89,55 @@ class ChartController extends Controller{
         //
     }
 
-    public function showSensor(){
-         $sensors = Sensor::all();
-         $sizes = [10,25,50,100,150];
-         $scans = Scan::orderBy('date','desc')->orderBy('time','desc')->where('id_scan', '>', 316000)->get();
-         return view('chart.sensor',['scans' => $scans,'sensors' => $sensors,'user'=>Auth::user()]);
-    }
+    /**
+     * Show SensorChart
+     *
+     * @return \resources\views\chart\sensor.blade.php
+     */
+    public function showChart(){
+        $dt = Lava::DataTable();
+        $scans = DataTransfer::getScansBySensor('2016-04-25', Carbon::now(), 1)->all();
 
-    public function showAmbient(){
+        $dt ->addDateColumn('Data')
+            ->addNumberColumn('Temperatura')
+            ->addNumberColumn('Umidade Ar')
+            ->addNumberColumn('Umidade Solo');
 
-    $temperatures = Lava::DataTable();
+        foreach($scans as $scan){
+            $dt->addRow([$scan->date,  $scan->temperature, $scan->air_humidity, $scan->ground_humidity]);
+        }
 
-    $scans = Scan::orderBy('date','asc')->orderBy('time','asc')->paginate(4000);
+        //dd($scans[0]->date);
 
-    $temperatures->addDateColumn('Date')
-    ->addNumberColumn('Temperatura')
-    ->addNumberColumn('Umidade ar')
-    ->addNumberColumn('Umidade solo');
-
-    foreach ($scans as $scan) {
-        $temperatures->addRow([$scan->date,$scan->temperature,$scan->air_humidity,$scan->ground_humidity]);
-    }
-
-    
-    Lava::LineChart('Temps', $temperatures, [
-        'title' => 'Weather in October',
-        'height'=> 800
+        $grafico = Lava::LineChart('grafico', $dt, [
+           'height' => 600,
+           'hAxis' => [
+                'title' => 'Data',
+                'format' => 'dd-MMMM-yyyy',
+                'viewWindowMode' => 'explicit',
+                'viewWindow' => [
+                    'min' => 20160101,
+                    'max' => 20160503
+                ]
+            ],
+            'vAxis' => [
+                'title' => 'Temperatura'
+            ]
         ]);
+          
 
-    return view('chart.ambient',['user'=>Auth::user()]);
+        return view('chart.scans',['user'=>Auth::user()]);
     }
+
 }
+/*
+    <div class="form-group">
+    {!! Form::label('id_sensor', 'Sensor:', ['class' => 'control-label']) !!}
+    {!! Form::select('id_sensor', null, null, ['class' => 'form form-control']) !!}
+    </div>
+
+    <div class="form-group">
+    {!! Form::label('id_ambient', 'Ambientes:', ['class' => 'control-label']) !!}
+    {!! Form::select('id_ambient', $ambients, null, ['class' => 'form form-control']) !!}
+    </div>
+**/

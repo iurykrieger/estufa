@@ -84,5 +84,5 @@ Route::post('password/reset', 'Auth\PasswordController@postReset');
 /**
  * Charts reset routes
  */
-Route::get('/admin/chart/sensor','ChartController@showSensor');
-Route::get('/admin/chart/ambient','ChartController@showAmbient');
+Route::resource('admin/chart/scans', 'ChartController');
+Route::get('/admin/chart/scans','ChartController@showChart');
