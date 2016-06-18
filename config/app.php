@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost',
+    'url' => 'http://192.168.2.100',
 
     /*
     |--------------------------------------------------------------------------
@@ -137,9 +137,6 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
-        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
-        Yajra\Datatables\DatatablesServiceProvider::class,
-        Infinety\SweetAlert\AlertServiceProvider::class,
 
 
         /*
@@ -151,7 +148,10 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         App\Providers\DataServiceProvider::class,
-
+        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+        Yajra\Datatables\DatatablesServiceProvider::class,
+        Infinety\SweetAlert\AlertServiceProvider::class,
+        JasperPHP\JasperPHPServiceProvider::class,
     ],
 
     /*
@@ -202,7 +202,6 @@ return [
         'Form'      => Illuminate\Html\FormFacade::class,
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Datatables' => Yajra\Datatables\Datatables::class,
-
         'DataTransfer' => App\Services\DataTransfer::class,
     ],
 
