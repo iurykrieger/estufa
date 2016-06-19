@@ -91,7 +91,7 @@ Route::resource('admin/chart', 'ChartController');
 /**
  * Report Routes
  */
-Route::get('/reporting', ['uses' =>'ReportController@index', 'as' => 'Report']);
-Route::post('/reporting', ['uses' =>'ReportController@post']);
+Route::get('/admin/report/scan', ['uses' =>'ReportController@indexScan']);
+Route::post('/admin/report/scan', ['uses' =>'ReportController@postScan']);
  
 

@@ -30,6 +30,8 @@
   <link rel="stylesheet" href="{{ asset('/vendor/bower_components/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
   <!-- Sweet Alert -->
   <link rel="stylesheet" href="{{ asset('css/SweetAlert.css') }}">
+  <!-- CSRF -->
+  <meta name="csrf-token" content="{{ csrf_token() }}" />
 
   @yield('css')
 
@@ -79,6 +81,14 @@
 	<script src="{{ asset('/vendor/bower_components/AdminLTE/dist/js/app.min.js') }}"></script>
 	<!-- SweetAlert -->
 	<script src="{{ asset('js/SweetAlert.js') }}"></script>
+	<!-- CSRF -->
+	<script type="text/javascript">
+	    $.ajaxSetup({
+	        headers: {
+	            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	        }
+	    });
+	</script>
 
     @include('common.messages')
 

@@ -68,8 +68,7 @@
         <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-        <li><a href="{{ url ('admin/chart/sensor') }}"><i class="fa fa-circle-o"></i> Sensor</a></li>
-        <li><a href="{{ url ('admin/chart/ambient') }}"><i class="fa fa-circle-o"></i> Ambiente</a></li>
+        <li><a href="{{ url ('admin/reporting') }}"><i class="fa fa-circle-o"></i> Relatórios</a></li>
     </ul>
 </li>
 

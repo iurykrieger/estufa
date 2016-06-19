@@ -14,22 +14,21 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexScan()
     {
-        return view('reports/report');
+        return view('reports/reportScan');
     }
  
  
-    public function post()
+    public function postScan()
     {
-        
         $database = \Config::get('database.connections.mysql');
         $output = public_path() . '/report/'.time().'_codelution';
         
         $ext = "pdf";
  
         \JasperPHP::process(
-            public_path() . '/report/ReportTeste.jasper', 
+            public_path() . '/report/ScanReport.jasper', 
             $output, 
             array($ext),
             array(),

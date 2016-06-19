@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ScanReport" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="379af651-a403-469d-b13a-1b599f6e5864">
+	<property name="ireport.zoom" value="1.7715610000000013"/>
+	<property name="ireport.x" value="32"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT SCAN.ID_SCAN,
+       SCAN.DATE,
+       SCAN.TIME,
+       SCAN.TEMPERATURE,
+       SCAN.AIR_HUMIDITY,
+       SCAN.GROUND_HUMIDITY,
+       SCAN.ID_SENSOR,
+       SENSOR.DESCRIPTION AS SENSOR_DESCRIPTION,
+       SCAN.ID_AMBIENT,
+       AMBIENT.DESCRIPTION AS AMBIENT_DESCRIPTION
+FROM SCANS SCAN
+INNER JOIN SENSORS SENSOR ON (SENSOR.ID_SENSOR = SCAN.ID_SENSOR)
+INNER JOIN AMBIENTS AMBIENT ON (AMBIENT.ID_AMBIENT = SCAN.ID_AMBIENT)
+ORDER BY DATE DESC,
+         TIME DESC
+LIMIT 400]]>
+	</queryString>
+	<field name="ID_SCAN" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="DATE" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TIME" class="java.sql.Time">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="TEMPERATURE" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AIR_HUMIDITY" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="GROUND_HUMIDITY" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ID_SENSOR" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="SENSOR_DESCRIPTION" class="java.lang.String"/>
+	<field name="ID_AMBIENT" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="AMBIENT_DESCRIPTION" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="ea4bdce8-20a5-492a-93c1-021d4a41b9ea" x="10" y="7" width="54" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Projeto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ea4bdce8-20a5-492a-93c1-021d4a41b9ea" x="64" y="7" width="92" height="20"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTUFA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8a3914e4-8410-4645-b4c8-b20336a428ac" x="156" y="7" width="387" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Relatório de Leituras]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="50" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="0" y="0" width="72" height="16"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="72" y="0" width="66" height="16"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DATA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="138" y="0" width="36" height="16"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[HORA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="290" y="0" width="62" height="16"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[UMID. SOLO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="352" y="0" width="98" height="16"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SENSOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="450" y="0" width="105" height="16"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[AMBIENTE]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="cae13d9b-64f4-4316-a505-8b39ce8efe3f" x="0" y="15" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="174" y="0" width="52" height="16"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[TEMP.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="226" y="0" width="64" height="15"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[UMID. AR]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement uuid="895ffc31-b359-4d0f-9a2c-fbdce840aed1" x="0" y="0" width="72" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ID_SCAN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="02e6e285-de2e-469a-a623-9b1a0f2445a4" x="72" y="0" width="66" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,## 0 %">
+				<reportElement uuid="bc3c0849-a4e3-40d2-aff5-99fab0a07f87" x="290" y="0" width="62" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{GROUND_HUMIDITY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b17f03c6-452c-4cf9-a837-a0afe128850d" x="352" y="0" width="98" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{SENSOR_DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dc552f14-71a9-4e86-a81e-26486839dc06" x="450" y="0" width="105" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{AMBIENT_DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="cae13d9b-64f4-4316-a505-8b39ce8efe3f" x="0" y="14" width="555" height="1"/>
+			</line>
+			<textField pattern="HH:mm">
+				<reportElement uuid="bbf65db4-e2d8-4281-84ef-7a4e1ce526a4" x="138" y="0" width="36" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TIME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,##ºC">
+				<reportElement uuid="a527efda-13a3-4952-8fff-af23b05c48d9" x="174" y="0" width="52" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{TEMPERATURE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,## 0 %">
+				<reportElement uuid="d8a00b98-9873-4957-b228-dd5e050cff9d" x="226" y="0" width="64" height="14"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{AIR_HUMIDITY}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
