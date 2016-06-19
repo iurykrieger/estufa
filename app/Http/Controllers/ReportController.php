@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers; 
 
+use App\Ambient;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
-
 use JasperPHP\JasperPHP;
 
 class ReportController extends Controller
@@ -18,12 +19,40 @@ class ReportController extends Controller
      */
     public function indexScan()
     {
-        return view('reports/reportScan');
+        $ambients = Ambient::all();
+        $sensors = Sensor::all();
+        return view('reports/reportScan', ['ambients' => $ambients, 'sensors' => $sensors]);
     }
  
  
-    public function postScan()
+    public function postScan(Request $request)
     {
+        /**
+         * Get request inputs
+         */
+        $initialDate = $request->input('initialDate');
+        $endDate = $request->input('endDate');
+        $sensor = $request->input('sensor');
+        $ambient = $request->input('ambient');
+
+        $params = array();
+
+        if(!empty($sensor)){
+            $params['SENSOR'] = $sensor;
+        }
+        if(!empty($ambient)){
+            $params['AMBIENT'] = $ambient;
+        }
+        if(!empty($initialDate)){
+            $params['INITIAL_DATE'] = $initialDate; 
+        }
+        if(!empty($endDate)){
+            $params['END_DATE'] = $endDate;
+        }
+
+        /**
+         * Process the report
+         */
         $jasper = new JasperPHP();
 
         $database = Config::get('database.connections.mysql');
@@ -35,7 +64,7 @@ class ReportController extends Controller
             $report, //Relatório de entrada
             $output, //Relatório de saída
             array($outputExt), //Formato de saída
-            array('SENSOR' => '3'), //Parâmetros
+            $params, //Parâmetros
             $database //Conexão com o banco
         )->execute();
  

@@ -38,6 +38,32 @@
 			<div class="form-group">
 				{!! Form::label('endDate', ' até ', ['class' => 'control-label']) !!}
 				{!! Form::input('date','endDate', null, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
+			</div> 
+		</div>
+		<hr>
+		<div class="box-header">
+			<h3 class="box-title">AMBIENTE</h3><br>
+		</div>
+		<div class="box-body">
+			<div class="form-group">
+				<select id="dropdown" name="ambient" aria-controls="scans" class="form-control input-sm" style="width: 150px">
+					@foreach ($ambients as $ambient)
+					<option value="{{ $ambient->id_ambient }}">{{ $ambient->id_ambient . " - " . $ambient->description }}</option>
+					@endforeach
+				</select>
+			</div>    
+		</div>
+		<hr>
+		<div class="box-header">
+			<h3 class="box-title">SENSOR</h3><br>
+		</div>
+		<div class="box-body">
+			<div class="form-group">
+				<select id="dropdown" name="sensor" aria-controls="scans" class="form-control input-sm" style="width: 150px">
+					@foreach ($sensors as $sensor)
+					<option value="{{ $sensor->id_sensor }}">{{ $sensor->id_sensor . " - " . $sensor->description }}</option>
+					@endforeach
+				</select>
 			</div>    
 		</div>
 		<hr>

@@ -6,6 +6,15 @@
 	<parameter name="SENSOR" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="INITIAL_DATE" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="END_DATE" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="AMBIENT" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT SCANS.ID_SCAN,
        SCANS.DATE,
@@ -20,7 +29,10 @@
 FROM SCANS
 INNER JOIN SENSORS ON (SENSORS.ID_SENSOR = SCANS.ID_SENSOR)
 INNER JOIN AMBIENTS ON (AMBIENTS.ID_AMBIENT = SCANS.ID_AMBIENT)
-WHERE SCANS.ID_SENSOR = $P{SENSOR} OR $P{SENSOR} IS NULL
+WHERE (SCANS.ID_SENSOR = $P{SENSOR} OR $P{SENSOR} IS NULL) AND
+      (SCANS.ID_AMBIENT = $P{AMBIENT} OR $P{AMBIENT} IS NULL) AND
+      (SCANS.DATE >= $P{INITIAL_DATE} OR $P{INITIAL_DATE} IS NULL) AND
+      (SCANS.DATE <= $P{END_DATE} OR $P{END_DATE} IS NULL)
 ORDER BY SCANS.DATE DESC,
          SCANS.TIME DESC
 LIMIT 500]]>
