@@ -41,7 +41,7 @@
 			</div>    
 		</div>
 		<hr>
-		{!! Form::button('<i class="fa fa-search"></i> Pesquisar', ['class' => 'btn btn-primary btn-flat pull-right', 'id' => 'btn-search', 'type' => 'submit']) !!}
+		{!! Form::button('<i class="fa fa-file-pdf-o"></i> Gerar Relatório', ['class' => 'btn btn-primary btn-flat pull-right', 'id' => 'btn-search', 'type' => 'submit']) !!}
 		{!! Form::close() !!}
     </div>
     <!-- /.box-body -->

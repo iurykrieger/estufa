@@ -203,6 +203,7 @@ return [
         'Html'      => Illuminate\Html\HtmlFacade::class,
         'Datatables' => Yajra\Datatables\Datatables::class,
         'DataTransfer' => App\Services\DataTransfer::class,
+        'JasperPHP' => JasperPHP\JasperPHPServiceProvider::class,
     ],
 
 ];
