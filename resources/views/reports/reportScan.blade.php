@@ -47,6 +47,7 @@
 		<div class="box-body">
 			<div class="form-group">
 				<select id="dropdown" name="ambient" aria-controls="scans" class="form-control input-sm" style="width: 150px">
+					<option value="">-- TODOS --</option>
 					@foreach ($ambients as $ambient)
 					<option value="{{ $ambient->id_ambient }}">{{ $ambient->id_ambient . " - " . $ambient->description }}</option>
 					@endforeach
@@ -60,6 +61,7 @@
 		<div class="box-body">
 			<div class="form-group">
 				<select id="dropdown" name="sensor" aria-controls="scans" class="form-control input-sm" style="width: 150px">
+					<option value="">-- TODOS --</option>
 					@foreach ($sensors as $sensor)
 					<option value="{{ $sensor->id_sensor }}">{{ $sensor->id_sensor . " - " . $sensor->description }}</option>
 					@endforeach
