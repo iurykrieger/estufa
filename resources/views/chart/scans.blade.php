@@ -29,27 +29,51 @@
         {!! csrf_field() !!}
 
         <form class="form-inline"> 
+            <div class="box-body">
+              <div class="col-xs-2">
+                {!! Form::label('initialDate', ' De ', ['class' => 'control-label']) !!}
+                {!! Form::input('date','initialDate', null, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
+              </div>
 
-            <div class="col-xs-2">
-              {!! Form::label('dataInicial', 'Data Inicial:', ['class' => 'control-label']) !!}
-              {!! Form::text('dataInicial', null, ['class' => 'form-control','placeholder'=> 'Data Inicial']) !!}
-            </div>
-            <div class="col-xs-2">
-              {!! Form::label('dataFinal', 'Data Final:', ['class' => 'control-label']) !!}
-              {!! Form::text('dataFinal', null, ['class' => 'form-control','placeholder'=> 'Data Final']) !!}
+                <div class="col-xs-2">
+                  {!! Form::label('endDate', ' até ', ['class' => 'control-label']) !!}
+                  {!! Form::input('date','endDate', null, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
+                </div>          
             </div>
 
-            <div class="col-xs-2">
-            {!! Form::label('id_sensor', 'Sensor:', ['class' => 'control-label']) !!}
-            {!! Form::select('description', $sensores, null, ['class' => 'form form-control']) !!}
+            <hr>
+
+            <div class="box-header">
+              <h3 class="box-title">AMBIENTE</h3><br>
             </div>
-            <div class="col-xs-2">
-              {!! Form::label('id_ambient', 'Ambientes:', ['class' => 'control-label']) !!}
-              {!! Form::select('id_ambient', $ambientes, null, ['class' => 'form form-control']) !!}
-            </div>  
+            <div class="box-body">
+              <div class="form-group">
+                <select id="dropdown" name="ambient" aria-controls="ambient" class="form-control input-sm" style="width: 150px">
+                  <option value="">-- TODOS --</option>
+                  @foreach ($ambients as $ambient)
+                  <option value="{{ $ambient->id_ambient }}">{{ $ambient->id_ambient . " - " . $ambient->description }}</option>
+                  @endforeach
+                </select>
+              </div>    
+            </div>
+
+            <div class="box-header">
+              <h3 class="box-title">SENSOR</h3><br>
+            </div>
+            <div class="box-body">
+              <div class="form-group">
+                <select id="dropdown" name="sensor" aria-controls="sensor" class="form-control input-sm" style="width: 150px">
+                  <option value="">-- TODOS --</option>
+                  @foreach ($sensors as $sensor)
+                  <option value="{{ $sensor->id_sensor }}">{{ $sensor->id_sensor . " - " . $sensor->description }}</option>
+                  @endforeach
+                </select>
+              </div> 
+
+
 
             <div class="col-xs-2">                
-            {!!Form::button('<i class="fa fa-save"></i> Consultar', array('type' => 'submit', 'class' => 'btn btn-primary btn-flat'))!!}
+              {!!Form::button('<i class="fa fa-save"></i> Consultar', array('type' => 'submit', 'class' => 'btn btn-primary btn-flat'))!!}
             </div> 
 
             <div>                
@@ -58,11 +82,8 @@
             </div> 
 
               
-          </div>
-              
-                <div id="temps_div" class=""></div>
-
-            
+          </div>              
+                <div id="temps_div" class=""></div>            
         </form>
 
     {!! Form::close() !!}
