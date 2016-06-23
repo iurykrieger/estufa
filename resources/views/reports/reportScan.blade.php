@@ -46,7 +46,7 @@
 		</div>
 		<div class="box-body">
 			<div class="form-group">
-				<select id="dropdown" name="ambient" aria-controls="scans" class="form-control input-sm" style="width: 150px">
+				<select id="dropdown" name="ambient" aria-controls="ambient" class="form-control input-sm" style="width: 150px">
 					<option value="">-- TODOS --</option>
 					@foreach ($ambients as $ambient)
 					<option value="{{ $ambient->id_ambient }}">{{ $ambient->id_ambient . " - " . $ambient->description }}</option>
@@ -60,11 +60,25 @@
 		</div>
 		<div class="box-body">
 			<div class="form-group">
-				<select id="dropdown" name="sensor" aria-controls="scans" class="form-control input-sm" style="width: 150px">
+				<select id="dropdown" name="sensor" aria-controls="sensor" class="form-control input-sm" style="width: 150px">
 					<option value="">-- TODOS --</option>
 					@foreach ($sensors as $sensor)
 					<option value="{{ $sensor->id_sensor }}">{{ $sensor->id_sensor . " - " . $sensor->description }}</option>
 					@endforeach
+				</select>
+			</div>    
+		</div>
+		<hr>
+		<div class="box-header">
+			<h3 class="box-title">LIMITE DE REGISTROS</h3><br>
+		</div>
+		<div class="box-body">
+			<div class="form-group">
+				<select id="dropdown" name="limit" aria-controls="limit" class="form-control input-sm" style="width: 150px">
+					<option value="">-- ILIMITADO --</option>
+					@for ($i = 3000; $i >= 50; $i = $i - 50)
+					<option value="{{ $i }}">{{ $i }}</option>
+					@endfor
 				</select>
 			</div>    
 		</div>

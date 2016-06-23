@@ -34,6 +34,7 @@ class ReportController extends Controller
         $endDate = $request->input('endDate');
         $sensor = $request->input('sensor');
         $ambient = $request->input('ambient');
+        $limit = $request->input('limit');
 
         $params = array();
 
@@ -49,6 +50,9 @@ class ReportController extends Controller
         if(!empty($endDate)){
             $params['END_DATE'] = $endDate;
         }
+        if(!empty($limit)){
+            $params['LIMIT'] = '"LIMIT ' .  $limit . '"';   
+        }
 
         /**
          * Process the report
@@ -60,14 +64,14 @@ class ReportController extends Controller
         $outputExt = "pdf";
         $report = public_path() . '/report/ScanReport.jasper';
 
-        $jasper->process(
+        $s = $jasper->process(
             $report, //Relatório de entrada
             $output, //Relatório de saída
             array($outputExt), //Formato de saída
             $params, //Parâmetros
             $database //Conexão com o banco
         )->execute();
- 
+
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename='.'RelatorioLeituras_' . time(). '.'.$outputExt);

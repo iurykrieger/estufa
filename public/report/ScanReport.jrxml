@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ScanReport" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="379af651-a403-469d-b13a-1b599f6e5864">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="1.6500000000000004"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SENSOR" class="java.lang.Integer">
@@ -15,27 +15,30 @@
 	<parameter name="AMBIENT" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="LIMIT" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT SCANS.ID_SCAN,
-       SCANS.DATE,
-       SCANS.TIME,
-       SCANS.TEMPERATURE,
-       SCANS.AIR_HUMIDITY,
-       SCANS.GROUND_HUMIDITY,
-       SCANS.ID_SENSOR,
-       SENSORS.DESCRIPTION AS SENSOR_DESCRIPTION,
-       SCANS.ID_AMBIENT,
-       AMBIENTS.DESCRIPTION AS AMBIENT_DESCRIPTION
-FROM SCANS
-INNER JOIN SENSORS ON (SENSORS.ID_SENSOR = SCANS.ID_SENSOR)
-INNER JOIN AMBIENTS ON (AMBIENTS.ID_AMBIENT = SCANS.ID_AMBIENT)
-WHERE (SCANS.ID_SENSOR = $P{SENSOR} OR $P{SENSOR} IS NULL) AND
-      (SCANS.ID_AMBIENT = $P{AMBIENT} OR $P{AMBIENT} IS NULL) AND
-      (SCANS.DATE >= $P{INITIAL_DATE} OR $P{INITIAL_DATE} IS NULL) AND
-      (SCANS.DATE <= $P{END_DATE} OR $P{END_DATE} IS NULL)
-ORDER BY SCANS.DATE DESC,
-         SCANS.TIME DESC
-LIMIT 500]]>
+		<![CDATA[SELECT scans.id_scan,
+       scans.date,
+       scans.time,
+       scans.temperature,
+       scans.air_humidity,
+       scans.ground_humidity,
+       scans.id_sensor,
+       sensors.description AS sensor_description,
+       scans.id_ambient,
+       ambients.description AS ambient_description
+FROM scans
+INNER JOIN sensors ON (sensors.id_sensor = scans.id_sensor)
+INNER JOIN ambients ON (ambients.id_ambient = scans.id_ambient)
+WHERE (scans.id_sensor = $P{SENSOR} OR $P{SENSOR} IS NULL) AND
+      (scans.id_ambient = $P{AMBIENT} OR $P{AMBIENT} IS NULL) AND
+      (scans.date >= $P{INITIAL_DATE} OR $P{INITIAL_DATE} IS NULL) AND
+      (scans.date <= $P{END_DATE} OR $P{END_DATE} IS NULL)
+ORDER BY scans.date DESC,
+         scans.time DESC
+$P!{LIMIT}]]>
 	</queryString>
 	<field name="ID_SCAN" class="java.lang.Long">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -63,92 +66,140 @@ LIMIT 500]]>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="AMBIENT_DESCRIPTION" class="java.lang.String"/>
+	<variable name="AVG_TEMPERATURE" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{TEMPERATURE}.doubleValue()]]></variableExpression>
+	</variable>
+	<variable name="AVG_AIR_HUMIDITY" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{AIR_HUMIDITY}]]></variableExpression>
+	</variable>
+	<variable name="AVG_GROUND_HUMIDITY" class="java.math.BigDecimal" calculation="Average">
+		<variableExpression><![CDATA[$F{GROUND_HUMIDITY}]]></variableExpression>
+	</variable>
+	<variable name="ROW_COUNT" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{ID_SCAN}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="27" splitType="Stretch">
-			<staticText>
-				<reportElement uuid="ea4bdce8-20a5-492a-93c1-021d4a41b9ea" x="10" y="7" width="54" height="20"/>
-				<textElement textAlignment="Center">
-					<font fontName="Arial" size="16" isBold="false"/>
-				</textElement>
-				<text><![CDATA[Projeto]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="ea4bdce8-20a5-492a-93c1-021d4a41b9ea" x="64" y="7" width="92" height="20"/>
-				<textElement>
-					<font fontName="Arial" size="16" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ESTUFA]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="8a3914e4-8410-4645-b4c8-b20336a428ac" x="156" y="7" width="387" height="20"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="14"/>
-				</textElement>
-				<text><![CDATA[Relatório de Leituras]]></text>
-			</staticText>
+		<band height="30" splitType="Stretch">
+			<frame>
+				<reportElement uuid="b2954852-0e8c-4e7b-a22b-fa8f45c28fbb" mode="Opaque" x="-20" y="-20" width="596" height="50" backcolor="#006633"/>
+				<staticText>
+					<reportElement uuid="ea4bdce8-20a5-492a-93c1-021d4a41b9ea" x="30" y="20" width="57" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="16" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Projeto]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="8a3914e4-8410-4645-b4c8-b20336a428ac" x="158" y="20" width="400" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="DejaVu Sans" size="14"/>
+					</textElement>
+					<text><![CDATA[Relatório de Leituras]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ea4bdce8-20a5-492a-93c1-021d4a41b9ea" x="87" y="20" width="71" height="20" forecolor="#FFFFFF"/>
+					<textElement>
+						<font fontName="DejaVu Sans" size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ESTUFA]]></text>
+				</staticText>
+			</frame>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="50" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="a24cf0c0-f063-4c54-a628-a55272157d92" x="10" y="10" width="41" height="13"/>
-				<textElement/>
+				<reportElement uuid="a24cf0c0-f063-4c54-a628-a55272157d92" x="10" y="10" width="46" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[Período:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="false">
-				<reportElement uuid="fad04250-a8de-445b-b273-a3923c632ee5" x="51" y="10" width="64" height="13"/>
-				<textElement textAlignment="Center"/>
+				<reportElement uuid="fad04250-a8de-445b-b273-a3923c632ee5" x="56" y="10" width="75" height="13"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
 				<textFieldExpression><![CDATA[($P{INITIAL_DATE}) ? $P{INITIAL_DATE} : "[INDEFINIDO]"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="a24cf0c0-f063-4c54-a628-a55272157d92" x="115" y="10" width="18" height="13"/>
-				<textElement textAlignment="Center"/>
+				<reportElement uuid="a24cf0c0-f063-4c54-a628-a55272157d92" x="131" y="10" width="18" height="13"/>
+				<textElement textAlignment="Center">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[até]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="50a351e9-d51a-4788-8c18-66bc60946b43" x="133" y="10" width="64" height="13"/>
-				<textElement textAlignment="Center"/>
+				<reportElement uuid="50a351e9-d51a-4788-8c18-66bc60946b43" x="149" y="10" width="75" height="13"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
 				<textFieldExpression><![CDATA[($P{END_DATE}) ? $P{END_DATE} : "[INDEFINIDO]"]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement uuid="a24cf0c0-f063-4c54-a628-a55272157d92" x="10" y="23" width="41" height="13"/>
-				<textElement/>
+				<reportElement uuid="a24cf0c0-f063-4c54-a628-a55272157d92" x="10" y="23" width="46" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
 				<text><![CDATA[Sensor:]]></text>
 			</staticText>
+			<line>
+				<reportElement uuid="cae13d9b-64f4-4316-a505-8b39ce8efe3f" x="0" y="49" width="555" height="1"/>
+			</line>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="fad04250-a8de-445b-b273-a3923c632ee5" x="56" y="23" width="168" height="13"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{SENSOR}) ? $P{SENSOR} : "[INDEFINIDO]"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a24cf0c0-f063-4c54-a628-a55272157d92" x="236" y="10" width="54" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Ambiente:]]></text>
+			</staticText>
+			<textField pattern="" isBlankWhenNull="false">
+				<reportElement uuid="fad04250-a8de-445b-b273-a3923c632ee5" x="290" y="10" width="168" height="13"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{AMBIENT}) ? $P{AMBIENT} : "[INDEFINIDO]"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a24cf0c0-f063-4c54-a628-a55272157d92" x="236" y="23" width="54" height="13"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<text><![CDATA[Registros:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b55a58f4-bc70-4d09-a014-de2f073991da" x="290" y="23" width="168" height="13"/>
+				<textElement>
+					<paragraph leftIndent="5"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($P{LIMIT}) ? $P{LIMIT}.split(" ")[1] : "[ILIMITADO]"]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="18" splitType="Stretch">
 			<staticText>
-				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="0" y="0" width="72" height="16"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[ID]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="72" y="0" width="66" height="16"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[DATA]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="138" y="0" width="36" height="16"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[HORA]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="290" y="0" width="62" height="16"/>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[UMID. SOLO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="352" y="0" width="98" height="16"/>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="286" y="0" width="137" height="16"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[SENSOR]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="450" y="0" width="105" height="16"/>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="423" y="0" width="132" height="16"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[AMBIENTE]]></text>
 			</staticText>
@@ -156,71 +207,125 @@ LIMIT 500]]>
 				<reportElement uuid="cae13d9b-64f4-4316-a505-8b39ce8efe3f" x="0" y="15" width="555" height="1"/>
 			</line>
 			<staticText>
-				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="174" y="0" width="52" height="16"/>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="103" y="0" width="59" height="16"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[TEMP.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="226" y="0" width="64" height="15"/>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="162" y="0" width="62" height="15"/>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[UMID. AR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="0" y="0" width="67" height="16"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DATA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="67" y="0" width="36" height="16"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[HORA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="224" y="0" width="62" height="15"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[UMID. SOLO]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="17" splitType="Stretch">
-			<textField>
-				<reportElement uuid="895ffc31-b359-4d0f-9a2c-fbdce840aed1" x="0" y="1" width="72" height="15"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{ID_SCAN}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement uuid="02e6e285-de2e-469a-a623-9b1a0f2445a4" x="72" y="1" width="66" height="14"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
-			</textField>
-			<textField pattern="###,## %">
-				<reportElement uuid="bc3c0849-a4e3-40d2-aff5-99fab0a07f87" x="290" y="1" width="62" height="14"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{GROUND_HUMIDITY}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="b17f03c6-452c-4cf9-a837-a0afe128850d" x="352" y="1" width="98" height="14"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{SENSOR_DESCRIPTION}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement uuid="dc552f14-71a9-4e86-a81e-26486839dc06" x="450" y="1" width="105" height="14"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{AMBIENT_DESCRIPTION}]]></textFieldExpression>
-			</textField>
+		<band height="18" splitType="Stretch">
 			<line>
 				<reportElement uuid="cae13d9b-64f4-4316-a505-8b39ce8efe3f" x="0" y="15" width="555" height="1"/>
 			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="9fd81a24-6060-45a8-a625-065719bb0b79" x="0" y="0" width="67" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DATE}]]></textFieldExpression>
+			</textField>
 			<textField pattern="HH:mm">
-				<reportElement uuid="bbf65db4-e2d8-4281-84ef-7a4e1ce526a4" x="138" y="1" width="36" height="14"/>
+				<reportElement uuid="b864697b-0b10-4414-a300-6c57e9ab1373" x="67" y="0" width="36" height="15"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{TIME}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###,## ºC">
-				<reportElement uuid="a527efda-13a3-4952-8fff-af23b05c48d9" x="174" y="1" width="52" height="14"/>
+				<reportElement uuid="58379f01-4a88-419d-857b-eda9d4cef721" x="103" y="0" width="59" height="15"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{TEMPERATURE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###,## %">
-				<reportElement uuid="d8a00b98-9873-4957-b228-dd5e050cff9d" x="226" y="1" width="64" height="14"/>
+				<reportElement uuid="94f2cedd-fbdd-4a69-b29d-c4a7b267f04c" x="162" y="0" width="62" height="15"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{AIR_HUMIDITY}]]></textFieldExpression>
 			</textField>
+			<textField pattern="###,## %">
+				<reportElement uuid="2cfc798e-a765-4660-91c2-d2c3f1368061" x="224" y="0" width="62" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{GROUND_HUMIDITY}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="eb131cdd-3a1a-4d59-af97-bb0b6379c08f" x="286" y="0" width="137" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ID_SENSOR} + " - " + $F{SENSOR_DESCRIPTION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="619050ce-e67b-448b-ac77-aea283f6697e" x="423" y="0" width="132" height="15"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ID_AMBIENT} + " - " + $F{AMBIENT_DESCRIPTION}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="46" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="31" splitType="Stretch">
+			<textField evaluationTime="Report">
+				<reportElement uuid="bb16e903-93c7-421a-92d2-4f0a0183e495" x="515" y="11" width="40" height="20"/>
+				<textElement>
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="17747799-d637-4317-87c7-ca6f925244d8" x="435" y="11" width="80" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="DejaVu Sans"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band height="42">
+			<line>
+				<reportElement uuid="cae13d9b-64f4-4316-a505-8b39ce8efe3f" x="0" y="19" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="b12a2eab-4c88-429d-8555-eb5309397145" x="51" y="4" width="52" height="17"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MÉDIAS:]]></text>
+			</staticText>
+			<textField pattern="###,## ºC" isBlankWhenNull="true">
+				<reportElement uuid="b5a1c27d-5338-42c3-b42f-c30f4cb50b8c" x="103" y="4" width="59" height="16"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{AVG_TEMPERATURE}.doubleValue()]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,## %" isBlankWhenNull="true">
+				<reportElement uuid="079bd643-9197-4d7c-81ec-e6d55fc926ac" x="162" y="4" width="62" height="16"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{AVG_AIR_HUMIDITY}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###,## %" isBlankWhenNull="true">
+				<reportElement uuid="d86740f6-6bf7-4894-a76f-1449dcaeda19" x="224" y="4" width="62" height="16"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{AVG_GROUND_HUMIDITY}]]></textFieldExpression>
+			</textField>
+		</band>
 	</summary>
 </jasperReport>
