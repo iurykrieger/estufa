@@ -23,47 +23,65 @@ class ChartController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        
-    }
-
-    /**
-     * Show SensorChart
-     *
-     * @return \resources\views\chart\sensor.blade.php
-     */
-
-    public function showChart(){
-        $dt = Lava::DataTable();
-        $scans = DataTransfer::getScansBySensor('2016-04-23', '2016-04-25', 1);
-
-        $dt ->addDateTimeColumn('Data')
-            ->addNumberColumn('Temperatura')
-            ->addNumberColumn('Umidade Ar')
-            ->addNumberColumn('Umidade Solo');
-
-        foreach($scans as $scan){
-            $dt->addRow([$scan->time, $scan->temperature, $scan->air_humidity, $scan->ground_humidity]);
-        }
-
-        $grafico = Lava::LineChart('grafico', $dt, [
-           'height' => 600,
-           'hAxis' => [                
-                'title' => 'Data'
-            ],
-            'vAxis' => [
-                'title' => 'Temperatura'                
-            ]
-        ]);
-        
         $ambients = Ambient::all();
         $sensors = Sensor::all();
 
-        return view('chart/scans', ['ambients' => $ambients, 'sensors' => $sensors]);;
+        $dt = Lava::DataTable();
+        $dt ->addDateTimeColumn('Data')
+            ->addNumberColumn('Temperatura')
+            ->addNumberColumn('Umidade Ar')
+            ->addNumberColumn('Umidade Solo');
+        $grafico = Lava::LineChart('grafico', $dt, [
+           'height' => 600,
+           'hAxis' => [                
+                'title' => 'Data'
+            ],
+            'vAxis' => [
+                'title' => 'Temperatura'                
+            ]
+        ]);
+
+        return view('chart/scans', ['user'=>Auth::user(),'ambients' => $ambients, 'sensors' => $sensors, 'grafico' => $grafico]);
     }
 
-      public function postChart(){
-        $dt = Lava::DataTable();
-        $scans = DataTransfer::getScansBySensor('2016-04-23', '2016-04-25', 1);
+
+    /**
+     * Display chart.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function postChart(Request $request){
+        $ambients = Ambient::all();
+        $sensors = Sensor::all();
+
+        /**
+         * Get request inputs
+         */
+        $initialDate = $request->input('initialDate');
+        $endDate = $request->input('endDate');
+        $sensor = $request->input('sensor');
+        $ambient = $request->input('ambient');
+
+        $params = array();
+         $dt = Lava::DataTable();
+
+        if(!empty($sensor))      $params['SENSOR'] = $sensor; 
+        if(!empty($ambient))     $params['AMBIENT'] = $ambient; 
+        if(!empty($initialDate)) $params['INITIAL_DATE'] = $initialDate; 
+        if(!empty($endDate))     $params['END_DATE'] = $endDate; 
+      
+         if(empty($sensor) &&  empty($ambient))// busca apenas por data  
+           $scans = DataTransfer::getScansByDate($initialDate, $endDate);  
+
+        if(!empty($sensor) &&  empty($ambient))// busca apenas por sensor  
+            $scans = DataTransfer::getScansBySensor($initialDate, $endDate, $sensor, $ambient);           
+
+        if(empty($sensor)  && !empty($ambient))// busca apenas por ambiente  
+            $scans = DataTransfer::getScansByAmbient($initialDate, $endDate, $sensor, $ambient);        
+          
+        if(!empty($sensor) && !empty($ambient))// busca completa (sensor e ambiente)
+             $scans = DataTransfer::getScansBySensorAndAmbient($initialDate, $endDate, $sensor, $ambient);
+
 
         $dt ->addDateTimeColumn('Data')
             ->addNumberColumn('Temperatura')
@@ -71,7 +89,7 @@ class ChartController extends Controller{
             ->addNumberColumn('Umidade Solo');
 
         foreach($scans as $scan){
-            $dt->addRow([$scan->time, $scan->temperature, $scan->air_humidity, $scan->ground_humidity]);
+            $dt->addRow([$scan->data_alterada, $scan->temperature, $scan->air_humidity, $scan->ground_humidity]);
         }
 
         $grafico = Lava::LineChart('grafico', $dt, [
@@ -83,12 +101,10 @@ class ChartController extends Controller{
                 'title' => 'Temperatura'                
             ]
         ]);
-        
-        $sensores = Sensor::lists('id_sensor','description');
-        $ambients = Ambient::lists('id_ambient', 'description');
 
-         return view('chart.scans',['user'=>Auth::user(),'sensores'=> $sensores, 'ambientes' => $ambients]);
+         return view('chart.scans',['user'=>Auth::user(),'ambients' => $ambients, 'sensors' => $sensors,]);
     }
 
 
 }
+
