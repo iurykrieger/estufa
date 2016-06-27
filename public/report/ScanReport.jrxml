@@ -37,7 +37,11 @@ WHERE (scans.id_sensor = $P{SENSOR} OR $P{SENSOR} IS NULL) AND
       (scans.date >= $P{INITIAL_DATE} OR $P{INITIAL_DATE} IS NULL) AND
       (scans.date <= $P{END_DATE} OR $P{END_DATE} IS NULL)
 ORDER BY scans.date DESC,
-         scans.time DESC
+         scans.time DESC,
+         scans.id_sensor,
+         sensors.description,
+         scans.id_ambient,
+         ambients.description
 $P!{LIMIT}]]>
 	</queryString>
 	<field name="ID_SCAN" class="java.lang.Long">

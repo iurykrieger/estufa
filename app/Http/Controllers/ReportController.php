@@ -24,7 +24,11 @@ class ReportController extends Controller
         return view('reports/reportScan', ['ambients' => $ambients, 'sensors' => $sensors]);
     }
  
- 
+    /**
+     * Receive Post Request
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function postScan(Request $request)
     {
         /**
@@ -57,14 +61,28 @@ class ReportController extends Controller
         /**
          * Process the report
          */
+        $this->generateReport('ScanReport', 'RelatorioLeituras', $params);
+
+        
+        return Redirect::to('/admin/report/scan');
+    }
+
+    /**
+     * Process and generates the report
+     * @param  [type] $reportName  [description]
+     * @param  [type] $reportAlias [description]
+     * @param  [type] $params      [description]
+     * @return [type]              [description]
+     */
+    private function generateReport($reportName, $reportAlias, $params){
         $jasper = new JasperPHP();
 
         $database = Config::get('database.connections.mysql');
-        $output = public_path() . '/report/'.'RelatorioLeituras_' . time();
+        $output = public_path() . '/report/'. $reportAlias . '_' . time();
         $outputExt = "pdf";
-        $report = public_path() . '/report/ScanReport.jasper';
+        $report = public_path() . '/report/'. $reportName . '.jasper';
 
-        $s = $jasper->process(
+        $jasper->process(
             $report, //Relatório de entrada
             $output, //Relatório de saída
             array($outputExt), //Formato de saída
@@ -74,7 +92,7 @@ class ReportController extends Controller
 
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
-        header('Content-Disposition: attachment; filename='.'RelatorioLeituras_' . time(). '.'.$outputExt);
+        header('Content-Disposition: attachment; filename='. $reportAlias . '_' . time(). '.'.$outputExt);
         header('Content-Transfer-Encoding: binary');
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -83,7 +101,5 @@ class ReportController extends Controller
         flush();
         readfile($output.'.'.$outputExt);
         unlink($output.'.'.$outputExt); // deletes the temporary file
-        
-        return Redirect::to('/admin/report/scan');
     }
 }

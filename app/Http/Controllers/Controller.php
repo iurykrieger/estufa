@@ -11,5 +11,5 @@ abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected $redirectPath = '/home';
+    protected $redirectPath = '/admin';
 }

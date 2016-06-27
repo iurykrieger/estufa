@@ -14,6 +14,7 @@
 @endsection
 
 @section('content')
+
 <!-- Filter Box -->
 <div class="box">
     <div class="box-header with-border">
@@ -26,7 +27,7 @@
     </div>
     <div class="box-body">
     	{!! Form::open(['method' => 'POST','url' => 'admin/report/scan', 'class' => 'action-form form-inline', 'id' => 'form-dates']) !!}
-		{!! csrf_field() !!}
+		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
     	<div class="box-header">
 			<h3 class="box-title">PERÍODO</h3><br>
 		</div>
@@ -89,5 +90,9 @@
     <!-- /.box-body -->
 </div>
 <!-- /.box -->
+
+@endsection
+
+@section('scripts')
 
 @endsection
