@@ -31,12 +31,12 @@
         <form class="form-inline"> 
             <div class="box-body">
                 <div class="col-xs-2">
-                  {!! Form::label('initialDate', ' De ', ['class' => 'control-label']) !!}
+                  {!! Form::label('initialDate', 'Data Inicial', ['class' => 'control-label']) !!}
                   {!! Form::input('date','initialDate', null, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
                 </div>
 
                   <div class="col-xs-2">
-                    {!! Form::label('endDate', ' até ', ['class' => 'control-label']) !!}
+                    {!! Form::label('endDate', 'Data Final ', ['class' => 'control-label']) !!}
                     {!! Form::input('date','endDate', null, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
                   </div>          
             </div>

@@ -54,8 +54,18 @@ class ChartController extends Controller{
         $ambients = Ambient::all();
         $sensors = Sensor::all();
 
+         /**
+         * Valida os campos
+         */
+        $this->validate($request, [
+            'sensor' => 'required',
+            'ambient' => 'required',
+            'endDate' => 'required',
+            'initialDate' => 'required'
+        ]);
+
         /**
-         * Get request inputs
+         * Retorna paramentros da pagina
          */
         $initialDate = $request->input('initialDate');
         $endDate = $request->input('endDate');
@@ -63,15 +73,15 @@ class ChartController extends Controller{
         $ambient = $request->input('ambient');
 
         $params = array();
-         $dt = Lava::DataTable();
 
         if(!empty($sensor))      $params['SENSOR'] = $sensor; 
         if(!empty($ambient))     $params['AMBIENT'] = $ambient; 
         if(!empty($initialDate)) $params['INITIAL_DATE'] = $initialDate; 
         if(!empty($endDate))     $params['END_DATE'] = $endDate; 
       
-         if(empty($sensor) &&  empty($ambient))// busca apenas por data  
-           $scans = DataTransfer::getScansByDate($initialDate, $endDate);  
+         
+        if(empty($sensor) &&  empty($ambient))// busca apenas por data  
+           $scans = DataTransfer::getScansBySensor($initialDate, $endDate, $sensor, $ambient);  
 
         if(!empty($sensor) &&  empty($ambient))// busca apenas por sensor  
             $scans = DataTransfer::getScansBySensor($initialDate, $endDate, $sensor, $ambient);           
@@ -82,6 +92,11 @@ class ChartController extends Controller{
         if(!empty($sensor) && !empty($ambient))// busca completa (sensor e ambiente)
              $scans = DataTransfer::getScansBySensorAndAmbient($initialDate, $endDate, $sensor, $ambient);
 
+
+        /**
+         * Cria a data table - adiciona as colunas e carrega dados
+         */
+        $dt = Lava::DataTable();
 
         $dt ->addDateTimeColumn('Data')
             ->addNumberColumn('Temperatura')
@@ -104,7 +119,5 @@ class ChartController extends Controller{
 
          return view('chart.scans',['user'=>Auth::user(),'ambients' => $ambients, 'sensors' => $sensors,]);
     }
-
-
 }
 
