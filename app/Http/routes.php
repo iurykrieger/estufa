@@ -35,11 +35,11 @@ Route::get('/',function(){
 /**
  * Sensor Routes
  */
-Route::delete('admin/sensor/multipleDestroy','SensorController@multipleDestroy');
-Route::get('admin/sensor/{sensor}/deactivate','SensorController@deactivate');
-Route::get('admin/sensor/{sensor}/activate','SensorController@activate');
-Route::get('admin/sensor/ambient/{ambient?}','SensorController@getSensorsByAmbient');
-Route::resource('admin/sensor', 'SensorController');
+Route::delete('/admin/sensor/multipleDestroy','SensorController@multipleDestroy');
+Route::get('/admin/sensor/{sensor}/deactivate','SensorController@deactivate');
+Route::get('/admin/sensor/{sensor}/activate','SensorController@activate');
+Route::get('/admin/sensor/ambient/{ambient?}','SensorController@getSensorsByAmbient');
+Route::resource('/admin/sensor', 'SensorController');
 
 /**
  * Scan Routes
@@ -48,38 +48,38 @@ Route::get('/admin/scan/sensor/{sensor?}', 'ScanController@indexBySensor');
 Route::get('/admin/scan/ambient/{ambient?}', 'ScanController@indexByAmbient');
 Route::post('/admin/scan/date', 'ScanController@getScansByDates');
 Route::get('/admin/scan/all', 'ScanController@indexAll');
-Route::resource('admin/scan', 'ScanController',['only' => ['index', 'show', 'destroy']]);
+Route::resource('/admin/scan', 'ScanController',['only' => ['index', 'show', 'destroy']]);
 
 /**
  * Ambient Routes
  */
-Route::post('admin/ambient/sensors/{ambient}','AmbientController@deactivateAmbientSensors');
-Route::resource('admin/ambient', 'AmbientController');
+Route::post('/admin/ambient/sensors/{ambient}','AmbientController@deactivateAmbientSensors');
+Route::resource('/admin/ambient', 'AmbientController');
 
 /**
  * Authentication Routes
  */
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@getLogout');
+Route::get('/admin/auth/login', 'Auth\AuthController@getLogin');
+Route::post('/admin/auth/login', 'Auth\AuthController@postLogin');
+Route::get('/admin/auth/logout', 'Auth\AuthController@getLogout');
 
 /**
  * Registration Routes
  */
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::get('/admin/auth/register', 'Auth\AuthController@getRegister');
+Route::post('/admin/auth/register', 'Auth\AuthController@postRegister');
 
 /**
  * Password reset link request routes
  */
-Route::get('password/email', 'Auth\PasswordController@getEmail');
-Route::post('password/email', 'Auth\PasswordController@postEmail');
+Route::get('/admin/password/email', 'Auth\PasswordController@getEmail');
+Route::post('/admin/password/email', 'Auth\PasswordController@postEmail');
 
 /**
  * Password reset routes
  */
-Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
-Route::post('password/reset', 'Auth\PasswordController@postReset');
+Route::get('/admin/password/reset/{token}', 'Auth\PasswordController@getReset');
+Route::post('/admin/password/reset', 'Auth\PasswordController@postReset');
 
 /**
  * Charts reset routes

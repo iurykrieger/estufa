@@ -4,7 +4,7 @@
 @section('subtitle','Faça login para abrir sua sessão')
 
 @section('content')
-    <form method="POST" action="/auth/login">
+    <form method="POST" action="/admin/auth/login">
         {!! csrf_field() !!}
         <div class="form-group has-feedback">
             <input type="email" class="form-control" value="{{ old('email') }}" placeholder="Email" id="login-email" name="email">
@@ -24,7 +24,7 @@
             </div>
             <!-- /.col -->
             <div class="col-xs-6">
-                <a href="{{ url('password/email') }}">Perdeu sua senha?</a><br>
+                <a href="{{ url('/admin/password/email') }}">Perdeu sua senha?</a><br>
             </div>
             <!-- /.col -->
         </div>

@@ -93,7 +93,7 @@
                     <a href="#" class="btn btn-default btn-flat"><i class="fa fa-cog"></i> Minha Conta</a>
                   </div>
                   <div class="pull-right">
-                    <a href="{{ url('auth/logout') }}" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Sair</a>
+                    <a href="{{ url('/admin/auth/logout') }}" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Sair</a>
                   </div>
                 </li>
               </ul>

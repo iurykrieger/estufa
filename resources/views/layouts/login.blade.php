@@ -16,6 +16,10 @@
   <link rel="stylesheet" href="{{ asset('/vendor/bower_components/AdminLTE/dist/css/AdminLTE.min.css') }}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{ asset('/vendor/bower_components/AdminLTE/plugins/iCheck/square/blue.css') }}">
+  <!-- Sweet Alert -->
+  <link rel="stylesheet" href="{{ asset('css/SweetAlert.css') }}">
+  <!-- PACE -->
+  <link rel="stylesheet" href="{{ asset('css/pace.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -48,6 +52,12 @@
     <script src="{{ asset('/vendor/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js') }}"></script>
     <!-- iCheck -->
     <script src="{{ asset('/vendor/bower_components/AdminLTE/plugins/iCheck/icheck.min.js') }}"></script>
+    <!-- SweetAlert -->
+    <script src="{{ asset('js/SweetAlert.js') }}"></script>
+    <!-- PACE -->
+    <script src="{{ asset('js/pace.js') }}"></script>
+    <!-- Messages -->
+    @include('common.messages')
     <script>
         $(function () {
             $('input').iCheck({
@@ -57,5 +67,7 @@
               });
         });
     </script>
+
+   
 </body>
 </html>

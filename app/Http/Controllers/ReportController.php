@@ -63,7 +63,6 @@ class ReportController extends Controller
          */
         $this->generateReport('ScanReport', 'RelatorioLeituras', $params);
 
-        
         return Redirect::to('/admin/report/scan');
     }
 

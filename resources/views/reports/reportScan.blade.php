@@ -39,6 +39,8 @@
 			<div class="form-group">
 				{!! Form::label('endDate', ' até ', ['class' => 'control-label']) !!}
 				{!! Form::input('date','endDate', null, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
+
+				{!! Form::input('time','initialTime', null, ['class' => 'form-control', 'placeholder' => 'Time']) !!}
 			</div> 
 		</div>
 		<hr>
@@ -79,7 +81,23 @@
 					<option value="">-- ILIMITADO --</option>
 					@for ($i = 3000; $i >= 50; $i = $i - 50)
 					<option value="{{ $i }}">{{ $i }}</option>
-					@endfor
+					@endfor 
+				</select>
+			</div>    
+		</div>
+		<hr>
+		<div class="box-header">
+			<h3 class="box-title">AGRUPAMENTO</h3><br>
+		</div>
+		<div class="box-body">
+			<div class="form-group">
+				<select id="dropdown" name="limit" aria-controls="limit" class="form-control input-sm" style="width: 150px">
+					<option value="id_scan">LEITURA</option>
+					<option value="id_sensor">SENSOR</option>
+					<option value="id_ambient">AMBIENTE</option>
+					<option value="date">DATA</option>
+					<option value="time">HORA</option>
+					<option value="day">DIA</option>
 				</select>
 			</div>    
 		</div>
@@ -87,6 +105,7 @@
 		{!! Form::button('<i class="fa fa-file-pdf-o"></i> Gerar Relatório', ['class' => 'btn btn-primary btn-flat pull-right', 'id' => 'btn-search', 'type' => 'submit']) !!}
 		{!! Form::close() !!}
     </div>
+
     <!-- /.box-body -->
 </div>
 <!-- /.box -->

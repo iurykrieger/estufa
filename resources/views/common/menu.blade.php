@@ -73,4 +73,16 @@
 </li>
 
 <li class="header">OPÇÕES DE ADMINISTRADOR</li>
+<!-- Sensors Menu Item -->
+<li class="treeview">
+    <a href="#">
+        <i class="fa fa-sitemap"></i>
+        <span>Usuário</span>
+        <i class="fa fa-angle-left pull-right"></i>
+    </a>
+    <ul class="treeview-menu">
+        <li><a href="{{ url ('admin/sensor/create') }}"><i class="fa fa-circle-o"></i> Registrar Usuário</a></li>
+        <li><a href="{{ url ('admin/sensor') }}"><i class="fa fa-circle-o"></i> Lista de Usuários</a></li>
+    </ul>
+</li>
 </ul>

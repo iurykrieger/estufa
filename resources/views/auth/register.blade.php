@@ -6,9 +6,7 @@
 @stop
 
 @section('content')
-
-    @include('common.messages')
-    <form class="form-signup" method="POST" action="/auth/register">
+    <form class="form-signup" method="POST" action="/admin/auth/register">
         {!! csrf_field() !!}
         <div class="login-form">
             <div class="form-group">
@@ -36,7 +34,7 @@
                 <label class="login-field-icon fui-list" for="register-secret-answer"></label>
             </div>
             <button type="submit" value="Registrar" class="btn btn-primary btn-lg btn-block">Registrar</button>
-            <a class="login-link" href="/auth/login">Voltar ao login</a>
+            <a class="login-link" href="/admin/auth/login">Voltar ao login</a>
         </div>
     </form>
 @stop
