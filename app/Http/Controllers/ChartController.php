@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use Khill\Lavacharts\Laravel\LavachartsFacade as Lava;
 
 class ChartController extends Controller{
@@ -56,13 +57,14 @@ class ChartController extends Controller{
 
          /**
          * Valida os campos
-         */
+         *//*
         $this->validate($request, [
             'sensor' => 'required',
             'ambient' => 'required',
             'endDate' => 'required',
             'initialDate' => 'required'
         ]);
+*/
 
         /**
          * Retorna paramentros da pagina
@@ -71,6 +73,9 @@ class ChartController extends Controller{
         $endDate = $request->input('endDate');
         $sensor = $request->input('sensor');
         $ambient = $request->input('ambient');
+        $temperatura = $request->input('temperature');
+        $uda = $request->input('air_humidity');
+        $uds = $request->input('ground_humidity');
 
         $params = array();
 
@@ -98,26 +103,60 @@ class ChartController extends Controller{
          */
         $dt = Lava::DataTable();
 
-        $dt ->addDateTimeColumn('Data')
-            ->addNumberColumn('Temperatura')
-            ->addNumberColumn('Umidade Ar')
-            ->addNumberColumn('Umidade Solo');
+        //Carrega somente temperatura
+        if(!empty($temperatura) && empty($uda) && empty($uds)){
+            $dt ->addDateTimeColumn('Data')->addNumberColumn('Temperatura');
+            foreach($scans as $scan){  $dt->addRow([$scan->data_alterada, $scan->temperature]);  }
+        }
 
-        foreach($scans as $scan){
-            $dt->addRow([$scan->data_alterada, $scan->temperature, $scan->air_humidity, $scan->ground_humidity]);
+        //Carrega somente umidade do ar
+        if(empty($temperatura) && !empty($uda) && empty($uds)){
+            $dt ->addDateTimeColumn('Data')->addNumberColumn('Umidade Ar');
+            foreach($scans as $scan){ $dt->addRow([$scan->data_alterada, $scan->air_humidity]);  }
+        }
+
+        //Carrega somente umidade do solo
+        if(empty($temperatura) && empty($uda) && !empty($uds)){
+            $dt ->addDateTimeColumn('Data')->addNumberColumn('Umidade Solo');
+            foreach($scans as $scan){  $dt->addRow([$scan->data_alterada,$scan->ground_humidity]); }
+        }
+
+        //Carrega temperatura e umidade do ar
+        if(!empty($temperatura) && !empty($uda) && empty($uds)){
+            $dt ->addDateTimeColumn('Data')->addNumberColumn('Temperatura')->addNumberColumn('Umidade Ar');
+            foreach($scans as $scan){ $dt->addRow([$scan->data_alterada, $scan->temperature, $scan->air_humidity]);}
+        }
+
+        //Carrega temperatura e umidade do solo
+        if(!empty($temperatura) && empty($uda) && !empty($uds)){
+            $dt ->addDateTimeColumn('Data')->addNumberColumn('Temperatura')->addNumberColumn('Umidade Solo');
+            foreach($scans as $scan){ $dt->addRow([$scan->data_alterada, $scan->temperature, $scan->ground_humidity]);}
+        }
+
+        //Carrega umidade do ar e umidade do solo
+        if(empty($temperatura) && !empty($uda) && !empty($uds)){
+            $dt ->addDateTimeColumn('Data')->addNumberColumn('Umidade Ar')->addNumberColumn('Umidade Solo');
+            foreach($scans as $scan){ $dt->addRow([$scan->data_alterada, $scan->air_humidity, $scan->ground_humidity]);}
+         }
+
+        //Carrega todos os dados no grafico
+        if(!empty($temperatura) && !empty($uda) && !empty($uds)){
+            $dt ->addDateTimeColumn('Data')->addNumberColumn('Temperatura')->addNumberColumn('Umidade Ar')->addNumberColumn('Umidade Solo');
+            foreach($scans as $scan){ $dt->addRow([$scan->data_alterada, $scan->temperature, $scan->air_humidity, $scan->ground_humidity]); }            
         }
 
         $grafico = Lava::LineChart('grafico', $dt, [
-           'height' => 600,
-           'hAxis' => [                
-                'title' => 'Data'
-            ],
-            'vAxis' => [
-                'title' => 'Temperatura'                
-            ]
-        ]);
+               'height' => 600,
+               'hAxis' => [                
+                    'title' => 'Data'
+                ],
+                'vAxis' => [
+                    'title' => 'Temperatura'                
+                ]
+            ]);
 
-         return view('chart.scans',['user'=>Auth::user(),'ambients' => $ambients, 'sensors' => $sensors,]);
-    }
+        return view('chart.scans',['user'=>Auth::user(),'ambients' => $ambients, 'sensors' => $sensors,]);
+     }
+    
 }
 
