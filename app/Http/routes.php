@@ -67,7 +67,7 @@ Route::get('/admin/auth/logout', 'Auth\AuthController@getLogout');
  * Registration Routes
  */
 Route::get('/admin/auth/register', 'Auth\AuthController@getRegister');
-Route::post('/admin/auth/register', 'Auth\AuthController@postRegister');
+Route::post('/admin/auth/register', 'Auth\AuthController@create');
 
 /**
  * Password reset link request routes

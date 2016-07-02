@@ -20,12 +20,6 @@
             displayMessage("Aviso!", "{{ session('warningMessage') }}", "warning");
         });
     </script>
-@elseif(session('loadMessage'))
-    <script>
-        $(document).ready(function() {
-            loading().showPleaseWait();
-        });
-    </script>
 @endif
 
 <script>
