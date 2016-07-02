@@ -67,7 +67,7 @@ Route::get('/admin/auth/logout', 'Auth\AuthController@getLogout');
  * User Routes
  */
 Route::get('/admin/user','UserController@index');
-Route::delete('/admin/user/delete','UserController@destroy');
+Route::delete('/admin/user/delete/{user}','UserController@destroy');
 Route::get('/admin/user/register','UserController@create');
 Route::post('/admin/user/register','UserController@store');
 Route::get('/admin/user/account/{user}','UserController@show');

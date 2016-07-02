@@ -1,5 +1,5 @@
-<script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.10/js/dataTables.bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
 <script>
 	$(document).ready(function() {
 		$('#scans').DataTable({
@@ -19,9 +19,10 @@
 			},
 			"autoWidth": false,
 			responsive: true,
+			autoWidth: false,
 			pageLength: 50,
 			paging:false,
-			"order": [[ 1, "desc" ], [ 2, "desc" ]]
+			"order": [[ 0, "desc" ], [ 1, "desc" ]]
 		});
 	} );
 </script>

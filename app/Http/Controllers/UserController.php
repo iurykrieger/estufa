@@ -136,11 +136,12 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        if(Auth::user()->role()->description != 'Administrador' && Auth::user() != $user){
-            return Redirect::back()->withErrors('Você não tem permissão para deletar este usuário!');
-        }else{
-            $user->delete();
+        if(Auth::user()->role->description != 'Administrador' && Auth::user() != $user){
+            return Redirect::to('admin/user')->withErrors('Você não tem permissão para deletar este usuário!');
+        }else if($user->delete()){
             return Redirect::to('admin/user')->with('successMessage','O usuário foi excluido com sucesso do banco de dados.');
+        }else{
+            return Redirect::to('admin/user')->withErrors('Houve um erro ao deletar o usuário');
         }
     }
 }

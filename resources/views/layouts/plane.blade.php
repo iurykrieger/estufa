@@ -28,6 +28,8 @@
   <link rel="stylesheet" href="{{ asset('/vendor/bower_components/AdminLTE/plugins/daterangepicker/daterangepicker-bs3.css') }}">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="{{ asset('/vendor/bower_components/AdminLTE/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+  <!-- Dat Tables -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
   <!-- Sweet Alert -->
   <link rel="stylesheet" href="{{ asset('css/SweetAlert.css') }}">
   <!-- PACE -->
