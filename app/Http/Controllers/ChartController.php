@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Validator;
 use Khill\Lavacharts\Laravel\LavachartsFacade as Lava;
+use Illuminate\Support\Facades\Session;
 
 class ChartController extends Controller{
     /**
@@ -27,24 +28,8 @@ class ChartController extends Controller{
         $ambients = Ambient::all();
         $sensors = Sensor::all();
 
-        $dt = Lava::DataTable();
-        $dt ->addDateTimeColumn('Data')
-            ->addNumberColumn('Temperatura')
-            ->addNumberColumn('Umidade Ar')
-            ->addNumberColumn('Umidade Solo');
-        $grafico = Lava::LineChart('grafico', $dt, [
-           'height' => 600,
-           'hAxis' => [                
-                'title' => 'Data'
-            ],
-            'vAxis' => [
-                'title' => 'Temperatura'                
-            ]
-        ]);
-
-        return view('chart/scans', ['user'=>Auth::user(),'ambients' => $ambients, 'sensors' => $sensors, 'grafico' => $grafico]);
+        return view('chart/scans', ['user'=>Auth::user(),'ambients' => $ambients, 'sensors' => $sensors]);
     }
-
 
     /**
      * Display chart.
@@ -57,14 +42,13 @@ class ChartController extends Controller{
 
          /**
          * Valida os campos
-         *//*
+         */
         $this->validate($request, [
             'sensor' => 'required',
             'ambient' => 'required',
             'endDate' => 'required',
             'initialDate' => 'required'
         ]);
-*/
 
         /**
          * Retorna paramentros da pagina
@@ -84,7 +68,7 @@ class ChartController extends Controller{
         if(!empty($initialDate)) $params['INITIAL_DATE'] = $initialDate; 
         if(!empty($endDate))     $params['END_DATE'] = $endDate; 
       
-         
+        /* 
         if(empty($sensor) &&  empty($ambient))// busca apenas por data  
            $scans = DataTransfer::getScansBySensor($initialDate, $endDate, $sensor, $ambient);  
 
@@ -93,7 +77,7 @@ class ChartController extends Controller{
 
         if(empty($sensor)  && !empty($ambient))// busca apenas por ambiente  
             $scans = DataTransfer::getScansByAmbient($initialDate, $endDate, $sensor, $ambient);        
-          
+        */
         if(!empty($sensor) && !empty($ambient))// busca completa (sensor e ambiente)
              $scans = DataTransfer::getScansBySensorAndAmbient($initialDate, $endDate, $sensor, $ambient);
 
@@ -145,17 +129,37 @@ class ChartController extends Controller{
             foreach($scans as $scan){ $dt->addRow([$scan->data_alterada, $scan->temperature, $scan->air_humidity, $scan->ground_humidity]); }            
         }
 
-        $grafico = Lava::LineChart('grafico', $dt, [
-               'height' => 600,
-               'hAxis' => [                
-                    'title' => 'Data'
-                ],
-                'vAxis' => [
-                    'title' => 'Temperatura'                
-                ]
-            ]);
+        //Caso nenhuma check fique marcado, consulta por todas as opcoes
+        if(empty($temperatura) && empty($uda) && empty($uds)){
+            $dt ->addDateTimeColumn('Data')->addNumberColumn('Temperatura')->addNumberColumn('Umidade Ar')->addNumberColumn('Umidade Solo');
+            foreach($scans as $scan){ $dt->addRow([$scan->data_alterada, $scan->temperature, $scan->air_humidity, $scan->ground_humidity]); }            
+        }
 
-        return view('chart.scans',['user'=>Auth::user(),'ambients' => $ambients, 'sensors' => $sensors,]);
+        if(empty($scan)){
+            Session::flash('warningMessage','Nenhuma leitura encontrada.');
+            $grafico = Lava::LineChart('grafico', $dt, [
+                   'height' => 600,
+                   'hAxis' => [                
+                        'title' => 'Data'
+                    ],
+                    'vAxis' => [
+                        'title' => 'Temperatura'                
+                    ]
+                ]);            
+        }else{
+            $grafico = Lava::LineChart('grafico', $dt, [
+                   'height' => 600,
+                   'hAxis' => [                
+                        'title' => 'Data'
+                    ],
+                    'vAxis' => [
+                        'title' => 'Temperatura'                
+                    ]
+                ]);
+            }
+
+        return view('chart/scans',['user'=>Auth::user(),'ambients' => $ambients, 'sensors' => $sensors]);
+
      }
     
 }
