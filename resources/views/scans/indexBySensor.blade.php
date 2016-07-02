@@ -45,7 +45,6 @@
 		<table id="scans" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 			<thead>
 				<tr>
-					<th>ID</th>
 					<th>Data</th>
 					<th>Hora</th>
 					<th>Temperatura</th>
@@ -58,7 +57,6 @@
 			</thead>
 			<tfoot>
 				<tr>
-					<th>ID</th>
 					<th>Data</th>
 					<th>Hora</th>
 					<th>Temperatura</th>
@@ -72,7 +70,6 @@
 			<tbody>
 				@foreach ($scans as $scan)
 				<tr>
-					<td>{{ $scan->id_scan }}</td>
 					<td>{{ $scan->date->format('d/m/Y') }}</td>
 					<td>{{ $scan->time }}</td>
 					<td>{{ $scan->temperature }} ºC</td>

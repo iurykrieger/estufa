@@ -1,23 +1,23 @@
 <!-- resources/views/ambients/create.blade.php -->
 @extends('layouts.dashboard')
 
-@section('title','Novo Ambiente')
+@section('title','Registrar Usuário')
 
-@section('page_title','Ambiente')
+@section('page_title','Usuário')
 
-@section('page_subtitle','Novo Ambiente')
+@section('page_subtitle','Registrar Usuário')
 
 @section('breadcrumb')
     <li><a href="{{ url('admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><i class="fa fa-tree"></i> Ambientes</li>
-    <li class="active">Novo Ambiente</li>
+    <li><i class="fa fa-user"></i> Usuários</li>
+    <li class="active">Registrar Usuário</li>
 @endsection
 
 @section('content')
   <!-- Default box -->
   <div class="box">
     <div class="box-header with-border">
-      <h3 class="box-title"><i class="fa fa-tree"></i> Cadastro de Ambiente</h3>
+      <h3 class="box-title"><i class="fa fa-user"></i> Registro de Usuário</h3>
 
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -26,47 +26,47 @@
       </div>
     </div>
     <div class="box-body">
-      	{!! Form::open(['url' => 'admin/ambient']) !!}
+      	{!! Form::open(['url' => 'admin/user/register']) !!}
 
 		<div class="form-group">
-			{!! Form::label('description', 'Descrição:', ['class' => 'control-label']) !!}
-			{!! Form::text('description', null, ['class' => 'form-control']) !!}
+			{!! Form::label('name', 'Nome:', ['class' => 'control-label']) !!}
+			{!! Form::text('name', old('name'), ['class' => 'form-control']) !!}
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('max_temperature', 'Temperatura Máxima:', ['class' => 'control-label']) !!}
-			{!! Form::text('max_temperature', null, ['class' => 'form-control']) !!}
+			{!! Form::label('email', 'Email:', ['class' => 'control-label']) !!}
+			{!! Form::email('email', old('email'), ['class' => 'form-control']) !!}
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('min_temperature', 'Temperatura Mínima:', ['class' => 'control-label']) !!}
-			{!! Form::text('min_temperature', null, ['class' => 'form-control']) !!}
+			{!! Form::label('password', 'Senha:', ['class' => 'control-label']) !!}
+			{!! Form::password('password', ['class' => 'form-control']) !!}
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('max_air_humidity', 'Umidade do Ar Máxima:', ['class' => 'control-label']) !!}
-			{!! Form::text('max_air_humidity', null, ['class' => 'form-control']) !!}
+			{!! Form::label('password_confirmation', 'Confirmação de Senha:', ['class' => 'control-label']) !!}
+			{!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('min_air_humidity', 'Umidade do Ar Mínima:', ['class' => 'control-label']) !!}
-			{!! Form::text('min_air_humidity', null, ['class' => 'form-control']) !!}
+			{!! Form::label('id_role', 'Tipo:', ['class' => 'control-label']) !!}
+			{!! Form::select('id_role', $roles, null, ['class' => 'form form-control']) !!}
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('max_ground_humidity', 'Umidade do Solo Máxima:', ['class' => 'control-label']) !!}
-			{!! Form::text('max_ground_humidity', null, ['class' => 'form-control']) !!}
+			{!! Form::label('secret_question', 'Pergunta Secreta:', ['class' => 'control-label']) !!}
+			{!! Form::text('secret_question', null, ['class' => 'form-control']) !!}
 		</div>
 
 		<div class="form-group">
-			{!! Form::label('min_ground_humidity', 'Umidade do Solo Mínima:', ['class' => 'control-label']) !!}
-			{!! Form::text('min_ground_humidity', null, ['class' => 'form-control']) !!}
+			{!! Form::label('secret_answer', 'Resposta da Pergunta:', ['class' => 'control-label']) !!}
+			{!! Form::text('secret_answer', null, ['class' => 'form-control']) !!}
 		</div>
 
-		{!!Form::button('<i class="fa fa-save"></i> Salvar Novo Ambiente', array('type' => 'submit', 'class' => 'btn btn-primary btn-flat'))!!}
+		{!!Form::button('<i class="fa fa-save"></i> Registrar Usuário', array('type' => 'submit', 'class' => 'btn btn-primary btn-flat'))!!}
 
-		<a href="{{ url('admin/ambient') }}">
-			<button type="button" class="btn btn-info btn-flat"><i class="fa fa-arrow-left"></i> Voltar aos ambientes</button>
+		<a href="{{ url('admin/user') }}">
+			<button type="button" class="btn btn-info btn-flat"><i class="fa fa-arrow-left"></i> Voltar aos usuários</button>
 		</a>
 
 		{!! Form::close() !!}

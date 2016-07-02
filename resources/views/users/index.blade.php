@@ -33,6 +33,7 @@
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Tipo</th>
+                    <th>Ativo</th>
                     <th>Data de Ingresso</th>
                     <th>Ações</th>
                 </tr>
@@ -43,6 +44,7 @@
                     <th>Nome</th>
                     <th>Email</th>
                     <th>Tipo</th>
+                    <th>Ativo</th>
                     <th>Data de Ingresso</th>
                     <th>Ações</th>
                 </tr>
@@ -54,6 +56,7 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->role->description }}</td>
+                    <td>{{ ($user->active == 1 ? "Sim" : "Não")  }}</td>
                     <td>{{ $user->created_at->format('d/m/Y H:i:s') }}</td>
                     <td>
                         <!-- Show Button -->

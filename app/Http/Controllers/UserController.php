@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -38,7 +42,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.register');
+        $roles = Role::lists('description', 'id_role');
+        return view('users.register', ["roles" => $roles]);
     }
 
     /**
@@ -54,10 +59,22 @@ class UserController extends Controller
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
             'secret_question' => 'required|max:255',
-            'secret_answer' => 'required|max:255'
+            'secret_answer' => 'required|max:255',
+            'id_role' => 'required'
         ]);
-        $user = $user->all();
-        User::create($user);
+        $data = $request->all();
+        
+        User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'secret_question' => $data['secret_question'],
+            'secret_answer' => $data['secret_answer'],
+            'tries' => 0,
+            'active' => true,
+            'id_role' => $data['id_role'],
+        ]);
+        
         return Redirect::to('admin/user/register')->with('successMessage','O usuário foi cadastrado com sucesso no banco de dados.');
     }
 

@@ -16,6 +16,11 @@
 @section('content')
 
 <!-- Default box -->
+  <div class="callout callout-info" style="margin-bottom: 0!important;">
+  	<h4><i class="fa fa-info"></i> Nota:</h4>
+  	Estas informações referem-se as últimas leituras do dia.
+  </div>
+  <br>
   <div class="box">
     <div class="box-header with-border">
       <h3 class="box-title"><i class="fa fa-tasks"></i> Últimas Leituras</h3>
@@ -30,7 +35,6 @@
         <table id="scans" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 			<thead>
 				<tr>
-					<th>ID</th>
 					<th>Data</th>
 					<th>Hora</th>
 					<th>Temperatura</th>
@@ -43,7 +47,6 @@
 			</thead>
 			<tfoot>
 				<tr>
-					<th>ID</th>
 					<th>Data</th>
 					<th>Hora</th>
 					<th>Temperatura</th>
@@ -57,7 +60,6 @@
 			<tbody>
 				@foreach ($scans as $scan)
 				<tr>
-					<td>{{ $scan->id_scan }}</td>
 					<td>{{ $scan->date->format('d/m/Y') }}</td>
 					<td>{{ $scan->time }}</td>
 					<td>{{ $scan->temperature }} ºC</td>
@@ -67,12 +69,12 @@
 					<td><a href="{{url('admin/ambient/'.$scan->ambient->id_ambient)}}">{{ $scan->ambient->id_ambient." - ".$scan->ambient->description}}</a></td>
 					<td>
 						<!-- Show Button -->
-		                <a href="{{ url('admin/scan/'.$scan->id_scan) }}"><button type="button" class="btn btn-primary"><i class="fa fa-eye"></i> Visualizar</button></a>
+		                <a href="{{ url('admin/scan/'.$scan->id_scan) }}"><button type="button" class="btn btn-primary btn-flat"><i class="fa fa-eye"></i> Visualizar</button></a>
 		                
 		                <!-- Destroy Form Button -->
 		                {!! Form::open(['method' => 'DELETE','url' => 'admin/scan/'.$scan->id_scan, 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
 		                {!! csrf_field() !!}
-		                {!! Form::button('<i class="fa fa-times"></i> Remover', ['class' => 'btn btn-danger', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
+		                {!! Form::button('<i class="fa fa-times"></i> Remover', ['class' => 'btn btn-danger btn-flat', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
 		                {!! Form::close() !!}
 					</td>
 				</tr>

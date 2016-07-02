@@ -90,7 +90,7 @@
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
-                    <a href="#" class="btn btn-default btn-flat"><i class="fa fa-cog"></i> Minha Conta</a>
+                    <a href="{{ url('/admin/user/account/'.Auth::user()->id_user) }}" class="btn btn-default btn-flat"><i class="fa fa-cog"></i> Minha Conta</a>
                   </div>
                   <div class="pull-right">
                     <a href="{{ url('/admin/auth/logout') }}" class="btn btn-default btn-flat"><i class="fa fa-sign-out"></i> Sair</a>

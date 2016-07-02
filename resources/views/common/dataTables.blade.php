@@ -21,6 +21,7 @@
 			responsive: true,
 			pageLength: 50,
 			paging:false,
+			"order": [[ 1, "desc" ], [ 2, "desc" ]]
 		});
 	} );
 </script>
