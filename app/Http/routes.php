@@ -64,10 +64,15 @@ Route::post('/admin/auth/login', 'Auth\AuthController@postLogin');
 Route::get('/admin/auth/logout', 'Auth\AuthController@getLogout');
 
 /**
- * Registration Routes
+ * User Routes
  */
-Route::get('/admin/auth/register', 'Auth\AuthController@getRegister');
-Route::post('/admin/auth/register', 'Auth\AuthController@create');
+Route::get('/admin/user','UserController@index');
+Route::delete('/admin/user/delete','UserController@destroy');
+Route::get('/admin/user/register','UserController@create');
+Route::post('/admin/user/register','UserController@store');
+Route::get('/admin/user/account/{user}','UserController@show');
+Route::get('/admin/user/account/{user}/edit','UserController@edit');
+Route::post('/admin/user/account/{user}/edit','UserController@update');
 
 /**
  * Password reset link request routes

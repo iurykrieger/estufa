@@ -129,7 +129,7 @@ class AmbientController extends Controller
      */
     public function destroy($id)
     {
-        $ambient = Ambient::findOrFail($id);
+        $ambient = User::findOrFail($id);
         if(count($ambient->sensors()) > 0){
             return Redirect::back()->withErrors('Você não pode deletar um ambiente que possui sensores atrelados!');
         }else{

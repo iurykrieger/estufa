@@ -70,13 +70,13 @@
                     <td>{{ $ambient->updated_at->format('d/m/Y H:i:s') }}</td>
                     <td>
                         <!-- Show Button -->
-                        <a href="{{ url('admin/ambient/'.$ambient->id_ambient) }}"><button type="button" class="btn btn-primary"><i class="fa fa-eye"></i> Visualizar</button></a>
+                        <a href="{{ url('admin/ambient/'.$ambient->id_ambient) }}"><button type="button" class="btn btn-primary btn-flat"><i class="fa fa-eye"></i> Visualizar</button></a>
 
                         <!-- Edit Button -->
-                        <a href="{{ url('admin/ambient/'.$ambient->id_ambient.'/edit') }}"><button type="button" class="btn btn-info"><i class="fa fa-pencil"></i> Editar</button></a>
+                        <a href="{{ url('admin/ambient/'.$ambient->id_ambient.'/edit') }}"><button type="button" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i> Editar</button></a>
                         
                         <!-- Sensors Button -->
-                        <a href="{{ url('admin/sensor/ambient/'.$ambient->id_ambient) }}"><button type="button" class="btn"><i class="fa fa-sitemap"></i> Sensores</button></a>
+                        <a href="{{ url('admin/sensor/ambient/'.$ambient->id_ambient) }}"><button type="button" class="btn btn-flat"><i class="fa fa-sitemap"></i> Sensores</button></a>
                     </td>
                 </tr>
                 @endforeach
