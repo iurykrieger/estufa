@@ -85,14 +85,19 @@
               </div>
 
               <div class="col-xs-2">                
-                {!! Form::button('<i class="fa fa-file-pdf-o"></i> Consultar', ['class' => 'btn btn-primary btn-flat pull-right', 'id' => 'btn-search', 'type' => 'submit']) !!}
+                {!! Form::button('<i class="fa fa-file-pdf-o"></i> Consultar', ['class' => 'btn btn-primary btn-flat pull-right','name' => 'btn-consultar','id' => 'btn-search', 'type' => 'submit']) !!}
               </div>  
             </div>     
                           
           </div>              
                 <div id="temps_div" class=""></div>            
         </form>
+        <?
+          if (isset($_POST['btn-consultar'])){?>
+                @linechart('grafico', 'temps_div') 
+              <? }?>
 
+        
     {!! Form::close() !!}
     </div>
     <!-- /.box-body -->    
@@ -100,6 +105,3 @@
   <!-- /.box -->
 @endsection
 
-@section('scripts')
-   @linechart('grafico', 'temps_div') 
-@endsection
