@@ -66,7 +66,7 @@ class AuthController extends Controller
             'secret_answer' => $data['secret_answer'],
             'tries' => 0,
             'active' => true,
-            'id_role' => $data['id_role'],
+            'id_role' => 1
         ]);
     }
 }

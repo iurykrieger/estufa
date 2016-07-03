@@ -39,8 +39,8 @@
 			<div class="form-group">
 				{!! Form::label('endDate', ' até ', ['class' => 'control-label']) !!}
 				{!! Form::input('date','endDate', null, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
-
 				{!! Form::input('time','initialTime', null, ['class' => 'form-control', 'placeholder' => 'Time']) !!}
+				{!! Form::input('time','endTime', null, ['class' => 'form-control', 'placeholder' => 'Time']) !!}
 			</div> 
 		</div>
 		<hr>
@@ -91,7 +91,7 @@
 		</div>
 		<div class="box-body">
 			<div class="form-group">
-				<select id="dropdown" name="limit" aria-controls="limit" class="form-control input-sm" style="width: 150px">
+				<select id="dropdown" name="group" aria-controls="limit" class="form-control input-sm" style="width: 150px">
 					<option value="id_scan">LEITURA</option>
 					<option value="id_sensor">SENSOR</option>
 					<option value="id_ambient">AMBIENTE</option>

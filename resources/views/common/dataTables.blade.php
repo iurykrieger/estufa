@@ -2,7 +2,7 @@
 <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#scans').DataTable({
+		$('#dataTable').DataTable({
 			language: {
 				"lengthMenu": "Mostrando _MENU_ leituras por página",
 				"zeroRecords": "Descuple, nenhum registro encontrado",

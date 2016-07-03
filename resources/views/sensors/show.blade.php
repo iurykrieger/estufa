@@ -68,13 +68,18 @@
 			{{ $sensor->updated_at->format('d/m/Y H:m:s') }}
 		</div>
 		<hr>
-		<a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/edit') }}"><button type="button" class="btn btn-primary btn-flat"><i class="fa fa-pencil"></i> Editar Sensor</button></a>
-		<a href="{{ url('admin/sensor') }}"><button type="button" class="btn btn-info btn-flat"><i class="fa fa-arrow-left"></i> Voltar aos sensores</button></a>
+		@if (Auth::user()->isAdmin())
+			<a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/edit') }}"><button type="button" class="btn btn-primary btn-flat"><i class="fa fa-pencil"></i> Editar Sensor</button></a>
+		@endif
 
-		{!! Form::open(['method' => 'DELETE','url' => 'admin/sensor/'.$sensor->id_sensor, 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
-		{!! csrf_field() !!}
-		{!! Form::button('<i class="fa fa-trash"></i> Remover Sensor', ['class' => 'btn btn-danger btn-flat pull-right', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
-		{!! Form::close() !!}
+		<a href="{{ url('admin/sensor') }}"><button type="button" class="btn btn-info btn-flat"><i class="fa fa-arrow-left"></i> Voltar aos sensores</button></a>
+		
+		@if (Auth::user()->isAdmin())
+			{!! Form::open(['method' => 'DELETE','url' => 'admin/sensor/'.$sensor->id_sensor, 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
+			{!! csrf_field() !!}
+			{!! Form::button('<i class="fa fa-trash"></i> Remover Sensor', ['class' => 'btn btn-danger btn-flat pull-right', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
+			{!! Form::close() !!}
+		@endif
 	</div>
 	<!-- /.box-body -->
 </div>

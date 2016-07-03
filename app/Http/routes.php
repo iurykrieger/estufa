@@ -62,17 +62,19 @@ Route::resource('/admin/ambient', 'AmbientController');
 Route::get('/admin/auth/login', 'Auth\AuthController@getLogin');
 Route::post('/admin/auth/login', 'Auth\AuthController@postLogin');
 Route::get('/admin/auth/logout', 'Auth\AuthController@getLogout');
+//Route::get('/admin/auth/register','Auth\AuthController@getRegister');
+//Route::post('/admin/auth/register','Auth\AuthController@postRegister');
 
 /**
  * User Routes
  */
 Route::get('/admin/user','UserController@index');
-Route::delete('/admin/user/delete/{user}','UserController@destroy');
 Route::get('/admin/user/register','UserController@create');
-Route::post('/admin/user/register','UserController@store');
+Route::post('/admin/user','UserController@store');
 Route::get('/admin/user/account/{user}','UserController@show');
 Route::get('/admin/user/account/{user}/edit','UserController@edit');
-Route::post('/admin/user/account/{user}/edit','UserController@update');
+Route::patch('/admin/user/account/{user}','UserController@update');
+Route::delete('/admin/user/delete/{user}','UserController@destroy');
 
 /**
  * Password reset link request routes

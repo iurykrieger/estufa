@@ -97,9 +97,13 @@ class ScanController extends Controller
      */
     public function destroy($id)
     {
-        $scan = Scan::findOrFail($id);
-        $scan->delete();
-        return Redirect::to('admin/scan/all')->with('successMessage','A leitura foi excluida com sucesso do banco de dados.');
+    	if(Auth::user()->isAdmin()){
+	        $scan = Scan::findOrFail($id);
+	        $scan->delete();
+	        return Redirect::to('admin/scan/all')->with('successMessage','A leitura foi excluida com sucesso do banco de dados.');
+	    }else{
+	    	return Redirect::back();
+	    }
     }
 
     /**

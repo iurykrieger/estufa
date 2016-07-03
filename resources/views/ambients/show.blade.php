@@ -97,18 +97,25 @@
 		   	{{ $ambient->updated_at->format('d/m/Y H:m:s') }}
 		</div>
 		<hr>
-		<a href="{{ url('admin/ambient/'.$ambient->id_ambient.'/edit') }}">
-			<button type="button" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i> Editar Ambiente</button>
-		</a>
+		@if (Auth::user()->isAdmin())
+			<a href="{{ url('admin/ambient/'.$ambient->id_ambient.'/edit') }}">
+				<button type="button" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i> Editar Ambiente</button>
+			</a>
+		@endif
+
 		<a href="{{ url('admin/ambient') }}">
 			<button type="button" class="btn btn-primary btn-flat"><i class="fa fa-arrow-left"></i> Voltar aos ambientes</button>
 		</a>
+
 		<a href="{{ url('admin/sensor/ambient/'.$ambient->id_ambient) }}">
 			<button type="button" class="btn btn-flat"><i class="fa fa-sitemap"></i> Sensores</button>
 		</a>
-		{!! Form::open(['method' => 'DELETE','url' => 'admin/ambient/'.$ambient->id_ambient, 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
-		{!! Form::button('<i class="fa fa-trash"></i> Remover Ambiente', ['class' => 'btn btn-danger btn-flat pull-right', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
-		{!! Form::close() !!}
+
+		@if (Auth::user()->isAdmin())
+			{!! Form::open(['method' => 'DELETE','url' => 'admin/ambient/'.$ambient->id_ambient, 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
+			{!! Form::button('<i class="fa fa-trash"></i> Remover Ambiente', ['class' => 'btn btn-danger btn-flat pull-right', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
+			{!! Form::close() !!}
+		@endif
 	</div>
 	<!-- /.box-body -->
 </div>

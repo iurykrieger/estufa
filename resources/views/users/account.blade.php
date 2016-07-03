@@ -75,12 +75,16 @@
 		   	{{ $user->updated_at->format('d/m/Y H:m:s') }}
 		</div>
 		<hr>
-		<a href="{{ url('admin/user/'.$user->id_user.'/edit') }}">
+		<a href="{{ url('admin/user/account/'.$user->id_user.'/edit') }}">
 			<button type="button" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i> Editar Usuário</button>
 		</a>
-		<a href="{{ url('admin/user') }}">
-			<button type="button" class="btn btn-primary btn-flat"><i class="fa fa-arrow-left"></i> Voltar aos Usuários</button>
-		</a>
+
+		@if (Auth::user()->isAdmin())
+			<a href="{{ url('admin/user') }}">
+				<button type="button" class="btn btn-primary btn-flat"><i class="fa fa-arrow-left"></i> Voltar aos Usuários</button>
+			</a>
+		@endif
+		
 		{!! Form::open(['method' => 'DELETE','url' => 'admin/user/delete/'.$user->id_user, 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
 		{!! Form::button('<i class="fa fa-trash"></i> Remover Usuário', ['class' => 'btn btn-danger btn-flat pull-right', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
 		{!! Form::close() !!}

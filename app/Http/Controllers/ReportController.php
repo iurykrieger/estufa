@@ -88,7 +88,7 @@ class ReportController extends Controller
             $params, //Parâmetros
             $database //Conexão com o banco
         )->execute();
-
+        
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename='. $reportAlias . '_' . time(). '.'.$outputExt);

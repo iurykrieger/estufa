@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="box-body">
-        <table id="ambients" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+        <table id="dataTable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -73,8 +73,12 @@
                         <a href="{{ url('admin/ambient/'.$ambient->id_ambient) }}"><button type="button" class="btn btn-primary btn-flat"><i class="fa fa-eye"></i> Visualizar</button></a>
 
                         <!-- Edit Button -->
-                        <a href="{{ url('admin/ambient/'.$ambient->id_ambient.'/edit') }}"><button type="button" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i> Editar</button></a>
-                        
+                        @if (Auth::user()->isAdmin())
+                            <a href="{{ url('admin/ambient/'.$ambient->id_ambient.'/edit') }}">
+                                <button type="button" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i> Editar</button>
+                            </a>
+                        @endif
+
                         <!-- Sensors Button -->
                         <a href="{{ url('admin/sensor/ambient/'.$ambient->id_ambient) }}"><button type="button" class="btn btn-flat"><i class="fa fa-sitemap"></i> Sensores</button></a>
                     </td>

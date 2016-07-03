@@ -37,18 +37,21 @@
                     </select>
                 </div>
             </div>
-            <div class="col-sm-6">
-                {!! Form::open(['method' => 'DELETE','url' => 'admin/sensor/multipleDestroy', 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
-                {!! csrf_field() !!}
-                {!! Form::button('<i class="fa fa-trash"></i> Remover Sensores', ['class' => 'btn btn-danger btn-flat pull-right', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
-            </div>
+            @if (Auth::user()->isAdmin())
+                <div class="col-sm-6">
+                    {!! Form::open(['method' => 'DELETE','url' => 'admin/sensor/multipleDestroy', 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
+                    {!! csrf_field() !!}
+                    {!! Form::button('<i class="fa fa-trash"></i> Remover Sensores', ['class' => 'btn btn-danger btn-flat pull-right', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
+                </div>
+            @endif
         </div>
         <hr>
-        <hr>
-        <table id="sensors" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+        <table id="dataTable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
             <thead>
                 <tr>
-                    <th><i class="fa fa-trash"></i> Remover</th>
+                    @if (Auth::user()->isAdmin())
+                        <th><i class="fa fa-trash"></i> Remover</th>
+                    @endif
                     <th>ID</th>
                     <th>Descrição</th>
                     <th>Ambiente</th>
@@ -58,7 +61,9 @@
             </thead>
             <tfoot> 
                 <tr>
-                    <th>Remover</th>
+                    @if (Auth::user()->isAdmin())
+                        <th><i class="fa fa-trash"></i> Remover</th>
+                    @endif
                     <th>ID</th>
                     <th>Descrição</th>
                     <th>Ambiente</th>
@@ -69,7 +74,9 @@
             <tbody>
                 @foreach ($sensors as $sensor)
                 <tr>
-                    <td>{!! Form::checkbox('sensors[]', $sensor->id_sensor, null, ['style' => 'margin: 0; padding: 0;']) !!}</td>
+                    @if (Auth::user()->isAdmin())
+                        <td>{!! Form::checkbox('sensors[]', $sensor->id_sensor, null, ['style' => 'margin: 0; padding: 0;']) !!}</td>
+                    @endif
                     <td>{{ $sensor->id_sensor }}</td>
                     <td>{{ $sensor->description }}</td>
                     <td><a href="{{url('admin/ambient/'.$sensor->ambient->id_ambient)}}">{{ $sensor->ambient->id_ambient." - ".$sensor->ambient->description}}</a></td>

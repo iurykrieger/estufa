@@ -14,7 +14,9 @@
         <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-        <li><a href="{{ url ('admin/sensor/create') }}"><i class="fa fa-circle-o"></i> Novo Sensor</a></li>
+        @if (Auth::user()->isAdmin())
+            <li><a href="{{ url ('admin/sensor/create') }}"><i class="fa fa-circle-o"></i> Novo Sensor</a></li>
+        @endif
         <li><a href="{{ url ('admin/sensor') }}"><i class="fa fa-circle-o"></i> Lista de Sensores</a></li>
         <li><a href="{{ url ('admin/sensor/ambient/') }}"><i class="fa fa-circle-o"></i> Sensores por Ambiente</a></li>
     </ul>
@@ -28,7 +30,9 @@
         <i class="fa fa-angle-left pull-right"></i>
     </a>
     <ul class="treeview-menu">
-        <li><a href="{{ url ('admin/ambient/create') }}"><i class="fa fa-circle-o"></i> Novo Ambiente</a></li>
+        @if (Auth::user()->isAdmin())
+            <li><a href="{{ url ('admin/ambient/create') }}"><i class="fa fa-circle-o"></i> Novo Ambiente</a></li>
+        @endif
         <li><a href="{{ url ('admin/ambient') }}"><i class="fa fa-circle-o"></i> Lista de Ambientes</a></li>
     </ul>
 </li>
@@ -71,18 +75,19 @@
         <li><a href="{{ url ('/admin/report/scan') }}"><i class="fa fa-circle-o"></i> Leituras</a></li>
     </ul>
 </li>
-
-<li class="header">OPÇÕES DE ADMINISTRADOR</li>
-<!-- Sensors Menu Item -->
-<li class="treeview">
-    <a href="#">
-        <i class="fa fa-user"></i>
-        <span>Usuários</span>
-        <i class="fa fa-angle-left pull-right"></i>
-    </a>
-    <ul class="treeview-menu">
-        <li><a href="{{ url ('admin/user/register') }}"><i class="fa fa-circle-o"></i> Registrar Usuário</a></li>
-        <li><a href="{{ url ('admin/user') }}"><i class="fa fa-circle-o"></i> Lista de Usuários</a></li>
-    </ul>
-</li>
+@if (Auth::user()->isAdmin())
+    <li class="header">OPÇÕES DE ADMINISTRADOR</li>
+    <!-- Sensors Menu Item -->
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-user"></i>
+            <span>Usuários</span>
+            <i class="fa fa-angle-left pull-right"></i>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="{{ url ('admin/user/register') }}"><i class="fa fa-circle-o"></i> Registrar Usuário</a></li>
+            <li><a href="{{ url ('admin/user') }}"><i class="fa fa-circle-o"></i> Lista de Usuários</a></li>
+        </ul>
+    </li>
+@endif
 </ul>

@@ -45,7 +45,11 @@ class AmbientController extends Controller
      */
     public function create()
     {
-        return view('ambients.create');
+        if(Auth::user()->isAdmin()){
+            return view('ambients.create');
+        }else{
+            return Redirect::back();
+        }
     }
 
     /**
@@ -56,18 +60,22 @@ class AmbientController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'description' => 'required',
-            'max_temperature' => 'required',
-            'min_temperature' => 'required',
-            'max_air_humidity' => 'required',
-            'min_air_humidity' => 'required',
-            'max_ground_humidity' => 'required',
-            'min_ground_humidity' => 'required'
-            ]);
-        $ambient = $request->all();
-        Ambient::create($ambient);
-        return Redirect::to('admin/ambient/create')->with('successMessage','O ambiente foi cadastrado com sucesso no banco de dados.');
+        if(Auth::user()->isAdmin()){
+            $this->validate($request, [
+                'description' => 'required',
+                'max_temperature' => 'required',
+                'min_temperature' => 'required',
+                'max_air_humidity' => 'required',
+                'min_air_humidity' => 'required',
+                'max_ground_humidity' => 'required',
+                'min_ground_humidity' => 'required'
+                ]);
+            $ambient = $request->all();
+            Ambient::create($ambient);
+            return Redirect::to('admin/ambient/create')->with('successMessage','O ambiente foi cadastrado com sucesso no banco de dados.');
+        }else{
+            return Redirect::back();
+        }
     }
 
     /**
@@ -90,8 +98,12 @@ class AmbientController extends Controller
      */
     public function edit($id)
     {
-        $ambient = Ambient::findOrFail($id);
-        return view('ambients.edit', ['ambient' => $ambient]);
+        if(Auth::user()->isAdmin()){
+            $ambient = Ambient::findOrFail($id);
+            return view('ambients.edit', ['ambient' => $ambient]);
+        }else{
+            return Redirect::back();
+        }
     }
 
     /**
@@ -103,22 +115,26 @@ class AmbientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $ambient = Ambient::findOrFail($id);
+        if(Auth::user()->isAdmin()){
+            $ambient = Ambient::findOrFail($id);
 
-        $this->validate($request, [
-            'description' => 'required',
-            'max_temperature' => 'required',
-            'min_temperature' => 'required',
-            'max_air_humidity' => 'required',
-            'min_air_humidity' => 'required',
-            'max_ground_humidity' => 'required',
-            'min_ground_humidity' => 'required'
-            ]);
+            $this->validate($request, [
+                'description' => 'required',
+                'max_temperature' => 'required',
+                'min_temperature' => 'required',
+                'max_air_humidity' => 'required',
+                'min_air_humidity' => 'required',
+                'max_ground_humidity' => 'required',
+                'min_ground_humidity' => 'required'
+                ]);
 
-        $input = $request->all();
-        $ambient->fill($input)->save();
+            $input = $request->all();
+            $ambient->fill($input)->save();
 
-        return Redirect::to('admin/ambient/'.$ambient->id_ambient)->with('successMessage','O ambiente foi alterado com sucesso no banco de dados.');
+            return Redirect::to('admin/ambient/'.$ambient->id_ambient)->with('successMessage','O ambiente foi alterado com sucesso no banco de dados.');
+        }else{
+            return Redirect::back();
+        }
     }
 
     /**
@@ -129,12 +145,16 @@ class AmbientController extends Controller
      */
     public function destroy($id)
     {
-        $ambient = User::findOrFail($id);
-        if(count($ambient->sensors()) > 0){
-            return Redirect::back()->withErrors('Você não pode deletar um ambiente que possui sensores atrelados!');
+        if(Auth::user()->isAdmin()){
+            $ambient = User::findOrFail($id);
+            if(count($ambient->sensors()) > 0){
+                return Redirect::back()->withErrors('Você não pode deletar um ambiente que possui sensores atrelados!');
+            }else{
+                $ambient->delete();
+                return Redirect::to('admin/ambient')->with('successMessage','O ambiente foi excluido com sucesso do banco de dados.');
+            }
         }else{
-            $ambient->delete();
-            return Redirect::to('admin/ambient')->with('successMessage','O ambiente foi excluido com sucesso do banco de dados.');
+            return Redirect::back();
         }
     }
 }

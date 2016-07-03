@@ -46,8 +46,12 @@ class SensorController extends Controller
      */
     public function create()
     {
-        $ambients = Ambient::lists('description', 'id_ambient');
-        return view('sensors.create',['ambients' => $ambients]);
+        if(Auth::user()->isAdmin()){
+            $ambients = Ambient::lists('description', 'id_ambient');
+            return view('sensors.create',['ambients' => $ambients]);
+        }else{
+            return Redirect::back();
+        }
     }
 
     /**
@@ -58,15 +62,19 @@ class SensorController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'description' => 'required',
-            'id_ambient' => 'required',
-            'active' => 'required'
-            ]);
-        $sensor = $request->all();
-        Sensor::create($sensor);
+        if(Auth::user()->isAdmin()){
+            $this->validate($request, [
+                'description' => 'required',
+                'id_ambient' => 'required',
+                'active' => 'required'
+                ]);
+            $sensor = $request->all();
+            Sensor::create($sensor);
 
-        return Redirect::to('admin/sensor/create')->with('successMessage','O sensor foi cadastrado com sucesso no banco de dados.');
+            return Redirect::to('admin/sensor/create')->with('successMessage','O sensor foi cadastrado com sucesso no banco de dados.');
+        }else{
+            return Redirect::back();
+        }
     }
 
     /**
@@ -89,9 +97,13 @@ class SensorController extends Controller
      */
     public function edit($id)
     {
-        $sensor = Sensor::findOrFail($id);
-        $ambients = Ambient::lists('description', 'id_ambient');
-        return view('sensors.edit', ['sensor' => $sensor, 'ambients' => $ambients]);
+        if(Auth::user()->isAdmin()){
+            $sensor = Sensor::findOrFail($id);
+            $ambients = Ambient::lists('description', 'id_ambient');
+            return view('sensors.edit', ['sensor' => $sensor, 'ambients' => $ambients]);
+        }else{
+            return Redirect::back();
+        }
     }
 
     /**
@@ -103,18 +115,22 @@ class SensorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $sensor = Sensor::findOrFail($id);
+        if(Auth::user()->isAdmin()){
+            $sensor = Sensor::findOrFail($id);
 
-        $this->validate($request, [
-            'description' => 'required',
-            'id_ambient' => 'required',
-            'active' => 'required'
-            ]);
+            $this->validate($request, [
+                'description' => 'required',
+                'id_ambient' => 'required',
+                'active' => 'required'
+                ]);
 
-        $input = $request->all();
-        $sensor->fill($input)->save();
+            $input = $request->all();
+            $sensor->fill($input)->save();
 
-        return Redirect::to('admin/sensor/'.$sensor->id_sensor)->with('successMessage','O sensor foi alterado com sucesso no banco de dados.');
+            return Redirect::to('admin/sensor/'.$sensor->id_sensor)->with('successMessage','O sensor foi alterado com sucesso no banco de dados.');
+        }else{
+            return Redirect::back();
+        }
     }
 
     /**
@@ -124,12 +140,16 @@ class SensorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        $sensor = Sensor::findOrFail($id);
-        $sensor->active = false;
-        $sensor->id_ambient = null;
-        $sensor->save();
+        if(Auth::user()->isAdmin()){
+            $sensor = Sensor::findOrFail($id);
+            $sensor->active = false;
+            $sensor->id_ambient = null;
+            $sensor->save();
 
-        return Redirect::back()->with('successMessage','O sensor foi removido do ambiente com sucesso.');
+            return Redirect::back()->with('successMessage','O sensor foi removido do ambiente com sucesso.');
+        }else{
+            return Redirect::back();
+        }
     }
 
     /**
@@ -138,11 +158,15 @@ class SensorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function deactivate($id){
-        $sensor = Sensor::findOrFail($id);
-        $sensor->active = false;
-        $sensor->save();
-    
-        return Redirect::back()->with('successMessage','O sensor foi desativado com sucesso.');
+        if(Auth::user()->isAdmin()){
+            $sensor = Sensor::findOrFail($id);
+            $sensor->active = false;
+            $sensor->save();
+        
+            return Redirect::back()->with('successMessage','O sensor foi desativado com sucesso.');
+        }else{
+            return Redirect::back();
+        }
     }
 
     /**
@@ -151,25 +175,33 @@ class SensorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function activate($id){
-        $sensor = Sensor::findOrFail($id);
-        if(!(is_null($sensor->ambient))){
-            $sensor->active = true;
-            $sensor->save();
-            return Redirect::back()->with('successMessage','O sensor foi desativado com sucesso.');
+        if(Auth::user()->isAdmin()){
+            $sensor = Sensor::findOrFail($id);
+            if(!(is_null($sensor->ambient))){
+                $sensor->active = true;
+                $sensor->save();
+                return Redirect::back()->with('successMessage','O sensor foi desativado com sucesso.');
+            }else{
+                return Redirect::back()->withErrors(['O sensor precisa ter um ambiente atrelado para ser ativado!']);
+            }
         }else{
-            return Redirect::back()->withErrors(['O sensor precisa ter um ambiente atrelado para ser ativado!']);
+            return Redirect::back();
         }
     }
 
     public function multipleDestroy(Request $request){
-        $sensors = $request->sensors;
-        foreach ($sensors as $id) {
-            $sensor = Sensor::findOrFail($id);
-            $sensor->active = false;
-            $sensor->id_ambient = null;
-            $sensor->save();
+        if(Auth::user()->isAdmin()){
+            $sensors = $request->sensors;
+            foreach ($sensors as $id) {
+                $sensor = Sensor::findOrFail($id);
+                $sensor->active = false;
+                $sensor->id_ambient = null;
+                $sensor->save();
+            }
+            return Redirect::back()->with('successMessage','Sensores desativados com sucesso.');
+        }else{
+            return Redirect::back();
         }
-        return Redirect::back()->with('successMessage','Sensores desativados com sucesso.');
     }
 
     /**

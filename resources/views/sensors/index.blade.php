@@ -26,7 +26,7 @@
       </div>
     </div>
     <div class="box-body">
-        <table id="sensors" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+        <table id="dataTable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -66,14 +66,18 @@
                         <a href="{{ url('admin/sensor/'.$sensor->id_sensor) }}"><button type="button" class="btn btn-primary btn-flat"><i class="fa fa-eye"></i> Visualizar</button></a>
 
                         <!-- Edit Button -->
-                        <a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/edit') }}"><button type="button" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i> Editar</button></a>
-                        
-                        @if($sensor->active)
-                            <!-- Deactivate Button -->
-                            <a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/deactivate') }}"><button type="button" class="btn btn-danger btn-flat"><i class="fa fa-toggle-on"></i> Desativar</button></a>
-                        @else
-                            <!-- Activate Button -->
-                            <a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/activate') }}"><button type="button" class="btn btn-success btn-flat"><i class="fa fa-toggle-off"></i> Ativar</button></a>
+                        @if (Auth::user()->isAdmin())
+                            <a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/edit') }}"><button type="button" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i> Editar</button></a>
+                        @endif
+
+                        @if (Auth::user()->isAdmin())
+                            @if($sensor->active)
+                                <!-- Deactivate Button -->
+                                <a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/deactivate') }}"><button type="button" class="btn btn-danger btn-flat"><i class="fa fa-toggle-on"></i> Desativar</button></a>
+                            @else
+                                <!-- Activate Button -->
+                                <a href="{{ url('admin/sensor/'.$sensor->id_sensor.'/activate') }}"><button type="button" class="btn btn-success btn-flat"><i class="fa fa-toggle-off"></i> Ativar</button></a>
+                            @endif
                         @endif
                     </td>
                 </tr>

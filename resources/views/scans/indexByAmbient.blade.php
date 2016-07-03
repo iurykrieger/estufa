@@ -42,7 +42,7 @@
 			</div>
 		</div>
 
-		<table id="scans" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+		<table id="dataTable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
 			<thead>
 				<tr>
 					<th>Data</th>
@@ -82,10 +82,12 @@
 		                <a href="{{ url('admin/scan/'.$scan->id_scan) }}"><button type="button" class="btn btn-primary btn-flat"><i class="fa fa-eye"></i> Visualizar</button></a>
 		                
 		                <!-- Destroy Form Button -->
-		                {!! Form::open(['method' => 'DELETE','url' => 'admin/scan/'.$scan->id_scan, 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
-		                {!! csrf_field() !!}
-		                {!! Form::button('<i class="fa fa-times"></i> Remover', ['class' => 'btn btn-danger btn-flat', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
-		                {!! Form::close() !!}
+		                @if (Auth::user()->isAdmin())
+			                {!! Form::open(['method' => 'DELETE','url' => 'admin/scan/'.$scan->id_scan, 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
+			                {!! csrf_field() !!}
+			                {!! Form::button('<i class="fa fa-times"></i> Remover', ['class' => 'btn btn-danger btn-flat', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
+			                {!! Form::close() !!}
+			            @endif
 					</td>
 				</tr>
 				@endforeach

@@ -85,10 +85,13 @@
 		<a href="{{ url('admin/scan/all') }}">
 			<button type="button" class="btn btn-primary btn-flat"><i class="fa fa-arrow-left"></i> Voltar as Leituras</button>
 		</a>
-		{!! Form::open(['method' => 'DELETE','url' => 'admin/scan/'.$scan->id_scan, 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
-		{!! csrf_field() !!}
-		{!! Form::button('<i class="fa fa-times"></i> Remover Leitura', ['class' => 'btn btn-danger pull-right btn-flat', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
-		{!! Form::close() !!}
+
+		@if (Auth::user()->isAdmin())
+			{!! Form::open(['method' => 'DELETE','url' => 'admin/scan/'.$scan->id_scan, 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
+			{!! csrf_field() !!}
+			{!! Form::button('<i class="fa fa-times"></i> Remover Leitura', ['class' => 'btn btn-danger pull-right btn-flat', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
+			{!! Form::close() !!}
+		@endif
 	</div>
 	<!-- /.box-body -->
 </div>
