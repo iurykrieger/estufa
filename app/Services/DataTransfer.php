@@ -90,4 +90,16 @@ class DataTransfer
         return $avgs;
     }
 
+    public static function transferGhostToScans($id_sensor){
+
+    $id_ambient = DB::table('ghost_scans')->selectRaw('distinct sensors.id_ambient as id')->join('sensors','sensors.id_sensor','=','sensors.id_sensor')->where('sensors.id_sensor', '=', $id_sensor)->get();
+
+        $ghosts = DB::table('ghost_scans')->get();
+        
+        foreach($ghosts as $ghost){
+          DB::table('scans')->insert(['date'=>$ghost->date,'time'=>$ghost->time,'temperature'=>$ghost->temperature,'air_humidity'=>$ghost->air_humidity,'ground_humidity'=>$ghost->ground_humidity,'id_sensor'=>$ghost->id_sensor,'id_ambient'=>$id_ambient[0]->id]);
+        }
+        
+        DB::table('ghost_scans')->where('id_sensor', '=', $ghost->id_sensor)->delete();
+    }
 }

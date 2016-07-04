@@ -69,7 +69,10 @@ class SensorController extends Controller
                 'active' => 'required'
                 ]);
             $sensor = $request->all();
-            Sensor::create($sensor);
+            $id_sensor = Sensor::create($sensor)->id_sensor;
+
+            //$var = DataTransfer::transferGhostToScans($id_sensor);
+            
 
             return Redirect::to('admin/sensor/create')->with('successMessage','O sensor foi cadastrado com sucesso no banco de dados.');
         }else{
