@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Chart;
-use App\Sensor;
 use App\Ambient;
+use App\Chart;
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Scan;
+use App\Sensor;
 use App\Services\DataTransfer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
-use Khill\Lavacharts\Laravel\LavachartsFacade as Lava;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class ChartController extends Controller{
     /**
@@ -85,7 +84,7 @@ class ChartController extends Controller{
         /**
          * Cria a data table - adiciona as colunas e carrega dados
          */
-        $dt = Lava::DataTable();
+        $dt = \Lava::DataTable();
 
         //Carrega somente temperatura
         if(!empty($temperatura) && empty($uda) && empty($uds)){
@@ -137,7 +136,7 @@ class ChartController extends Controller{
 
         if(empty($scan)){
             Session::flash('warningMessage','Nenhuma leitura encontrada.');
-            $grafico = Lava::LineChart('grafico', $dt, [
+            $grafico = \Lava::LineChart('grafico', $dt, [
                    'height' => 600,
                    'hAxis' => [                
                         'title' => 'Data'
@@ -147,7 +146,7 @@ class ChartController extends Controller{
                     ]
                 ]);            
         }else{
-            $grafico = Lava::LineChart('grafico', $dt, [
+            $grafico = \Lava::LineChart('grafico', $dt, [
                    'height' => 600,
                    'hAxis' => [                
                         'title' => 'Data'
@@ -160,7 +159,7 @@ class ChartController extends Controller{
 
         return view('chart/scans',['user'=>Auth::user(),'ambients' => $ambients, 'sensors' => $sensors]);
 
-     }
+    }
     
 }
 

@@ -8,7 +8,7 @@ use App\Http\Requests;
 use App\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
-use JasperPHP\JasperPHP;
+use JasperPHP\Facades\JasperPHP;
 
 class ReportController extends Controller
 {
@@ -74,14 +74,13 @@ class ReportController extends Controller
      * @return [type]              [description]
      */
     private function generateReport($reportName, $reportAlias, $params){
-        $jasper = new JasperPHP();
-
+        
         $database = Config::get('database.connections.mysql');
         $output = public_path() . '/report/'. $reportAlias . '_' . time();
         $outputExt = "pdf";
         $report = public_path() . '/report/'. $reportName . '.jasper';
 
-        $jasper->process(
+        JasperPHP::process(
             $report, //Relatório de entrada
             $output, //Relatório de saída
             array($outputExt), //Formato de saída

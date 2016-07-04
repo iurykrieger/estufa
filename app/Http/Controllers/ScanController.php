@@ -34,7 +34,7 @@ class ScanController extends Controller
 	 * @return \Illuminate\Http\Response
 	 */
 	public function index(){
-		$scans = Scan::where('date',Carbon::now()->format('Y-m-d'))->orderBy('date','desc')->orderBy('time','desc')->paginate(30);
+		$scans = Scan::where('date',Carbon::today())->orderBy('date','desc')->orderBy('time','desc')->paginate(30);
 		return view('scans.index',['scans' => $scans]);
 	}
 

@@ -94,10 +94,8 @@
         </form>
         <?
           if (isset($_POST['btn-consultar'])){?>
-                @linechart('grafico', 'temps_div') 
-              <? }?>
-
-        
+          @linechart('grafico', 'temps_div') 
+        <? }?>
     {!! Form::close() !!}
     </div>
     <!-- /.box-body -->    

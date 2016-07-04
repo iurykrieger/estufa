@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'America/Sao_Paulo',
 
     /*
     |--------------------------------------------------------------------------
@@ -204,6 +204,7 @@ return [
         'Datatables' => Yajra\Datatables\Datatables::class,
         'DataTransfer' => App\Services\DataTransfer::class,
         'JasperPHP' => JasperPHP\JasperPHPServiceProvider::class,
+        'Lava'      => Khill\Lavacharts\Laravel\LavachartsFacade::class
     ],
 
 ];

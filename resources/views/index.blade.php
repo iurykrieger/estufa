@@ -3,9 +3,9 @@
 
 @section('title','Home')
 
-@section('page_title','Home')
+@section('page_title','Projeto<b>ESTUFA</b>')
 
-@section('page_subtitle','Admin')
+@section('page_subtitle','Home')
 
 @section('parent_breadcrumb','Home')
 
@@ -15,46 +15,31 @@
       <div class="row">
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-aqua">
-            <div class="inner">
-              <h3>150</h3>
-
-              <p>New Orders</p>
-            </div>
-            <div class="icon">
-              <i class="ion ion-bag"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-        <div class="col-lg-3 col-xs-6">
-          <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>53<sup style="font-size: 20px">%</sup></h3>
+              <h3>{{ $todayScanCount }}</h3>
 
-              <p>Bounce Rate</p>
+              <p>Novas Leituras Hoje</p>
             </div>
             <div class="icon">
-              <i class="ion ion-stats-bars"></i>
+              <i class="fa fa-tasks"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="{{ url('admin/scan') }}" class="small-box-footer">Mais Informações <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
         <div class="col-lg-3 col-xs-6">
           <!-- small box -->
-          <div class="small-box bg-yellow">
+          <div class="small-box bg-blue">
             <div class="inner">
-              <h3>44</h3>
+              <h3>{{ $todayScanAvgs['temperature'] }}<sup style="font-size: 20px">ºC</sup></h3>
 
-              <p>User Registrations</p>
+              <p>Média de Temperatura Hoje</p>
             </div>
             <div class="icon">
-              <i class="ion ion-person-add"></i>
+              <i class="fa fa-sun-o"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer">Mais informações <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -62,14 +47,29 @@
           <!-- small box -->
           <div class="small-box bg-red">
             <div class="inner">
-              <h3>65</h3>
+              <h3>{{ $todayScanAvgs['air_humidity'] }}<sup style="font-size: 20px">%</sup></h3>
 
-              <p>Unique Visitors</p>
+              <p>Média de Umidade do Ar Hoje</p>
             </div>
             <div class="icon">
-              <i class="ion ion-pie-graph"></i>
+              <i class="fa fa-cloud"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="#" class="small-box-footer">Mais informações <i class="fa fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3>{{ $todayScanAvgs['ground_humidity'] }}<sup style="font-size: 20px">%</sup></h3>
+
+              <p>Média de Umidade do Solo Hoje</p>
+            </div>
+            <div class="icon">
+              <i class="fa fa-area-chart"></i>
+            </div>
+            <a href="#" class="small-box-footer">Mais informações <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->
@@ -79,21 +79,18 @@
       <div class="row">
         <!-- Left col -->
         <section class="col-lg-7 connectedSortable">
-          <!-- Custom tabs (Charts with tabs)-->
-          <div class="nav-tabs-custom">
-            <!-- Tabs within a box -->
-            <ul class="nav nav-tabs pull-right">
-              <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-              <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-              <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
-            </ul>
-            <div class="tab-content no-padding">
-              <!-- Morris chart - Sales -->
-              <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-              <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
+          <!-- Gráfico -->
+          <div class="box box-success">
+            <div class="box-header with-border">
+              <i class="fa fa-line-chart"></i>
+
+              <h3 class="box-title">Resumo de Hoje</h3>
+            </div>
+            <div class="box-body chat" id="chat-box">
+              <div id="todayScans" class=""></div>
+              @linechart('todayScans', 'todayScans')
             </div>
           </div>
-          <!-- /.nav-tabs-custom -->
 
           <!-- Chat box -->
           <div class="box box-success">
@@ -331,50 +328,67 @@
         <!-- right col (We are only adding the ID to make the widgets sortable)-->
         <section class="col-lg-5 connectedSortable">
 
-          <!-- Map box -->
-          <div class="box box-solid bg-light-blue-gradient">
-            <div class="box-header">
-              <!-- tools box -->
-              <div class="pull-right box-tools">
-                <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip" title="Date range">
-                  <i class="fa fa-calendar"></i></button>
-                <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse" data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
-                  <i class="fa fa-minus"></i></button>
-              </div>
-              <!-- /. tools -->
-
-              <i class="fa fa-map-marker"></i>
-
-              <h3 class="box-title">
-                Visitors
-              </h3>
+        <!-- PRODUCT LIST -->
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Últimos Sensores Ativos</h3>
+            <div class="box-tools pull-right">
+              <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
-            <div class="box-body">
-              <div id="world-map" style="height: 250px; width: 100%;"></div>
-            </div>
-            <!-- /.box-body-->
-            <div class="box-footer no-border">
-              <div class="row">
-                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <div id="sparkline-1"></div>
-                  <div class="knob-label">Visitors</div>
+          </div><!-- /.box-header -->
+          <div class="box-body">
+            <ul class="products-list product-list-in-box">
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-50x50.gif" alt="Product Image">
                 </div>
-                <!-- ./col -->
-                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <div id="sparkline-2"></div>
-                  <div class="knob-label">Online</div>
+                <div class="product-info">
+                  <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
+                  <span class="product-description">
+                    Samsung 32" 1080p 60Hz LED Smart HDTV.
+                  </span>
                 </div>
-                <!-- ./col -->
-                <div class="col-xs-4 text-center">
-                  <div id="sparkline-3"></div>
-                  <div class="knob-label">Exists</div>
+              </li><!-- /.item -->
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-50x50.gif" alt="Product Image">
                 </div>
-                <!-- ./col -->
-              </div>
-              <!-- /.row -->
-            </div>
-          </div>
-          <!-- /.box -->
+                <div class="product-info">
+                  <a href="javascript::;" class="product-title">Bicycle <span class="label label-info pull-right">$700</span></a>
+                  <span class="product-description">
+                    26" Mongoose Dolomite Men's 7-speed, Navy Blue.
+                  </span>
+                </div>
+              </li><!-- /.item -->
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-50x50.gif" alt="Product Image">
+                </div>
+                <div class="product-info">
+                  <a href="javascript::;" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
+                  <span class="product-description">
+                    Xbox One Console Bundle with Halo Master Chief Collection.
+                  </span>
+                </div>
+              </li><!-- /.item -->
+              <li class="item">
+                <div class="product-img">
+                  <img src="dist/img/default-50x50.gif" alt="Product Image">
+                </div>
+                <div class="product-info">
+                  <a href="javascript::;" class="product-title">PlayStation 4 <span class="label label-success pull-right">$399</span></a>
+                  <span class="product-description">
+                    PlayStation 4 500GB Console (PS4)
+                  </span>
+                </div>
+              </li><!-- /.item -->
+            </ul>
+          </div><!-- /.box-body -->
+          <div class="box-footer text-center">
+            <a href="{{ url('/admin/sensor') }}" class="uppercase">Ver Todos os Sensores</a>
+          </div><!-- /.box-footer -->
+        </div><!-- /.box -->
 
           <!-- solid sales graph -->
           <div class="box box-solid bg-teal-gradient">

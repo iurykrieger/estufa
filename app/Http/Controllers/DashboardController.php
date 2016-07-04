@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Lava;
 use App\Http\Requests;
+use App\Services\DataTransfer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,7 +29,29 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $todayScanCount = DataTransfer::getTodayScanCount();
+        $todayScanAvgs = DataTransfer::getTodayScanAvgs();
+
+        $scans = DataTransfer::getTodayScans();
+        $dt = \Lava::DataTable();
+        $dt ->addDateTimeColumn('Data')->addNumberColumn('Temperatura')->addNumberColumn('Umidade Ar')->addNumberColumn('Umidade Solo');
+            
+        foreach($scans as $scan){ 
+            $dt->addRow([$scan->data_alterada, $scan->temperature, $scan->air_humidity, $scan->ground_humidity]);
+        }
+
+        \Lava::LineChart('todayScans', $dt, [
+                   'height' => 500,
+                   'hAxis' => [                
+                        'title' => 'Data'
+                    ],
+                    'vAxis' => [
+                        'title' => 'Temperatura'                
+                    ]
+                ]);
+            
+
+        return view('index',['todayScanCount' => $todayScanCount, 'todayScanAvgs' => $todayScanAvgs]);
     }
 
 }

@@ -3,7 +3,8 @@
 namespace App\Services;
 
 use App\Scan;
-use DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DataTransfer
 {
@@ -65,6 +66,28 @@ class DataTransfer
                  ->get();
 
         return $query;
+    }
+
+    public static function getTodayScans(){
+        $query = DB::table('scans')->selectRaw('DATE_FORMAT(CONCAT(DATE," ",time), "%Y-%m-%d %H:%i") AS data_alterada, avg(temperature) temperature, 
+                                                avg(air_humidity) air_humidity, avg(ground_humidity) ground_humidity')
+                                   ->groupBy('data_alterada')
+                                   ->where('date',Carbon::today())
+                                   ->get();
+        return $query;
+    }
+
+    public static function getTodayScanCount(){
+        return DB::table('scans')->where('date',Carbon::today())->count();
+    }
+
+    public static function getTodayScanAvgs(){
+        $avgs = array();
+
+        $avgs['temperature'] = number_format(DB::table('scans')->where('date',Carbon::today())->avg('temperature'), 2, '.', '');
+        $avgs['air_humidity'] = number_format(DB::table('scans')->where('date',Carbon::today())->avg('air_humidity'), 2, '.', '');
+        $avgs['ground_humidity'] = number_format(DB::table('scans')->where('date',Carbon::today())->avg('ground_humidity'), 2, '.', '');
+        return $avgs;
     }
 
 }
