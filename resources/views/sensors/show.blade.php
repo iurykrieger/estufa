@@ -44,7 +44,11 @@
 			<h3 class="box-title">AMBIENTE</h3>
 		</div>
 		<div class="box-body">
-			<a href="{{url('admin/ambient/'.$sensor->ambient->id_ambient)}}">{{ $sensor->ambient->id_ambient." - ".$sensor->ambient->description}}</a>
+			@if(is_null($sensor->ambient))
+                <a href="{{url('admin/sensor/'.$sensor->id_sensor.'/edit')}}"><i class="fa fa-plus"></i> Adicionar Ambiente</a>
+			@else
+				<a href="{{url('admin/ambient/'.$sensor->ambient->id_ambient)}}">{{ $sensor->ambient->id_ambient." - ".$sensor->ambient->description}}</a>
+			@endif
 		</div>
 		<hr>
 		<div class="box-header">

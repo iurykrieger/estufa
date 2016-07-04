@@ -87,12 +87,12 @@ class ReportController extends Controller
             $params, //Parâmetros
             $database //Conexão com o banco
         )->execute();
-        
+            
         header('Content-Description: File Transfer');
-        header('Content-Type: application/octet-stream');
+        header('Content-Type: application/pdf');
         header('Content-Disposition: attachment; filename='. $reportAlias . '_' . time(). '.'.$outputExt);
         header('Content-Transfer-Encoding: binary');
-        header('Expires: 0');
+        header('Expires: 500');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Pragma: public');
         header('Content-Length: ' . filesize($output.'.'.$outputExt));

@@ -79,12 +79,14 @@
       <div class="row">
         <!-- Left col -->
         <section class="col-lg-7 connectedSortable">
-          <!-- Gráfico -->
+          <!-- Today Scans -->
           <div class="box box-success">
             <div class="box-header with-border">
               <i class="fa fa-line-chart"></i>
-
               <h3 class="box-title">Resumo de Hoje</h3>
+              <div class="box-tools pull-right">
+                <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+              </div>
             </div>
             <div class="box-body chat" id="chat-box">
               <div id="todayScans" class=""></div>
@@ -325,10 +327,10 @@
 
         </section>
         <!-- /.Left col -->
-        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <!-- Right Col -->
         <section class="col-lg-5 connectedSortable">
 
-        <!-- PRODUCT LIST -->
+        <!-- Sensor List -->
         <div class="box box-primary">
           <div class="box-header with-border">
             <h3 class="box-title">Últimos Sensores Ativos</h3>

@@ -31,7 +31,7 @@
   <!-- Dat Tables -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
   <!-- Sweet Alert -->
-  <link rel="stylesheet" href="{{ asset('css/SweetAlert.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/sweetalert.css') }}">
   <!-- PACE -->
   <link rel="stylesheet" href="{{ asset('css/pace.css') }}">
   <!-- CSRF -->
@@ -84,7 +84,7 @@
 	<!-- AdminLTE App -->
 	<script src="{{ asset('/vendor/bower_components/AdminLTE/dist/js/app.min.js') }}"></script>
 	<!-- SweetAlert -->
-	<script src="{{ asset('js/SweetAlert.js') }}"></script>
+	<script src="{{ asset('js/sweetalert.js') }}"></script>
 	<!-- PACE -->
 	<script src="{{ asset('js/pace.js') }}"></script>
 	<!-- CSRF -->

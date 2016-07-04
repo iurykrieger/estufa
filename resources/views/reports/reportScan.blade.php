@@ -27,7 +27,6 @@
     </div>
     <div class="box-body">
     	{!! Form::open(['method' => 'POST','url' => 'admin/report/scan', 'class' => 'action-form form-inline', 'id' => 'form-dates']) !!}
-		<input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
     	<div class="box-header">
 			<h3 class="box-title">PERÍODO</h3><br>
 		</div>
