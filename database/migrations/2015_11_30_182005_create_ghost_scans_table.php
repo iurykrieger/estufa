@@ -22,10 +22,6 @@ class CreateGhostScansTable extends Migration
             $table->decimal('ground_humidity',10,2);
             $table->integer('id_sensor')->unsigned();
         });
-
-        Schema::table('ghost_scans', function($table) {
-            $table->foreign('id_sensor')->references('id_sensor')->on('sensors');
-        });
     }
 
     /**

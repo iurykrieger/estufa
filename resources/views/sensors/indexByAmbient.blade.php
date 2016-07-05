@@ -26,7 +26,10 @@
       </div>
     </div>
     <div class="box-body">
-       <div class="dataTables_wrapper form-inline dt-bootstrap">
+        @if (Auth::user()->isAdmin())
+            {!! Form::open(['method' => 'DELETE','url' => 'admin/sensor/multipleDestroy', 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
+        @endif
+        <div class="dataTables_wrapper form-inline dt-bootstrap">
             <div class="col-sm-6">
                 <div class="dataTables_length" id="scans_length">
                     Mostrando Sensores do ambiente
@@ -39,8 +42,6 @@
             </div>
             @if (Auth::user()->isAdmin())
                 <div class="col-sm-6">
-                    {!! Form::open(['method' => 'DELETE','url' => 'admin/sensor/multipleDestroy', 'class' => 'action-form inline', 'id' => 'form-delete']) !!}
-                    {!! csrf_field() !!}
                     {!! Form::button('<i class="fa fa-trash"></i> Remover Sensores', ['class' => 'btn btn-danger btn-flat pull-right', 'id' => 'btn-delete', 'type' => 'submit', 'onClick' => 'confirmDelete()']) !!}
                 </div>
             @endif

@@ -89,8 +89,10 @@ class DataTransfer
 
     // views/sensors/create.blade.php
     public static function transferGhostToScans($id_sensor){
-    $id_ambient = DB::table('ghost_scans')->selectRaw('distinct sensors.id_ambient as id')->join('sensors','sensors.id_sensor','=','sensors.id_sensor')->where('sensors.id_sensor', '=', $id_sensor)->get();
-
+        $id_ambient = DB::table('ghost_scans')->selectRaw('distinct sensors.id_ambient as id')
+                                              ->join('sensors','sensors.id_sensor','=','sensors.id_sensor')
+                                              ->where('sensors.id_sensor', '=', $id_sensor)
+                                              ->get();
         $ghosts = DB::table('ghost_scans')->get();
         
         foreach($ghosts as $ghost){
