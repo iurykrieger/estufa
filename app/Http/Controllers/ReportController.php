@@ -8,6 +8,8 @@ use App\Http\Requests;
 use App\Sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 use JasperPHP\Facades\JasperPHP;
 
 class ReportController extends Controller
@@ -61,9 +63,9 @@ class ReportController extends Controller
         /**
          * Process the report
          */
-        $this->generateReport('ScanReport', 'RelatorioLeituras', $params);
+        return $this->generateReport('ScanReport', 'RelatorioLeituras', $params);
 
-        return Redirect::to('/admin/report/scan');
+        //return Redirect::to('/admin/report/scan');
     }
 
     /**
@@ -76,28 +78,25 @@ class ReportController extends Controller
     private function generateReport($reportName, $reportAlias, $params){
         
         $database = Config::get('database.connections.mysql');
-        $output = public_path() . '/report/'. $reportAlias . '_' . time();
         $outputExt = "pdf";
+        $outputName = $reportAlias . '_' . time();
+        $outputPath = public_path() . '/report/'. $outputName;
         $report = public_path() . '/report/'. $reportName . '.jasper';
 
         JasperPHP::process(
             $report, //Relatório de entrada
-            $output, //Relatório de saída
+            $outputPath, //Relatório de saída
             array($outputExt), //Formato de saída
             $params, //Parâmetros
             $database //Conexão com o banco
         )->execute();
-            
-        header('Content-Description: File Transfer');
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename='. $reportAlias . '_' . time(). '.'.$outputExt);
-        header('Content-Transfer-Encoding: binary');
-        header('Expires: 500');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Pragma: public');
-        header('Content-Length: ' . filesize($output.'.'.$outputExt));
+
+        header("Content-type: application/octet-stream");                       
+        header("Content-Disposition:inline;filename='".$outputName.'.'.$outputExt."'");            
+        header('Content-Length: ' . filesize($outputPath.'.'.$outputExt));
+        header("Cache-control: private"); //use this to open files directly
         flush();
-        readfile($output.'.'.$outputExt);
-        unlink($output.'.'.$outputExt); // deletes the temporary file
+        readfile($outputPath.'.'.$outputExt);
+        unlink($outputPath.'.'.$outputExt); // deletes the temporary file*/
     }
 }
