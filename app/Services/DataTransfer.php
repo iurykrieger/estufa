@@ -77,9 +77,9 @@ class DataTransfer
 
     public static function getAmbientAVG(){
         $query = DB::table('ambients')->selectRaw('description,
-                                                   round(avg(max_temperature + min_temperature),2) as temperature,
-                                                   round(avg(max_air_humidity + min_air_humidity),2) as air_humidity,
-                                                   round(avg(max_ground_humidity + min_ground_humidity),2) as ground_humidity')
+                                                   round(((max_temperature + min_temperature)/2),2) as temperature,
+                                                   round(((max_air_humidity + min_air_humidity)/2),2) as air_humidity,
+                                                   round(((max_ground_humidity + min_ground_humidity)/2),2) as ground_humidity')
                                       ->groupBy('id_ambient')
                                       ->get();
         return $query;
