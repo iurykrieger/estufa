@@ -50,8 +50,13 @@ class DashboardController extends Controller
                     ]
                 ]);
             
+        // last inserted sensors
+        $lastSensors = DataTransfer::getLastInsertedSensors();
+        $lastAmbients = DataTransfer::getLastInsertedAmbients();
+        $avgAmbients = DataTransfer::getAmbientAVG();
 
-        return view('index',['todayScanCount' => $todayScanCount, 'todayScanAvgs' => $todayScanAvgs]);
+
+        return view('index',['todayScanCount' => $todayScanCount, 'todayScanAvgs' => $todayScanAvgs, 'lastSensors' => $lastSensors, 'lastAmbients' => $lastAmbients, 'avgAmbients' => $avgAmbients]);
     }
 
 }

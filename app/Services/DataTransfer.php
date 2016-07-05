@@ -7,51 +7,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class DataTransfer
-{
-    public static function getScansByDate($initialDate, $finalDate){
-        $sub = DB::table('scans')->selectRaw('DATE_FORMAT(CONCAT(DATE," ",time), "%Y-%m-%d %H:%i") AS data_alterada,temperature,air_humidity,ground_humidity')
-                ->where('temperature', '<', 100)
-                ->where('temperature', '>', -20);
-
-        $query = DB::table('scans')->selectRaw('data_alterada, temperature, air_humidity, ground_humidity')
-                 ->from(\DB::raw(' ( ' .$sub->toSql() . ' ) as sub '))
-                 ->mergeBindings($sub)
-                 ->whereBetween('data_alterada', array($initialDate,$finalDate))
-                 ->get();
-
-        return $query;
-    }
-
-    public static function getScansBySensor($initialDate, $finalDate, $sensor){
-        $sub = DB::table('scans')->selectRaw('DATE_FORMAT(CONCAT(DATE," ",time), "%Y-%m-%d %H:%i") AS data_alterada,temperature,air_humidity,ground_humidity,id_sensor')
-                ->where('id_sensor', '=', $sensor)
-                ->where('temperature', '<', 100)
-                ->where('temperature', '>', -20);
-
-        $query = DB::table('scans')->selectRaw('data_alterada, temperature, air_humidity, ground_humidity,id_sensor')
-                 ->from(\DB::raw(' ( ' .$sub->toSql() . ' ) as sub '))
-                 ->mergeBindings($sub)
-                 ->whereBetween('data_alterada', array($initialDate,$finalDate))
-                 ->get();
-
-        return $query;
-    }
-
-    public static function getScansByAmbient($initialDate, $finalDate, $ambient){
-        $sub = DB::table('scans')->selectRaw('DATE_FORMAT(CONCAT(DATE," ",time), "%Y-%m-%d %H:%i") AS data_alterada,temperature,air_humidity,ground_humidity,id_ambient')
-                ->where('id_ambient', '=', $ambient)
-                ->where('temperature', '<', 100)
-                ->where('temperature', '>', -20);
-
-        $query = DB::table('scans')->selectRaw('data_alterada, temperature, air_humidity, ground_humidity,id_ambient')
-                 ->from(\DB::raw(' ( ' .$sub->toSql() . ' ) as sub '))
-                 ->mergeBindings($sub)
-                 ->whereBetween('data_alterada', array($initialDate,$finalDate))
-                 ->get();
-
-        return $query;
-    }
-
+{   
+    // chart/scans.blade.php
     public static function getScansBySensorAndAmbient($initialDate, $finalDate, $sensor, $ambient){
         $sub = DB::table('scans')->selectRaw('DATE_FORMAT(CONCAT(DATE," ",time), "%Y-%m-%d %H:%i") AS data_alterada,temperature,air_humidity,ground_humidity,id_sensor,id_ambient')
                 ->where('id_sensor', '=', $sensor)
@@ -68,6 +25,17 @@ class DataTransfer
         return $query;
     }
 
+    public static function getMaxAndMinValue($ambient){
+
+        $query = DB::table('ambients')->selectRaw('max_temperature, min_temperature,max_air_humidity, min_air_humidity,max_ground_humidity, min_ground_humidity')
+                ->where('id_ambient','=',$ambient)
+                ->get();
+
+        return $query;
+    }
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    // views/index.blade.php
     public static function getTodayScans(){
         $query = DB::table('scans')->selectRaw('DATE_FORMAT(CONCAT(DATE," ",time), "%Y-%m-%d %H:%i") AS data_alterada, avg(temperature) temperature, 
                                                 avg(air_humidity) air_humidity, avg(ground_humidity) ground_humidity')
@@ -90,11 +58,38 @@ class DataTransfer
         return $avgs;
     }
 
+    public static function getLastInsertedSensors(){
+        $query = DB::table('sensors')->join('ambients','sensors.id_ambient','=','ambients.id_ambient')
+                                     ->select('sensors.*')
+                                     ->get();
+
+        return $query;
+    }
+
+
+    public static function getLastInsertedAmbients(){
+        $query = DB::table('sensors')->join('ambients','sensors.id_ambient','=','ambients.id_ambient')
+                                     ->select('ambients.*')
+                                     ->get();
+
+        return $query;
+    }   
+
+    public static function getAmbientAVG(){
+        $query = DB::table('ambients')->selectRaw('description,
+                                                   round(avg(max_temperature + min_temperature),2) as temperature,
+                                                   round(avg(max_air_humidity + min_air_humidity),2) as air_humidity,
+                                                   round(avg(max_ground_humidity + min_ground_humidity),2) as ground_humidity')
+                                      ->groupBy('id_ambient')
+                                      ->get();
+        return $query;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
+    // views/sensors/create.blade.php
     public static function transferGhostToScans($id_sensor){
-        $id_ambient = DB::table('ghost_scans')->selectRaw('distinct sensors.id_ambient as id')
-                                              ->join('sensors','sensors.id_sensor','=','sensors.id_sensor')
-                                              ->where('sensors.id_sensor', '=', $id_sensor)
-                                              ->get();
+    $id_ambient = DB::table('ghost_scans')->selectRaw('distinct sensors.id_ambient as id')->join('sensors','sensors.id_sensor','=','sensors.id_sensor')->where('sensors.id_sensor', '=', $id_sensor)->get();
 
         $ghosts = DB::table('ghost_scans')->get();
         
@@ -104,4 +99,5 @@ class DataTransfer
         
         DB::table('ghost_scans')->where('id_sensor', '=', $ghost->id_sensor)->delete();
     }
+    ////////////////////////////////////////////////////////////////////////////////////
 }
