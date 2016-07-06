@@ -14,13 +14,13 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            color: #B0BEC5;
-            font-weight: 100;
+            background-color: #00a65a !important;
+            font-weight: 600;
             font-family: 'Lato';
         }
 
         .container {
-            padding: 5%;
+            padding: 10% 5%;
         }
 
         .content{
@@ -32,37 +32,17 @@
         .title{
             font-size: 4em;
             text-align: center;
-            color: #888888;
-        }
-
-        .left{
-            float: left;
-            width: 60%;
-        }
-
-        .right{
-            width: 40%;
-            float: right;
-            margin-top: 5%;
-        }
-
-        .image{
-            margin: 0 auto;
-            width: 80%;
-            padding-top: 4%;
+            margin-bottom: 2%;
         }
 
         p{
-            text-align: left;
+            margin: 0 auto;
             font-size: 3em;
             font-weight: 550;
+            width: 50%;
+            text-align: center;
         }
 
-        img{
-            width: 100%;
-            margin-bottom: 10px;
-            box-shadow: 10px 10px 5px #888888;
-        }
     </style>
 </head>
 <body>
@@ -70,12 +50,9 @@
         <div class="content">
             <div class="left">
                 <div class="title">Erro 404</div>
-                <div class="image">
-                    <img src="{{ url('img/404.jpg') }}" alt="">
-                </div>
             </div>
-            <div class="right">
-                <p>Ops! Parece que trocamos nossa política de privacidade denovo. Melhor voltar e procurar outra página.</p> 
+            <div>
+                <p>Ops! A página que você está tentando acessar não existe, desculpe o transtorno.</p> 
             </div>
         </div>
     </div>

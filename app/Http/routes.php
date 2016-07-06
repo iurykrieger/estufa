@@ -21,11 +21,6 @@ use App\Charts;
 /**
  * Dashboard Routes
  */
-
-Route::get('adminlte', function(){
-	return view('layouts.adminlte');
-});
-
 Route::get('admin', 'DashboardController@index');
 
 Route::get('/',function(){
@@ -63,8 +58,6 @@ Route::resource('/admin/ambient', 'AmbientController');
 Route::get('/admin/auth/login', 'Auth\AuthController@getLogin');
 Route::post('/admin/auth/login', 'Auth\AuthController@postLogin');
 Route::get('/admin/auth/logout', 'Auth\AuthController@getLogout');
-//Route::get('/admin/auth/register','Auth\AuthController@getRegister');
-//Route::post('/admin/auth/register','Auth\AuthController@postRegister');
 
 /**
  * User Routes

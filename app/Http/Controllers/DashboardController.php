@@ -41,7 +41,7 @@ class DashboardController extends Controller
         }
 
         \Lava::LineChart('todayScans', $dt, [
-                   'height' => 500,
+                   'height' => 620,
                    'hAxis' => [                
                         'title' => 'Data'
                     ],
