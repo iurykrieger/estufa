@@ -45,8 +45,8 @@ class ChartController extends Controller{
         $this->validate($request, [
             'sensor' => 'required',
             'ambient' => 'required',
-            'endDate' => 'required',
-            'initialDate' => 'required'
+            'endDate' => 'required|after:initialDate',
+            'initialDate' => 'required|before:endDate'
         ]);
 
         /**

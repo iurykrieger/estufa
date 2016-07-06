@@ -39,6 +39,7 @@ Route::delete('/admin/sensor/multipleDestroy','SensorController@multipleDestroy'
 Route::get('/admin/sensor/{sensor}/deactivate','SensorController@deactivate');
 Route::get('/admin/sensor/{sensor}/activate','SensorController@activate');
 Route::get('/admin/sensor/ambient/{ambient?}','SensorController@getSensorsByAmbient');
+Route::get('/admin/sensor/create/{sensor?}','SensorController@create');
 Route::resource('/admin/sensor', 'SensorController');
 
 /**

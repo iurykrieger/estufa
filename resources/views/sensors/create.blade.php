@@ -29,6 +29,10 @@
       	{!! Form::open(['url' => 'admin/sensor']) !!}
 		{!! csrf_field() !!}
 
+		@if(isset($real_id))
+			{!! Form::hidden('real_id', $real_id) !!}
+		@endif
+
 		<div class="form-group">
 			{!! Form::label('description', 'Descrição:', ['class' => 'control-label']) !!}
 			{!! Form::text('description', null, ['class' => 'form-control']) !!}

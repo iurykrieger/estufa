@@ -36,7 +36,8 @@ class SensorController extends Controller
     public function index()
     {
         $sensors = Sensor::orderBy('updated_at','desc')->paginate(20);
-        return view('sensors.index',['sensors' => $sensors]);
+        $unregistered_sensors = DataTransfer::getLastUnregisteredSensorScans();
+        return view('sensors.index',['sensors' => $sensors, 'unregistered_sensors' => $unregistered_sensors]);
     }
 
     /**
@@ -44,11 +45,15 @@ class SensorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id = null)
     {
         if(Auth::user()->isAdmin()){
             $ambients = Ambient::lists('description', 'id_ambient');
-            return view('sensors.create',['ambients' => $ambients]);
+            if($id != null){
+                return view('sensors.create',['ambients' => $ambients, 'real_id' => $id]); 
+            }else{
+                return view('sensors.create',['ambients' => $ambients]);
+            }
         }else{
             return Redirect::back();
         }
@@ -64,16 +69,23 @@ class SensorController extends Controller
     {
         if(Auth::user()->isAdmin()){
             $this->validate($request, [
-                'description' => 'required',
-                'id_ambient' => 'required',
-                'active' => 'required'
+                'description' => 'required|alpha_num',
+                'id_ambient' => 'required|integer',
+                'active' => 'required|boolean'
                 ]);
             $sensor = $request->all();
-            $id_sensor = Sensor::create($sensor)->id_sensor;
-
-            //$var = DataTransfer::transferGhostToScans($id_sensor);
+            $savedSensor = Sensor::create($sensor);
             
+            if(!isset($request->real_id)){
+                $savedSensor->real_id = $savedSensor->id_sensor;
+            }else{
+                $savedSensor->real_id = $request->real_id;
+            }
 
+            $savedSensor->save();
+
+            DataTransfer::transferGhostToScans($savedSensor);
+            
             return Redirect::to('admin/sensor/create')->with('successMessage','O sensor foi cadastrado com sucesso no banco de dados.');
         }else{
             return Redirect::back();
@@ -122,13 +134,19 @@ class SensorController extends Controller
             $sensor = Sensor::findOrFail($id);
 
             $this->validate($request, [
-                'description' => 'required',
-                'id_ambient' => 'required',
-                'active' => 'required'
+                'description' => 'required|alpha_num',
+                'id_ambient' => 'required|integer',
+                'active' => 'required|boolean'
                 ]);
 
             $input = $request->all();
-            $sensor->fill($input)->save();
+
+            if($sensor->id_ambient == null){
+                $sensor->fill($input)->save();
+                DataTransfer::transferGhostToScans(Sensor::findOrFail($sensor->id_sensor));
+            }else{
+                $sensor->fill($input)->save();
+            }
 
             return Redirect::to('admin/sensor/'.$sensor->id_sensor)->with('successMessage','O sensor foi alterado com sucesso no banco de dados.');
         }else{

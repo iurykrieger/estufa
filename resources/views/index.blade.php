@@ -104,7 +104,6 @@
             <h3 class="box-title">Últimos Sensores Ativos</h3>
             <div class="box-tools pull-right">
               <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-              <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
           </div><!-- /.box-header -->
           <div class="box-body">
@@ -116,7 +115,7 @@
                       <i class="fa fa-sitemap fa-2x"></i>
                     </div>
                      <div class="product-info">
-                      <a href="javascript::;" class="product-title">{{ $lastSensors[$i]->description}} <span class="label label-success pull-right">{{ $lastAmbients[$i]->description}}</span></a>
+                      <a href="{{ url('/admin/sensor/'.$lastSensors[$i]->id_sensor) }}" class="product-title">{{ $lastSensors[$i]->description}} <span class="label label-success pull-right">{{ $lastAmbients[$i]->description}}</span></a>
                     </div>
                   </li>
                 @endfor
@@ -134,7 +133,6 @@
             <h3 class="box-title">Média Ambientes</h3>
             <div class="box-tools pull-right">
               <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-              <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
             </div>
           </div><!-- /.box-header -->
           <div class="box-body">
@@ -146,10 +144,10 @@
                       <i class="fa fa-tree fa-2x"></i>
                     </div>
                      <div class="product-info">
-                      <a href="javascript::;" class="product-title">{{ $avgAmbients[$i]->description}} 
-                                        <span class="label label-warning pull-right" style="margin-right: 5px;" data-toggle="tooltip" title="Umidade Solo">{{ $avgAmbients[$i]->ground_humidity}}</span>
-                                        <span class="label label-danger pull-right" style="margin-right: 5px;" data-toggle="tooltip" title="Umidade Ar">{{ $avgAmbients[$i]->air_humidity}}</span>
-                                        <span class="label label-info pull-right" style="margin-right: 5px;" data-toggle="tooltip" title="Temperatura">{{ $avgAmbients[$i]->temperature}}</span>
+                      <a href="{{ url('/admin/ambient/'.$avgAmbients[$i]->id_ambient) }}" class="product-title">{{ $avgAmbients[$i]->description}} 
+                        <span class="label label-warning pull-right" style="margin-right: 5px;" data-toggle="tooltip" title="Umidade Solo">{{ $avgAmbients[$i]->ground_humidity}}</span>
+                        <span class="label label-danger pull-right" style="margin-right: 5px;" data-toggle="tooltip" title="Umidade Ar">{{ $avgAmbients[$i]->air_humidity}}</span>
+                        <span class="label label-info pull-right" style="margin-right: 5px;" data-toggle="tooltip" title="Temperatura">{{ $avgAmbients[$i]->temperature}}</span>
                       </a>
                     </div>
                   </li>
@@ -157,11 +155,9 @@
           <!-- /.item -->
             </ul>
           </div>
-          <!-- /.box-body 
           <div class="box-footer text-center">
             <a href="{{ url('/admin/ambient') }}" class="uppercase">Ver Todos os Ambientes</a>
           </div>
-          -->
 
           <!-- /.box-footer -->
         </div><!-- /.box -->

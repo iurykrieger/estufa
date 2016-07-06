@@ -90,6 +90,55 @@
 </div>
 <!-- /.box -->
 
+<!-- Default box -->
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title"><i class="fa fa-sitemap"></i> Sensores Não Cadastrados</h3>
+
+      <div class="box-tools pull-right">
+        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+          <i class="fa fa-minus"></i></button>
+      </div>
+    </div>
+    <div class="box-body">
+        <table id="dataTable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Ativo</th>
+                    <th>Última Atividade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tfoot> 
+                <tr>
+                    <th>ID</th>
+                    <th>Ativo</th>
+                    <th>Última Atividade</th>
+                    <th>Ações</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach ($unregistered_sensors as $sensor)
+                <tr>
+                    <td>{{ $sensor->id_sensor }}</td>
+                    <td>Sim</td>
+                    <td>{{ $sensor->date }} as {{ $sensor->time}}</td>
+                    <td>
+                        <!-- Edit Button -->
+                        @if (Auth::user()->isAdmin())
+                            <a href="{{ url('/admin/sensor/create/'.$sensor->id_sensor) }}"><button type="button" class="btn btn-success btn-flat"><i class="fa fa-new"></i> Cadastrar</button></a>
+                        @endif
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+
 @endsection
 
 @section('scripts')

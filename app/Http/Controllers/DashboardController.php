@@ -55,8 +55,16 @@ class DashboardController extends Controller
         $lastAmbients = DataTransfer::getLastInsertedAmbients();
         $avgAmbients = DataTransfer::getAmbientAVG();
 
+        //Sensors without ambient
+        $sensorsWithoutAmbient = DataTransfer::getSensorsWithoutAmbient();
 
-        return view('index',['todayScanCount' => $todayScanCount, 'todayScanAvgs' => $todayScanAvgs, 'lastSensors' => $lastSensors, 'lastAmbients' => $lastAmbients, 'avgAmbients' => $avgAmbients]);
+
+        return view('index',['todayScanCount' => $todayScanCount, 
+                             'todayScanAvgs' => $todayScanAvgs, 
+                             'lastSensors' => $lastSensors, 
+                             'lastAmbients' => $lastAmbients, 
+                             'avgAmbients' => $avgAmbients,
+                             'sensorsWithoutAmbient' => $sensorsWithoutAmbient]);
     }
 
 }

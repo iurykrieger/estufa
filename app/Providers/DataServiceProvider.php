@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\DataTransfer;
 use Illuminate\Support\ServiceProvider;
 
 class DataServiceProvider extends ServiceProvider
@@ -13,7 +14,10 @@ class DataServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $sensorsWithoutAmbient = DataTransfer::getSensorsWithoutAmbient();
+        $sensorsNotRegistered = DataTransfer::getLastUnregisteredSensorScans();
+        view()->share(['sensorsWithoutAmbient' => $sensorsWithoutAmbient,
+                       'sensorsNotRegistered' => $sensorsNotRegistered]);
     }
 
     /**

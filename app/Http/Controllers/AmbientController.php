@@ -62,13 +62,13 @@ class AmbientController extends Controller
     {
         if(Auth::user()->isAdmin()){
             $this->validate($request, [
-                'description' => 'required',
-                'max_temperature' => 'required',
-                'min_temperature' => 'required',
-                'max_air_humidity' => 'required',
-                'min_air_humidity' => 'required',
-                'max_ground_humidity' => 'required',
-                'min_ground_humidity' => 'required'
+                'description' => 'required|alpha_num',
+                'max_temperature' => 'required|numeric|min:-100|max:100',
+                'min_temperature' => 'required|numeric|min:-100|max:100',
+                'max_air_humidity' => 'required|numeric|min:0|max:100',
+                'min_air_humidity' => 'required|numeric|min:0|max:100',
+                'max_ground_humidity' => 'required|numeric|min:0|max:100',
+                'min_ground_humidity' => 'required|numeric|min:0|max:100'
                 ]);
             $ambient = $request->all();
             Ambient::create($ambient);
@@ -119,13 +119,13 @@ class AmbientController extends Controller
             $ambient = Ambient::findOrFail($id);
 
             $this->validate($request, [
-                'description' => 'required',
-                'max_temperature' => 'required',
-                'min_temperature' => 'required',
-                'max_air_humidity' => 'required',
-                'min_air_humidity' => 'required',
-                'max_ground_humidity' => 'required',
-                'min_ground_humidity' => 'required'
+                'description' => 'required|alpha_num',
+                'max_temperature' => 'required|numeric|min:-100|max:100',
+                'min_temperature' => 'required|numeric|min:-100|max:100',
+                'max_air_humidity' => 'required|numeric|min:0|max:100',
+                'min_air_humidity' => 'required|numeric|min:0|max:100',
+                'max_ground_humidity' => 'required|numeric|min:0|max:100',
+                'min_ground_humidity' => 'required|numeric|min:0|max:100'
                 ]);
 
             $input = $request->all();
