@@ -73,6 +73,7 @@
     </a>
     <ul class="treeview-menu">
         <li><a href="{{ url ('/admin/report/scan') }}"><i class="fa fa-circle-o"></i> Leituras</a></li>
+        <li><a href="{{ url ('/admin/report/ambient') }}"><i class="fa fa-circle-o"></i> Ambientes</a></li>
     </ul>
 </li>
 @if (Auth::user()->isAdmin())

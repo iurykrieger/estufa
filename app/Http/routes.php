@@ -94,5 +94,7 @@ Route::post('/admin/chart/scans','ChartController@postChart');
  */
 Route::get('/admin/report/scan', ['uses' =>'ReportController@indexScan']);
 Route::post('/admin/report/scan', ['uses' =>'ReportController@postScan']);
+Route::get('/admin/report/ambient', ['uses' =>'ReportController@indexAmbient']);
+Route::post('/admin/report/ambient', ['uses' =>'ReportController@postAmbient']);
  
 

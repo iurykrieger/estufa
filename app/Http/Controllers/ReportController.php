@@ -25,6 +25,16 @@ class ReportController extends Controller
         $sensors = Sensor::all();
         return view('reports/reportScan', ['ambients' => $ambients, 'sensors' => $sensors]);
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAmbient()
+    {
+        return view('reports/reportAmbient');
+    }
  
     /**
      * Receive Post Request
@@ -65,8 +75,44 @@ class ReportController extends Controller
          */
         return $this->generateReport('ScanReport', 'RelatorioLeituras', $params);
 
-        //return Redirect::to('/admin/report/scan');
+        return Redirect::to('/admin/report/scan');
     }
+
+    /**
+     * Receive Post Request
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function postAmbient(Request $request)
+    {
+        /**
+         * Get request inputs
+         */
+        $initialDate = $request->input('initialDate');
+        $endDate = $request->input('endDate');
+        $limit = $request->input('limit');
+
+        $params = array();
+
+        if(!empty($initialDate)){
+            $params['INITIAL_DATE'] = $initialDate; 
+        }
+        if(!empty($endDate)){
+            $params['END_DATE'] = $endDate;
+        }
+        if(!empty($limit)){
+            $params['LIMIT'] = '"LIMIT ' .  $limit . '"';   
+        }
+
+        /**
+         * Process the report
+         */
+        return $this->generateReport('AmbientReport', 'RelatorioAmbientes', $params);
+
+        return Redirect::to('/admin/report/ambient');
+    }
+
+
 
     /**
      * Process and generates the report

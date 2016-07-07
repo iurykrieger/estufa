@@ -1,16 +1,16 @@
-<!-- resources/views/reports/scan.blade.php -->
+<!-- resources/views/reports/ambient.blade.php -->
 @extends('layouts.dashboard')
 
-@section('title','Relatórios de Leituras')
+@section('title','Relatórios de Ambientes')
 
 @section('page_title','Relatórios')
 
-@section('page_subtitle','Leituras')
+@section('page_subtitle','Ambientes')
 
 @section('breadcrumb')
 	<li><a href="{{ url('admin') }}"><i class="fa fa-dashboard"></i> Home</a></li>
 	<li><i class="fa fa-file-pdf-o"></i> Relatórios</li>
-	<li class="active">Leituras</li>
+	<li class="active">Ambientes</li>
 @endsection
 
 @section('content')
@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	<div class="box-body">
-		{!! Form::open(['method' => 'POST','url' => 'admin/report/scan', 'class' => 'action-form form-inline', 'id' => 'form-dates']) !!}
+		{!! Form::open(['method' => 'POST','url' => 'admin/report/ambient', 'class' => 'action-form form-inline', 'id' => 'form-dates']) !!}
 		<div class="box-header">
 			<h3 class="box-title">PERÍODO</h3><br>
 		</div>
@@ -39,34 +39,6 @@
 				{!! Form::label('endDate', ' até ', ['class' => 'control-label']) !!}
 				{!! Form::input('date','endDate', null, ['class' => 'form-control', 'placeholder' => 'Date']) !!}
 			</div> 
-		</div>
-		<hr>
-		<div class="box-header">
-			<h3 class="box-title">AMBIENTE</h3><br>
-		</div>
-		<div class="box-body">
-			<div class="form-group">
-				<select id="dropdown" name="ambient" aria-controls="ambient" class="form-control input-sm" style="width: 150px">
-					<option value="">-- TODOS --</option>
-					@foreach ($ambients as $ambient)
-					<option value="{{ $ambient->id_ambient }}">{{ $ambient->id_ambient . " - " . $ambient->description }}</option>
-					@endforeach
-				</select>
-			</div>    
-		</div>
-		<hr>
-		<div class="box-header">
-			<h3 class="box-title">SENSOR</h3><br>
-		</div>
-		<div class="box-body">
-			<div class="form-group">
-				<select id="dropdown" name="sensor" aria-controls="sensor" class="form-control input-sm" style="width: 150px">
-					<option value="">-- TODOS --</option>
-					@foreach ($sensors as $sensor)
-					<option value="{{ $sensor->id_sensor }}">{{ $sensor->id_sensor . " - " . $sensor->description }}</option>
-					@endforeach
-				</select>
-			</div>    
 		</div>
 		<hr>
 		<div class="box-header">
