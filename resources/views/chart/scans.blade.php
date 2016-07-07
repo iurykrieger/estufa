@@ -78,12 +78,12 @@
                 <label class="checkbox-inline"><input type="checkbox" name="air_humidity" value="air_humidity">Umidade do Ar</label>
                 <label class="checkbox-inline"><input type="checkbox" name="ground_humidity" value="ground_humidity">Umidade do Solo</label>
               </div>
-
+              <!--
               <div class="col-xs-3">
                 <label class="checkbox-inline"><input type="checkbox" value="">Limite Máximo</label>
                 <label class="checkbox-inline"><input type="checkbox" value="">Limite Mínimo</label>
               </div>
-
+              -->
               <div class="col-xs-2">                
                 {!! Form::button('<i class="fa fa-file-pdf-o"></i> Consultar', ['class' => 'btn btn-primary btn-flat pull-right','name' => 'btn-consultar','id' => 'btn-search', 'type' => 'submit']) !!}
               </div>  
