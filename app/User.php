@@ -63,4 +63,18 @@ class User extends Model implements AuthenticatableContract,
             return false;
         }
     }
+
+    /**
+     * Boot the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            $user->token = str_random(30);
+        });
+    }
 }

@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'iurykrieger96@gmail.com', 'name' => 'Iury Krieger'],
+    'from' => ['address' => 'nectar.ifcvideira@gmail.com', 'name' => 'ProjetoESTUFA'],
 
     /*
     |--------------------------------------------------------------------------

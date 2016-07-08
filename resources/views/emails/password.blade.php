@@ -1,5 +1,7 @@
 <!-- resources/views/emails/password.blade.php -->
 
-Clique no link à seguir para redefinir sua senha: 
+<h3>Olá, segue o link para redefinir sua senha:</h3>
 
-{{ url('password/reset/'.$token) }}
+<hr><br>
+
+{{ url('admin/password/reset/'.$token) }}
