@@ -92,10 +92,10 @@
           </div>              
                 <div id="temps_div" class=""></div>            
         </form>
-        <?
-          if (isset($_POST['btn-consultar'])){?>
-          @linechart('grafico', 'temps_div') 
-        <? }?>
+        <?php
+          if (isset($_POST['btn-consultar'])) { ?>
+            @linechart('grafico', 'temps_div') 
+        <?php } ?>
     {!! Form::close() !!}
     </div>
     <!-- /.box-body -->    
